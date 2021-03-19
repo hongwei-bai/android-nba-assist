@@ -4,10 +4,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.*
 
 @Composable
 fun NavComposeApp() {
@@ -15,18 +13,25 @@ fun NavComposeApp() {
 
     NavHost(navController, startDestination = "home") {
         composable("home") { Home(navController) }
-        composable("calendar") { Calendar(navController) }
+        composable(
+            "team-schedule/{team}",
+            arguments = listOf(
+                navArgument("team") { type = NavType.StringType }
+            )
+        ) {
+            TeamSchedule(navController, "gs")
+        }
     }
 }
 
 @Composable
 fun Home(navController: NavController) {
-    Button(onClick = { navController.navigate("calendar") }) {
+    Button(onClick = { navController.navigate("team-schedule/gs") }) {
         Text(text = "Navigate next")
     }
 }
 
 @Composable
-fun Calendar(navController: NavController) {
-    Text(text = "NBA Schedule")
+fun TeamSchedule(navController: NavController, team: String) {
+    Text(text = "$team Schedule")
 }
