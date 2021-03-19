@@ -6,39 +6,27 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun NavComposeApp() {
     val navController = rememberNavController()
 
-    NavHost(navController, startDestination = "profile") {
-        composable("home") { nav_graph.dest.home }
-        composable("plant_detail") { nav_graph.dest.plant_detail }
-    }
-
-    @Composable
-    fun Profile(navController: NavController) {
-        Button(onClick = { navController.navigate(nav_graph.dest.plant_detail) }) {
-            Text(text = "Navigate next")
-        }
+    NavHost(navController, startDestination = "home") {
+        composable("home") { Home(navController) }
+        composable("calendar") { Calendar(navController) }
     }
 }
 
-object nav_graph {
-
-    const val id = 1 // graph id
-
-    object dest {
-        const val home = 2
-        const val plant_detail = 3
+@Composable
+fun Home(navController: NavController) {
+    Button(onClick = { navController.navigate("calendar") }) {
+        Text(text = "Navigate next")
     }
+}
 
-    object action {
-        const val to_plant_detail = 4
-    }
-
-    object args {
-        const val plant_id = "plantId"
-    }
+@Composable
+fun Calendar(navController: NavController) {
+    Text(text = "NBA Schedule")
 }
