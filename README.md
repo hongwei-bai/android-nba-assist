@@ -1,6 +1,6 @@
 # android-nba-assistant
 
-This is an Android App demo which are going to apply all sorts of state-of-the-art technologies, including those are still in aplha & beta tests.
+This is an Android App demo which is going to apply all sorts of state-of-the-art technologies, including those are still in aplha & beta tests.
 
 What would be included:
 - Android Jetpack: Compose
