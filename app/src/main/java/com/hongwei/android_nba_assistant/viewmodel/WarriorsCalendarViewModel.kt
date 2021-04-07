@@ -21,7 +21,9 @@ class WarriorsCalendarViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO + exceptionHelper.handler) {
-            matchEvents.value = warriorsCalendarUseCase.getWarriorsSchedule()
+            launch(Dispatchers.Main) {
+                matchEvents.value = warriorsCalendarUseCase.getWarriorsSchedule()
+            }
         }
     }
 }

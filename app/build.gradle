@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose true
+        viewBinding true
         composeOptions {
             kotlinCompilerExtensionVersion "1.0.0-beta01"
 //            kotlinCompilerVersion '$kotlin_version'

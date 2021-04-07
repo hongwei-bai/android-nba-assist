@@ -8,7 +8,7 @@ import androidx.navigation.compose.navigate
 
 @Composable
 fun Dashboard(navController: NavController) {
-    Button(onClick = { navController.navigate("team-schedule/gs") }) {
+    Button(onClick = { navController.navigate("team-mock/gs") }) {
         Text(text = "Navigate next")
     }
 }

@@ -1,9 +1,10 @@
 package com.hongwei.android_nba_assistant.datasource.local
 
 import android.content.Context
-import com.hongwei.android_nba_assistant.constant.AppConfigurations.Stub.GS_SCHEDULE_JSON
+import com.hongwei.android_nba_assistant.constant.AppConfigurations.Mock.TEAM_SCHEDULE_JSON
 import com.hongwei.android_nba_assistant.datasource.TeamScheduleService
 import com.hongwei.android_nba_assistant.model.TeamSchedule
+import com.hongwei.android_nba_assistant.model.TeamScheduleResponse
 import com.hongwei.android_nba_assistant.util.LocalStorageUtils.getAssetJsonFile
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -15,8 +16,8 @@ class TeamScheduleLocalJsonParser @Inject constructor(
     private val moshi: Moshi
 ) : TeamScheduleService {
     override suspend fun getTeamSchedule(team: String): TeamSchedule {
-        val jsonString = getAssetJsonFile(context, GS_SCHEDULE_JSON)
-        val jsonAdapter: JsonAdapter<TeamSchedule> = moshi.adapter(TeamSchedule::class.java)
-        return jsonAdapter.fromJson(jsonString)!!
+        val jsonString = getAssetJsonFile(context, TEAM_SCHEDULE_JSON.replace("{team}", team))
+        val jsonAdapter: JsonAdapter<TeamScheduleResponse> = moshi.adapter(TeamScheduleResponse::class.java)
+        return jsonAdapter.fromJson(jsonString)!!.teamSchedule
     }
 }

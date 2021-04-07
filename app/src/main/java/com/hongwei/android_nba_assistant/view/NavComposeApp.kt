@@ -16,7 +16,7 @@ fun NavComposeApp() {
     NavHost(navController, startDestination = "home") {
         composable("home") { Dashboard(navController) }
         composable(
-            "team-schedule/{team}",
+            "team-mock/{team}",
             arguments = listOf(
                 navArgument("team") { type = NavType.StringType }
             )

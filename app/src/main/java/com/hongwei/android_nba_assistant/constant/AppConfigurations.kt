@@ -10,8 +10,8 @@ object AppConfigurations {
         const val NBA_STAT_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-nba/"
     }
 
-    object Stub {
-        const val GS_SCHEDULE_JSON = "schedule/gs/schedule.json"
+    object Mock {
+        const val TEAM_SCHEDULE_JSON = "mock/schedule-{team}.json"
     }
 
     object Date {

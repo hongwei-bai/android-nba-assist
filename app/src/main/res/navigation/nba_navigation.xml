@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nba_navigation"
+    app:startDestination="@id/fragment_id_dashboard">
+
+    <fragment
+        android:id="@+id/fragment_id_dashboard"
+        android:name="com.hongwei.android_nba_assistant.compat.view.DashboardFragment"
+        android:label=""
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboard_to_calendar_fragment"
+            app:destination="@id/fragment_id_calendar"
+            app:popUpTo="@id/fragment_id_dashboard"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_id_calendar"
+        android:name="com.hongwei.android_nba_assistant.compat.view.CalendarFragment"
+        android:label=""
+        tools:layout="@layout/fragment_calendar" />
+</navigation>
