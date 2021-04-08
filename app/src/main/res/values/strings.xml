@@ -5,8 +5,11 @@
     <string name="game_vs_at">\@</string>
     <string name="upcoming_game_in">Upcoming game in</string>
     <string name="upcoming_game_on">Upcoming game on</string>
-    <string name="upcoming_game_in_days">%1$d days...</string>
-    <string name="upcoming_game_in_hours">%1$d hour!!</string>
+    <string name="upcoming_game_in_days">%1$d days&#8230;</string>
+    <string name="upcoming_game_in_hours">%1$d hours!!</string>
     <string name="upcoming_game_tomorrow">Tomorrow</string>
     <string name="upcoming_game_today">Today!</string>
+    <string name="upcoming_game_now">Now!!!</string>
+    <string name="upcoming_game_countdown_zero">0:00:00</string>
+
 </resources>

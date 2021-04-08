@@ -18,3 +18,7 @@ enum class InDaysCaption {
 enum class InDaysUnit {
     Days, Hours, Countdown
 }
+
+enum class CountDownStatus {
+    None, CountdownZero, Now
+}

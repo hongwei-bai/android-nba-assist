@@ -13,6 +13,7 @@ import com.hongwei.android_nba_assistant.model.LocalSettings
 import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getTeamBannerDrawable
 import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getTeamDrawable
 import com.hongwei.android_nba_assistant.viewmodel.DashboardViewModel
+import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountDownStatus
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.InDaysCaption
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.InDaysUnit
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,9 +43,26 @@ class DashboardFragment @Inject constructor() : Fragment() {
         super.onResume()
         observeLoadingSpinner()
         observeUpcomingGame()
+        observeCountDown()
         setupSwipeRefreshLayout()
         binding.teamBanner.setImageDrawable(getTeamBannerDrawable(requireContext(), localSettings.myTeam))
         viewModel.load()
+    }
+
+    private fun observeCountDown() {
+        viewModel.countDownString.observe(this, {
+            binding.upcomingGameInDayValue.text = it
+        })
+
+        viewModel.countDownStatus.observe(this, {
+            when (it) {
+                CountDownStatus.Now -> binding.upcomingGameInDayValue.text = resources.getString(R.string.upcoming_game_now)
+                CountDownStatus.CountdownZero -> binding.upcomingGameInDayValue.text = resources.getString(R.string.upcoming_game_countdown_zero)
+                CountDownStatus.None -> {
+                    // No-Op
+                }
+            }
+        })
     }
 
     private fun observeLoadingSpinner() {
@@ -80,7 +98,7 @@ class DashboardFragment @Inject constructor() : Fragment() {
                         else -> resources.getString(R.string.upcoming_game_in_days, inDaysValue)
                     }
                     InDaysUnit.Hours -> resources.getString(R.string.upcoming_game_in_hours, inDaysValue)
-                    InDaysUnit.Countdown -> "1:00:00"
+                    InDaysUnit.Countdown -> ""
                 }
                 binding.nextGameLayout.visibility = View.VISIBLE
             } ?: displayNoUpcomingGames()

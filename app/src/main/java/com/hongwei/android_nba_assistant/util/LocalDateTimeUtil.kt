@@ -7,8 +7,10 @@ import java.util.Calendar.*
 import kotlin.math.roundToInt
 
 object LocalDateTimeUtil {
-    private const val MILLIS_PER_DAY = 1000 * 3600 * 24
-    private const val MILLIS_PER_HOUR = 1000 * 3600 * 1.00
+    const val MILLIS_PER_SECOND = 1000L
+    const val MILLIS_PER_MINUTE = 1000 * 60L
+    const val MILLIS_PER_HOUR = 1000 * 3600L
+    private const val MILLIS_PER_DAY = 1000 * 3600 * 24L
 
     fun getLocalDateDisplay(calendar: Calendar, format: String = "EEE., MMM.d"): String =
         SimpleDateFormat(format, Locale.US).format(calendar.time).toUpperCase(Locale.US)
@@ -16,11 +18,13 @@ object LocalDateTimeUtil {
     fun getLocalTimeDisplay(calendar: Calendar, format: String = "H:mm a"): String =
         SimpleDateFormat(format, Locale.US).format(calendar.time)
 
-    fun getInHours(calendar: Calendar): Int = getInDays(calendar, getInstance())
+    fun isFuture(calendar: Calendar): Boolean = calendar.timeInMillis > getInstance().timeInMillis
+
+    fun getInHours(calendar: Calendar): Int = getInHours(calendar, getInstance())
 
     @TestOnly
     fun getInHours(calendar: Calendar, reference: Calendar): Int =
-        ((calendar.timeInMillis - reference.timeInMillis) / MILLIS_PER_HOUR).roundToInt()
+        ((calendar.timeInMillis - reference.timeInMillis) * 1.0 / MILLIS_PER_HOUR).roundToInt()
 
     fun getInDays(calendar: Calendar): Int = getInDays(calendar, getInstance())
 
