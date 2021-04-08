@@ -6,8 +6,12 @@
         <entry key="..\:/code/an/android-nba-assistant/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/code/an/android-nba-assistant/app/src/main/res/layout/fragment_calendar.xml" value="0.31521739130434784" />
         <entry key="..\:/code/an/android-nba-assistant/app/src/main/res/layout/fragment_dashboard.xml" value="0.196875" />
+        <entry key="..\:/code/an/android-nba-assistant/app/src/main/res/layout/fragment_leaderboard.xml" value="0.21979166666666666" />
+        <entry key="..\:/code/an/android-nba-assistant/app/src/main/res/layout/fragment_settings.xml" value="0.16666666666666666" />
+        <entry key="..\:/code/an/android-nba-assistant/app/src/main/res/layout/fragment_standing.xml" value="0.21979166666666666" />
+        <entry key="..\:/code/an/android-nba-assistant/app/src/main/res/layout/layout_game.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="13" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" default="true" project-jdk-name="13" project-jdk-type="JavaSDK" />
 </project>

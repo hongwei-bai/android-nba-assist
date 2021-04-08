@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dashboard_loading_spinner_height">4dp</dimen>
+    <dimen name="dashboard_game_left_text_size">18sp</dimen>
+    <dimen name="dashboard_game_left_big_text_size">28sp</dimen>
+    <dimen name="dashboard_upcoming_game_title_size">20sp</dimen>
+    <dimen name="dashboard_upcoming_game_big_text_size">28sp</dimen>
+    <dimen name="dashboard_team_logo_width">120dp</dimen>
+    <dimen name="dashboard_vs_frame_width">140dp</dimen>
+    <dimen name="dashboard_vs_frame_height">80dp</dimen>
+    <dimen name="dashboard_upcoming_game_date_text_size">18sp</dimen>
+    <dimen name="dashboard_upcoming_game_at_text_size">20sp</dimen>
+    <dimen name="dashboard_upcoming_game_time_text_size">19dp</dimen>
+</resources>

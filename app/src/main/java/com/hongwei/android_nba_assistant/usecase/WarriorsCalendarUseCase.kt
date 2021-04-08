@@ -13,6 +13,7 @@ class WarriorsCalendarUseCase @Inject constructor(
             .map {
                 MatchEvent(
                     opponent = it.opponent.displayName,
+                    opponentLogo = it.opponent.logo,
                     isHome = it.opponent.home,
                     date = Calendar.getInstance().apply {
                         timeInMillis = it.unixTimeStamp

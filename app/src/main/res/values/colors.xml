@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="warriors_blue_background">#04539c</color>
+    <color name="warriors_blue">#1c4189</color>
+    <color name="warriors_white">#ffffff</color>
+    <color name="warriors_gold">#fcb826</color>
 </resources>
