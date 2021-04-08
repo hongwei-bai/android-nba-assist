@@ -6,7 +6,7 @@ data class MatchEvent(
     val opponent: String,
     val opponentLogo: String,
     val isHome: Boolean,
-    val date: Calendar
+    var date: Calendar
 ) {
     val teamShort =
         opponentLogo

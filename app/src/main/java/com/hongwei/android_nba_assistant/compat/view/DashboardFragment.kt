@@ -13,6 +13,8 @@ import com.hongwei.android_nba_assistant.model.LocalSettings
 import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getTeamBannerDrawable
 import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getTeamDrawable
 import com.hongwei.android_nba_assistant.viewmodel.DashboardViewModel
+import com.hongwei.android_nba_assistant.viewmodel.viewobject.InDaysCaption
+import com.hongwei.android_nba_assistant.viewmodel.viewobject.InDaysUnit
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -36,10 +38,16 @@ class DashboardFragment @Inject constructor() : Fragment() {
         return binding.root
     }
 
-
     override fun onResume() {
         super.onResume()
+        observeLoadingSpinner()
+        observeUpcomingGame()
+        setupSwipeRefreshLayout()
         binding.teamBanner.setImageDrawable(getTeamBannerDrawable(requireContext(), localSettings.myTeam))
+        viewModel.load()
+    }
+
+    private fun observeLoadingSpinner() {
         viewModel.loadingStatus.observe(this, { loading ->
             binding.loadingSpinner.visibility = if (loading) View.VISIBLE else View.GONE
 
@@ -50,6 +58,9 @@ class DashboardFragment @Inject constructor() : Fragment() {
             binding.upcomingGameInDayValue.visibility = contentVisibility
             binding.nextGameLayout.visibility = contentVisibility
         })
+    }
+
+    private fun observeUpcomingGame() {
         viewModel.upcomingGame.observe(this, {
             it?.run {
                 binding.gamesLeftNumber.text = "$gamesLeft"
@@ -58,14 +69,18 @@ class DashboardFragment @Inject constructor() : Fragment() {
                 binding.gameTime.text = timeString
                 binding.guestTeamLogo.setImageDrawable(getTeamDrawable(requireContext(), guestTeamShort))
                 binding.homeTeamLogo.setImageDrawable(getTeamDrawable(requireContext(), homeTeamShort))
-                binding.upcomingGameInDayCaption.text = when (inDays) {
-                    0, 1 -> resources.getString(R.string.upcoming_game_on)
-                    else -> resources.getString(R.string.upcoming_game_in)
+                binding.upcomingGameInDayCaption.text = when (inDaysCaption) {
+                    InDaysCaption.On -> resources.getString(R.string.upcoming_game_on)
+                    InDaysCaption.In -> resources.getString(R.string.upcoming_game_in)
                 }
-                binding.upcomingGameInDayValue.text = when (inDays) {
-                    0 -> resources.getString(R.string.upcoming_game_today)
-                    1 -> resources.getString(R.string.upcoming_game_tomorrow)
-                    else -> resources.getString(R.string.upcoming_game_in_days, inDays)
+                binding.upcomingGameInDayValue.text = when (inDaysUnit) {
+                    InDaysUnit.Days -> when (inDaysValue) {
+                        0 -> resources.getString(R.string.upcoming_game_today)
+                        1 -> resources.getString(R.string.upcoming_game_tomorrow)
+                        else -> resources.getString(R.string.upcoming_game_in_days, inDaysValue)
+                    }
+                    InDaysUnit.Hours -> resources.getString(R.string.upcoming_game_in_hours, inDaysValue)
+                    InDaysUnit.Countdown -> "1:00:00"
                 }
                 binding.nextGameLayout.visibility = View.VISIBLE
             } ?: displayNoUpcomingGames()
@@ -74,6 +89,14 @@ class DashboardFragment @Inject constructor() : Fragment() {
                 findNavController().navigate(R.id.action_dashboard_to_calendar_fragment)
             }
         })
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.warriors_gold)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.load()
+        }
     }
 
     private fun displayNoUpcomingGames() {

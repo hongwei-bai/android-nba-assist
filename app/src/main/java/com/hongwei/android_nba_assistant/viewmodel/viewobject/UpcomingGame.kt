@@ -5,6 +5,16 @@ data class UpcomingGame(
     val guestTeamShort: String,
     val dateString: String,
     val timeString: String,
-    val inDays: Int,
+    val inDaysCaption: InDaysCaption,
+    val inDaysValue: Int,
+    val inDaysUnit: InDaysUnit,
     val gamesLeft: Int
 )
+
+enum class InDaysCaption {
+    In, On
+}
+
+enum class InDaysUnit {
+    Days, Hours, Countdown
+}

@@ -5,16 +5,21 @@ import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class LocalDateTimeUtilTest {
     @Test
-    fun testCurrentHour() {
-        val calendar = Calendar.getInstance()
-        assertEquals("2021-04-08 22:05:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+    fun testHourDiffRoundDown() {
+        val calendar = getCalendarInstance(2020, Calendar.APRIL, 8, 12, 30, 0)
+        val referenceAsNow = getCalendarInstance(2020, Calendar.APRIL, 8, 10, 0, 1)
+        val inHours = LocalDateTimeUtil.getInHours(calendar, referenceAsNow)
+        assertEquals(2, inHours)
+    }
+
+    @Test
+    fun testHourDiffRoundUp() {
+        val calendar = getCalendarInstance(2020, Calendar.APRIL, 8, 12, 30, 0)
+        val referenceAsNow = getCalendarInstance(2020, Calendar.APRIL, 8, 9, 59, 59)
+        val inHours = LocalDateTimeUtil.getInHours(calendar, referenceAsNow)
+        assertEquals(3, inHours)
     }
 
     @Test

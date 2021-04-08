@@ -6,6 +6,7 @@
     <string name="upcoming_game_in">Upcoming game in</string>
     <string name="upcoming_game_on">Upcoming game on</string>
     <string name="upcoming_game_in_days">%1$d days...</string>
-    <string name="upcoming_game_tomorrow">Tomorrow!</string>
-    <string name="upcoming_game_today">Today!!!</string>
+    <string name="upcoming_game_in_hours">%1$d hour!!</string>
+    <string name="upcoming_game_tomorrow">Tomorrow</string>
+    <string name="upcoming_game_today">Today!</string>
 </resources>

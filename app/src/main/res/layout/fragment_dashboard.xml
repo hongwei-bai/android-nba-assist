@@ -1,176 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/warriors_blue_background"
     tools:context=".compat.view.MainCompatActivity">
 
-    <View
-        android:id="@+id/topBar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dashboard_loading_spinner_height"
-        android:background="@color/warriors_gold"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/teamBanner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dashboard_loading_spinner_height"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/loadingSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dashboard_loading_spinner_height"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:indicatorColor="@color/warriors_white"
-        app:layout_constraintTop_toBottomOf="@id/teamBanner"
-        app:layout_constraintVertical_bias="0.4"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/gamesLeftCaption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="@color/warriors_white"
-        android:textSize="@dimen/dashboard_game_left_text_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/gamesLeftNumber"
-        app:layout_constraintTop_toBottomOf="@id/teamBanner"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Games Left" />
-
-    <TextView
-        android:id="@+id/gamesLeftNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="@color/warriors_gold"
-        android:textSize="@dimen/dashboard_game_left_big_text_size"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@id/gamesLeftCaption"
-        app:layout_constraintEnd_toStartOf="@id/gamesLeftCaption"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="82" />
-
-    <TextView
-        android:id="@+id/upcomingGameInDayCaption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="@color/warriors_white"
-        android:textSize="@dimen/dashboard_upcoming_game_title_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gamesLeftCaption"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Upcoming game in" />
-
-    <TextView
-        android:id="@+id/upcomingGameInDayValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="@color/warriors_gold"
-        android:textSize="@dimen/dashboard_upcoming_game_big_text_size"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upcomingGameInDayCaption"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="2 days" />
-
-    <LinearLayout
-        android:id="@+id/nextGameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upcomingGameInDayValue"
-        app:layout_constraintVertical_bias="0.2">
+        <View
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dashboard_loading_spinner_height"
+            android:background="@color/warriors_gold"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/guestTeamLogo"
-            android:layout_width="@dimen/dashboard_team_logo_width"
-            android:layout_height="@dimen/dashboard_team_logo_width"
-            android:layout_gravity="center_vertical"
+            android:id="@+id/teamBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dashboard_loading_spinner_height"
             android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="packed" />
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/gameMiddleLayout"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dashboard_vs_frame_height"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            app:layout_constraintHorizontal_chainStyle="packed">
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/loadingSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dashboard_loading_spinner_height"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/warriors_white"
+            app:layout_constraintTop_toBottomOf="@id/teamBanner"
+            app:layout_constraintVertical_bias="0.4"
+            tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/gameDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/warriors_white"
-                android:textSize="@dimen/dashboard_upcoming_game_date_text_size"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="TUE., OCT. 17" />
+        <TextView
+            android:id="@+id/gamesLeftCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/warriors_white"
+            android:textSize="@dimen/dashboard_game_left_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gamesLeftNumber"
+            app:layout_constraintTop_toBottomOf="@id/teamBanner"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Games Left" />
 
-            <TextView
-                android:id="@+id/at"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="1dp"
-                android:paddingBottom="3dp"
-                android:text="@string/game_vs_at"
-                android:textAlignment="center"
-                android:textColor="@color/warriors_white"
-                android:textSize="28sp"
-                app:layout_constraintBottom_toTopOf="@id/gameTime"
-                app:layout_constraintTop_toBottomOf="@id/gameDate" />
+        <TextView
+            android:id="@+id/gamesLeftNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/warriors_gold"
+            android:textSize="@dimen/dashboard_game_left_big_text_size"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/gamesLeftCaption"
+            app:layout_constraintEnd_toStartOf="@id/gamesLeftCaption"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="82" />
 
-            <TextView
-                android:id="@+id/gameTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/warriors_white"
-                android:textSize="@dimen/dashboard_upcoming_game_time_text_size"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/at"
-                tools:text="9:30 PM" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/upcomingGameInDayCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/warriors_white"
+            android:textSize="@dimen/dashboard_upcoming_game_title_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gamesLeftCaption"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Upcoming game in" />
 
-        <ImageView
-            android:id="@+id/homeTeamLogo"
-            android:layout_width="@dimen/dashboard_team_logo_width"
-            android:layout_height="@dimen/dashboard_team_logo_width"
-            android:layout_gravity="center_vertical"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="packed" />
+        <TextView
+            android:id="@+id/upcomingGameInDayValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/warriors_gold"
+            android:textSize="@dimen/dashboard_upcoming_game_big_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upcomingGameInDayCaption"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="2 days" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/nextGameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upcomingGameInDayValue"
+            app:layout_constraintVertical_bias="0.2">
 
+            <ImageView
+                android:id="@+id/guestTeamLogo"
+                android:layout_width="@dimen/dashboard_team_logo_width"
+                android:layout_height="@dimen/dashboard_team_logo_width"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                app:layout_constraintHorizontal_chainStyle="packed" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/gameMiddleLayout"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dashboard_vs_frame_height"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                app:layout_constraintHorizontal_chainStyle="packed">
+
+                <TextView
+                    android:id="@+id/gameDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/warriors_white"
+                    android:textSize="@dimen/dashboard_upcoming_game_date_text_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="TUE., OCT. 17" />
+
+                <TextView
+                    android:id="@+id/at"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="3dp"
+                    android:text="@string/game_vs_at"
+                    android:textAlignment="center"
+                    android:textColor="@color/warriors_white"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toTopOf="@id/gameTime"
+                    app:layout_constraintTop_toBottomOf="@id/gameDate" />
+
+                <TextView
+                    android:id="@+id/gameTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/warriors_white"
+                    android:textSize="@dimen/dashboard_upcoming_game_time_text_size"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/at"
+                    tools:text="9:30 PM" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/homeTeamLogo"
+                android:layout_width="@dimen/dashboard_team_logo_width"
+                android:layout_height="@dimen/dashboard_team_logo_width"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                app:layout_constraintHorizontal_chainStyle="packed" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
