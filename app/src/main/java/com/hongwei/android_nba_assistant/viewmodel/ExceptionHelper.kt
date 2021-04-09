@@ -6,6 +6,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import javax.inject.Inject
 
 class ExceptionHelper @Inject constructor() {
+    var postHandler: (() -> Unit)? = null
+
     val handler = CoroutineExceptionHandler { _, throwable ->
         if (LocalProperties.isDebug) {
             Log.e("bbbb", "Exception caught: ${throwable.localizedMessage}")
@@ -13,5 +15,6 @@ class ExceptionHelper @Inject constructor() {
         } else {
             Log.e("bbbb", "Exception caught: ${throwable.localizedMessage}")
         }
+        postHandler?.invoke()
     }
 }

@@ -8,7 +8,7 @@
     <dimen name="dashboard_team_logo_width">120dp</dimen>
     <dimen name="dashboard_vs_frame_width">140dp</dimen>
     <dimen name="dashboard_vs_frame_height">80dp</dimen>
-    <dimen name="dashboard_upcoming_game_date_text_size">18sp</dimen>
-    <dimen name="dashboard_upcoming_game_at_text_size">20sp</dimen>
+    <dimen name="dashboard_upcoming_game_date_text_size">16sp</dimen>
+    <dimen name="dashboard_upcoming_game_at_text_size">19sp</dimen>
     <dimen name="dashboard_upcoming_game_time_text_size">19dp</dimen>
 </resources>

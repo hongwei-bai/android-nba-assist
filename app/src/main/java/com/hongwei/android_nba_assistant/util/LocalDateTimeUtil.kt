@@ -4,6 +4,7 @@ import org.jetbrains.annotations.TestOnly
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 object LocalDateTimeUtil {
@@ -22,9 +23,17 @@ object LocalDateTimeUtil {
 
     fun getInHours(calendar: Calendar): Int = getInHours(calendar, getInstance())
 
+    fun getHoursDiff(calendar: Calendar): Int = getHoursDiff(calendar, getInstance())
+
+    fun getInMillis(calendar: Calendar): Long = calendar.timeInMillis - getInstance().timeInMillis
+
     @TestOnly
     fun getInHours(calendar: Calendar, reference: Calendar): Int =
         ((calendar.timeInMillis - reference.timeInMillis) * 1.0 / MILLIS_PER_HOUR).roundToInt()
+
+    @TestOnly
+    fun getHoursDiff(calendar: Calendar, reference: Calendar): Int =
+        (abs(calendar.timeInMillis - reference.timeInMillis) * 1.0 / MILLIS_PER_HOUR).roundToInt()
 
     fun getInDays(calendar: Calendar): Int = getInDays(calendar, getInstance())
 
@@ -38,6 +47,15 @@ object LocalDateTimeUtil {
         newCalendar.set(MINUTE, 0)
         newCalendar.set(SECOND, 0)
         newCalendar.set(MILLISECOND, 0)
+        return newCalendar
+    }
+
+    fun getAheadOfHours(hours: Int): Calendar = getAheadOfHours(hours, getInstance())
+
+    @TestOnly
+    fun getAheadOfHours(hours: Int, calendar: Calendar): Calendar {
+        val newCalendar: Calendar = getInstance()
+        newCalendar.timeInMillis = calendar.timeInMillis - hours * MILLIS_PER_HOUR
         return newCalendar
     }
 

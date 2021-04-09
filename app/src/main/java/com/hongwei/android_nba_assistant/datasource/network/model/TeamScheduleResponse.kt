@@ -1,10 +1,11 @@
-package com.hongwei.android_nba_assistant.model
+package com.hongwei.android_nba_assistant.datasource.network.model
 
 data class TeamScheduleResponse(
     val teamSchedule: TeamSchedule
 )
 
 data class TeamSchedule(
+    val dataVersion: Long,
     val events: List<Event>
 )
 

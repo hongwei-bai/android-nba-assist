@@ -9,13 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hongwei.android_nba_assistant.R
 import com.hongwei.android_nba_assistant.databinding.FragmentDashboardBinding
-import com.hongwei.android_nba_assistant.model.LocalSettings
+import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
 import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getTeamBannerDrawable
 import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getTeamDrawable
 import com.hongwei.android_nba_assistant.viewmodel.DashboardViewModel
-import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountDownStatus
-import com.hongwei.android_nba_assistant.viewmodel.viewobject.InDaysCaption
-import com.hongwei.android_nba_assistant.viewmodel.viewobject.InDaysUnit
+import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownCaption
+import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownStatus
+import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownUnit
+import com.hongwei.android_nba_assistant.viewmodel.viewobject.LoadingStatus
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -50,58 +51,60 @@ class DashboardFragment @Inject constructor() : Fragment() {
     }
 
     private fun observeCountDown() {
-        viewModel.countDownString.observe(this, {
+        viewModel.upcomingGameCountdown.observe(this, {
+            with(it) {
+                when (countdownUnit) {
+                    CountdownUnit.Days -> binding.upcomingGameInDayValue.text =
+                        resources.getString(R.string.upcoming_game_in_days, countdownStaticValue)
+                    CountdownUnit.Hours -> binding.upcomingGameInDayValue.text =
+                        resources.getString(R.string.upcoming_game_in_hours, countdownStaticValue)
+                    CountdownUnit.Countdown -> {
+                        // No-Op
+                    }
+                }
+                binding.upcomingGameInDayCaption.text = when (countdownCaption) {
+                    CountdownCaption.On -> resources.getString(R.string.upcoming_game_on)
+                    CountdownCaption.In -> resources.getString(R.string.upcoming_game_in)
+                }
+            }
+        })
+
+        viewModel.countdownDynamicValue.observe(this, {
             binding.upcomingGameInDayValue.text = it
         })
 
-        viewModel.countDownStatus.observe(this, {
-            when (it) {
-                CountDownStatus.Now -> binding.upcomingGameInDayValue.text = resources.getString(R.string.upcoming_game_now)
-                CountDownStatus.CountdownZero -> binding.upcomingGameInDayValue.text = resources.getString(R.string.upcoming_game_countdown_zero)
-                CountDownStatus.None -> {
+        viewModel.countdownStatus.observe(this, { countdownStatus ->
+            when (countdownStatus) {
+                CountdownStatus.Now -> binding.upcomingGameInDayValue.text = resources.getString(R.string.upcoming_game_now)
+                CountdownStatus.CountdownZero -> binding.upcomingGameInDayValue.text = resources.getString(R.string.upcoming_game_countdown_zero)
+                CountdownStatus.Started -> binding.upcomingGameInDayCaption.text = resources.getString(R.string.upcoming_game_started)
+                CountdownStatus.Today -> binding.upcomingGameInDayValue.text = resources.getString(R.string.upcoming_game_today)
+                CountdownStatus.Tomorrow -> binding.upcomingGameInDayValue.text = resources.getString(R.string.upcoming_game_tomorrow)
+                else -> {
                     // No-Op
                 }
             }
         })
     }
 
-    private fun observeLoadingSpinner() {
-        viewModel.loadingStatus.observe(this, { loading ->
-            binding.loadingSpinner.visibility = if (loading) View.VISIBLE else View.GONE
-
-            val contentVisibility = if (loading) View.GONE else View.VISIBLE
-            binding.gamesLeftNumber.visibility = contentVisibility
-            binding.gamesLeftCaption.visibility = contentVisibility
-            binding.upcomingGameInDayCaption.visibility = contentVisibility
-            binding.upcomingGameInDayValue.visibility = contentVisibility
-            binding.nextGameLayout.visibility = contentVisibility
-        })
-    }
-
     private fun observeUpcomingGame() {
-        viewModel.upcomingGame.observe(this, {
-            it?.run {
-                binding.gamesLeftNumber.text = "$gamesLeft"
+        viewModel.gamesLeft.observe(this, { gameLeft ->
+            if (gameLeft > 0) {
+                binding.gamesLeftNumber.text = "$gameLeft"
+                binding.nextGameLayout.visibility = View.VISIBLE
+            } else {
+                displayNoUpcomingGames()
+            }
+        })
+
+        viewModel.upcomingGameInfo.observe(this, {
+            with(it) {
                 binding.gamesLeftCaption.text = resources.getString(R.string.games_left)
                 binding.gameDate.text = dateString
                 binding.gameTime.text = timeString
                 binding.guestTeamLogo.setImageDrawable(getTeamDrawable(requireContext(), guestTeamShort))
                 binding.homeTeamLogo.setImageDrawable(getTeamDrawable(requireContext(), homeTeamShort))
-                binding.upcomingGameInDayCaption.text = when (inDaysCaption) {
-                    InDaysCaption.On -> resources.getString(R.string.upcoming_game_on)
-                    InDaysCaption.In -> resources.getString(R.string.upcoming_game_in)
-                }
-                binding.upcomingGameInDayValue.text = when (inDaysUnit) {
-                    InDaysUnit.Days -> when (inDaysValue) {
-                        0 -> resources.getString(R.string.upcoming_game_today)
-                        1 -> resources.getString(R.string.upcoming_game_tomorrow)
-                        else -> resources.getString(R.string.upcoming_game_in_days, inDaysValue)
-                    }
-                    InDaysUnit.Hours -> resources.getString(R.string.upcoming_game_in_hours, inDaysValue)
-                    InDaysUnit.Countdown -> ""
-                }
-                binding.nextGameLayout.visibility = View.VISIBLE
-            } ?: displayNoUpcomingGames()
+            }
 
             binding.nextGameLayout.setOnClickListener {
                 findNavController().navigate(R.id.action_dashboard_to_calendar_fragment)
@@ -123,4 +126,21 @@ class DashboardFragment @Inject constructor() : Fragment() {
         binding.nextGameLayout.visibility = View.INVISIBLE
     }
 
+    private fun observeLoadingSpinner() {
+        viewModel.loadingStatus.observe(this, { loadingStatus ->
+            binding.loadingSpinner.visibility = if (loadingStatus == LoadingStatus.Loading) View.VISIBLE else View.GONE
+
+            val contentVisibility = if (loadingStatus == LoadingStatus.Inactive) View.VISIBLE else View.GONE
+            binding.gamesLeftNumber.visibility = contentVisibility
+            binding.gamesLeftCaption.visibility = contentVisibility
+            binding.upcomingGameInDayCaption.visibility = contentVisibility
+            binding.upcomingGameInDayValue.visibility = contentVisibility
+            binding.nextGameLayout.visibility = contentVisibility
+
+            if (loadingStatus == LoadingStatus.Error) {
+                binding.upcomingGameInDayCaption.text = resources.getString(R.string.dashboard_load_error)
+                binding.upcomingGameInDayCaption.visibility = View.VISIBLE
+            }
+        })
+    }
 }

@@ -11,14 +11,28 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    Properties properties = new Properties()
+    if (rootProject.file("local.properties").exists()) {
+        properties.load(rootProject.file("local.properties").newDataInputStream())
+    }
+
     defaultConfig {
         applicationId "com.hongwei.android_nba_assistant"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        resValue "string", "public_access_token", properties.getProperty("publicAccess.token", "")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
 
     buildTypes {
@@ -86,6 +100,16 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation 'com.google.code.gson:gson:2.8.6'
+    
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
 
     testImplementation 'junit:junit:4.+'
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")

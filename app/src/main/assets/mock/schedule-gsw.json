@@ -1,5 +1,6 @@
 {
   "teamSchedule": {
+    "dataVersion": 0,
     "events": [
       {
         "unixTimeStamp": 1617760800000,

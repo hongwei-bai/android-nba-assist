@@ -1,10 +1,12 @@
 <resources>
-    <string name="app_name">android-nba-assistant</string>
+    <string name="app_name">Watch NBA</string>
     <string name="games_left">Games Left</string>
     <string name="no_games_left">No Games Left, Season ends.</string>
+    <string name="dashboard_load_error">Oops! Something is wrong!\nPlease try again later&#8230;</string>
     <string name="game_vs_at">\@</string>
     <string name="upcoming_game_in">Upcoming game in</string>
     <string name="upcoming_game_on">Upcoming game on</string>
+    <string name="upcoming_game_started">Game started</string>
     <string name="upcoming_game_in_days">%1$d days&#8230;</string>
     <string name="upcoming_game_in_hours">%1$d hours!!</string>
     <string name="upcoming_game_tomorrow">Tomorrow</string>

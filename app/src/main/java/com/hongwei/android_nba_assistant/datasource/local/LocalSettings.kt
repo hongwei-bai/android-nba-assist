@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assistant.model
+package com.hongwei.android_nba_assistant.datasource.local
 
 import javax.inject.Inject
 

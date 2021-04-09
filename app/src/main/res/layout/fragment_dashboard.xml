@@ -77,6 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
+            android:lineSpacingExtra="14sp"
             android:textAlignment="center"
             android:textColor="@color/warriors_white"
             android:textSize="@dimen/dashboard_upcoming_game_title_size"
@@ -122,26 +123,28 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/gameMiddleLayout"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dashboard_vs_frame_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 app:layout_constraintHorizontal_chainStyle="packed">
 
                 <TextView
                     android:id="@+id/gameDate"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textAlignment="center"
                     android:textColor="@color/warriors_white"
                     android:textSize="@dimen/dashboard_upcoming_game_date_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="TUE., OCT. 17" />
 
                 <TextView
                     android:id="@+id/at"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingTop="1dp"
@@ -151,11 +154,13 @@
                     android:textColor="@color/warriors_white"
                     android:textSize="28sp"
                     app:layout_constraintBottom_toTopOf="@id/gameTime"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/gameDate" />
 
                 <TextView
                     android:id="@+id/gameTime"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textAlignment="center"
@@ -163,6 +168,8 @@
                     android:textSize="@dimen/dashboard_upcoming_game_time_text_size"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/at"
                     tools:text="9:30 PM" />
             </androidx.constraintlayout.widget.ConstraintLayout>

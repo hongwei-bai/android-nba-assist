@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hongwei.android_nba_assistant">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".NbaAssistantApplication"
         android:allowBackup="false"
@@ -9,16 +11,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NbaAssistant.DayNight.NoActionBar">
-        <activity android:name=".compat.view.MainCompatActivity"
+        android:theme="@style/Theme.NbaAssistant.DayNight.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".compat.view.MainCompatActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity"/>
+        <activity android:name=".view.MainActivity" />
     </application>
 
 </manifest>
