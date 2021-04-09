@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.NbaAssistant.DayNight.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/warriors_blue_background</item>
-        <item name="colorPrimaryVariant">@color/warriors_blue</item>
-        <item name="colorOnPrimary">@color/warriors_white</item>
+        <item name="colorPrimary">@color/warriors_white</item>
+        <item name="colorPrimaryVariant">@color/warriors_gold</item>
+        <item name="colorOnPrimary">@color/warriors_blue</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/warriors_gold</item>
-        <item name="colorSecondaryVariant">@color/warriors_blue</item>
+        <item name="colorSecondary">@color/warriors_blue_background</item>
+        <item name="colorSecondaryVariant">@color/warriors_gold</item>
         <item name="colorOnSecondary">@color/warriors_white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/warriors_blue_background</item>

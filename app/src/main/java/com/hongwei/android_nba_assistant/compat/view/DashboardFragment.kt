@@ -136,11 +136,9 @@ class DashboardFragment @Inject constructor() : Fragment() {
             binding.upcomingGameInDayCaption.visibility = contentVisibility
             binding.upcomingGameInDayValue.visibility = contentVisibility
             binding.nextGameLayout.visibility = contentVisibility
+            binding.nextGameShadow.visibility = contentVisibility
 
-            if (loadingStatus == LoadingStatus.Error) {
-                binding.upcomingGameInDayCaption.text = resources.getString(R.string.dashboard_load_error)
-                binding.upcomingGameInDayCaption.visibility = View.VISIBLE
-            }
+            binding.errorText.visibility = if (loadingStatus == LoadingStatus.Error) View.VISIBLE else View.GONE
         })
     }
 }

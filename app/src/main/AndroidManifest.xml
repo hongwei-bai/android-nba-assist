@@ -15,7 +15,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".compat.view.MainCompatActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.NbaAssistant.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -24,6 +25,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.MainActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
