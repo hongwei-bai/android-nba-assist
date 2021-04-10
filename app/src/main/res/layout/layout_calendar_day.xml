@@ -1,18 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="@color/calendar_black_alpha_background"
+    android:theme="@style/Theme.NbaAssistant.DayNight.NoActionBar">
 
     <TextView
+        android:id="@+id/dateHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey80"
+        android:fontFamily="@font/play"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/warriors_white"
+        android:textSize="6sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="MON MAR 15" />
+
+    <FrameLayout
+        android:id="@+id/opponentLogoFrame"
+        android:layout_width="@dimen/calendar_team_logo_frame_width"
+        android:layout_height="@dimen/calendar_team_logo_frame_width"
+        android:layout_marginTop="4dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateHeader">
+
+        <ImageView
+            android:id="@+id/opponentLogo"
+            android:layout_width="@dimen/calendar_team_logo_width"
+            android:layout_height="@dimen/calendar_team_logo_width"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            tools:background="@drawable/lal" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/gameLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/play"
         android:gravity="center"
-        android:text="10"
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textColor="@color/warriors_white"
+        android:textSize="7sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opponentLogoFrame"
+        tools:text="LOS ANGELES" />
+
+    <TextView
+        android:id="@+id/gameTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/play"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/warriors_white"
+        android:textSize="9sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/gameLocation"
+        tools:text="12:30 PM" />
 </androidx.constraintlayout.widget.ConstraintLayout>

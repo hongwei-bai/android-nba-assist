@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nba_navigation"
-    app:startDestination="@id/fragment_id_calendar">
+    app:startDestination="@id/fragment_id_dashboard">
 
     <fragment
         android:id="@+id/fragment_id_dashboard"

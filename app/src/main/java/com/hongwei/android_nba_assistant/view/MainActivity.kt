@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.hongwei.android_nba_assistant.viewmodel.WarriorsCalendarViewModel
+import com.hongwei.android_nba_assistant.viewmodel.TeamCalendarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val viewModel: WarriorsCalendarViewModel by viewModels()
+    private val viewModel: TeamCalendarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

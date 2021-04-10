@@ -13,5 +13,6 @@
     <string name="upcoming_game_today">Today!</string>
     <string name="upcoming_game_now">Now!!!</string>
     <string name="upcoming_game_countdown_zero">0:00:00</string>
+    <string name="date_is_up_to_date_copy">Your schedule data is up to date.</string>
     <string name="copy_right_declaration">\u00a9Copyright: hongwei.bai84\@gmail.com</string>
 </resources>

@@ -23,14 +23,14 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/warriors_blue_background_alpha"
             android:layout_marginTop="@dimen/dashboard_loading_spinner_height"
-            android:background="@color/warriors_blue_background"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dashboard_card_shadow_height"
-            android:background="@drawable/shape_shadow"
+            android:background="@drawable/bg_shadow"
             app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/play"
-            android:text="@string/copy_right_declaration"
+            android:text="@string/date_is_up_to_date_copy"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

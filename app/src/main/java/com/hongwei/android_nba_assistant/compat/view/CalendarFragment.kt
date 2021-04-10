@@ -1,15 +1,20 @@
 package com.hongwei.android_nba_assistant.compat.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.hongwei.android_nba_assistant.R
+import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.DAYS_PER_CALENDAR_ROW
 import com.hongwei.android_nba_assistant.databinding.FragmentCalendarBinding
+import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
+import com.hongwei.android_nba_assistant.viewmodel.TeamCalendarViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.*
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -17,6 +22,15 @@ class CalendarFragment @Inject constructor() : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
 
     private val binding get() = _binding!!
+
+    private val viewModel: TeamCalendarViewModel by viewModels()
+
+    @Inject
+    @ApplicationContext
+    lateinit var applicationContext: Context
+
+    @Inject
+    lateinit var localSettings: LocalSettings
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +43,27 @@ class CalendarFragment @Inject constructor() : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
-        binding.recyclerView.adapter = CalendarListAdapter()
+
+        val calendarListAdapter = CalendarListAdapter(applicationContext, localSettings)
+        binding.recyclerView.run {
+            layoutManager = GridLayoutManager(requireContext(), DAYS_PER_CALENDAR_ROW)
+            adapter = calendarListAdapter
+        }
+
+        viewModel.matchEvents.observe(this, {
+            calendarListAdapter.data = it
+            calendarListAdapter.notifyDataSetChanged()
+        })
+
+        setupSwipeRefreshLayout()
+        viewModel.load()
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.warriors_gold)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.load()
+        }
     }
 }

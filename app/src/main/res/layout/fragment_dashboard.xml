@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/warriors_white"
+    android:theme="@style/Theme.NbaAssistant.DayNight.NoActionBar"
     tools:context=".compat.view.MainCompatActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +32,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dashboard_card_shadow_height"
-            android:background="@drawable/shape_shadow"
+            android:background="@drawable/bg_shadow"
             app:layout_constraintTop_toBottomOf="@id/teamBanner" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -51,10 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/play"
             android:gravity="center"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/warriors_blue"
             android:textSize="@dimen/dashboard_game_left_text_size"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +115,7 @@
             android:id="@+id/nextGameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_rounded_rect_card"
+            android:background="@drawable/bg_top_rounded_rect_card"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
             android:paddingEnd="12dp"
@@ -203,7 +202,7 @@
             android:id="@+id/nextGameShadow"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dashboard_card_shadow_height"
-            android:background="@drawable/shape_shadow"
+            android:background="@drawable/bg_shadow"
             app:layout_constraintTop_toBottomOf="@id/nextGameLayout" />
 
         <TextView
@@ -211,7 +210,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/play"
-            android:text="@string/copy_right_declaration"
+            android:text="@string/date_is_up_to_date_copy"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -12,12 +12,40 @@ object LocalDateTimeUtil {
     const val MILLIS_PER_MINUTE = 1000 * 60L
     const val MILLIS_PER_HOUR = 1000 * 3600L
     private const val MILLIS_PER_DAY = 1000 * 3600 * 24L
+    const val DAYS_PER_WEEK = 7
+    const val MILLIS_PER_WEEK = MILLIS_PER_DAY * 7
 
-    fun getLocalDateDisplay(calendar: Calendar, format: String = "EEE., MMM.d"): String =
+    const val CALENDAR_GAME_DATE_FORMAT = "EEE MMM d"
+    private const val DASHBOARD_UPCOMING_GAME_DATE_FORMAT = "EEE., MMM.d"
+    private const val DASHBOARD_UPCOMING_GAME_TIME_FORMAT = "H:mm a"
+
+    fun getLocalDateDisplay(calendar: Calendar, format: String = DASHBOARD_UPCOMING_GAME_DATE_FORMAT): String =
         SimpleDateFormat(format, Locale.US).format(calendar.time).toUpperCase(Locale.US)
 
-    fun getLocalTimeDisplay(calendar: Calendar, format: String = "H:mm a"): String =
+    fun getLocalTimeDisplay(calendar: Calendar, format: String = DASHBOARD_UPCOMING_GAME_TIME_FORMAT): String =
         SimpleDateFormat(format, Locale.US).format(calendar.time)
+
+    fun getDateInWeeks(week: Int): Calendar {
+        val calendar: Calendar = getInstance()
+        calendar.timeInMillis = calendar.timeInMillis + MILLIS_PER_WEEK * week
+        return calendar
+    }
+
+    fun unixTimeStampToCalendar(unixTimeStamp: Long): Calendar = getInstance().apply {
+        timeInMillis = unixTimeStamp
+    }
+
+    fun getDayIdentifier(unixTimeStamp: Long): Long =
+        getDayIdentifier(unixTimeStampToCalendar(unixTimeStamp))
+
+    fun getDayIdentifier(calendar: Calendar): Long =
+        getBeginOfDay(calendar).timeInMillis
+
+    fun getDayIdentifierShift(dayId: Long, days: Int): Long = dayId + days * MILLIS_PER_DAY
+
+    fun dayIdentifierToCalendar(dayId: Long): Calendar = getInstance().apply {
+        timeInMillis = dayId
+    }
 
     fun isFuture(calendar: Calendar): Boolean = calendar.timeInMillis > getInstance().timeInMillis
 
@@ -41,7 +69,7 @@ object LocalDateTimeUtil {
     fun getInDays(calendar: Calendar, reference: Calendar): Int =
         ((getBeginOfDay(calendar).timeInMillis - getBeginOfDay(reference).timeInMillis) / MILLIS_PER_DAY).toInt()
 
-    fun getBeginOfDay(calendar: Calendar): Calendar {
+    fun getBeginOfDay(calendar: Calendar = getInstance()): Calendar {
         val newCalendar: Calendar = calendar.clone() as Calendar
         newCalendar.set(HOUR_OF_DAY, 0)
         newCalendar.set(MINUTE, 0)
@@ -68,13 +96,20 @@ object LocalDateTimeUtil {
         return newCalendar
     }
 
-    fun getMondayOfWeek(calendar: Calendar): Calendar {
+    fun getMondayOfWeek(calendar: Calendar = getInstance()): Calendar = getWeekday(calendar, MONDAY)
+
+    fun getSundayOfWeek(calendar: Calendar = getInstance()): Calendar = getWeekday(calendar, SUNDAY)
+
+    fun getWeekday(calendar: Calendar = getInstance(), weekday: Int): Calendar {
         val newCalendar: Calendar = calendar.clone() as Calendar
-        newCalendar.set(DAY_OF_WEEK, MONDAY)
+        newCalendar.set(DAY_OF_WEEK, weekday)
         newCalendar.set(HOUR_OF_DAY, 0)
         newCalendar.set(MINUTE, 0)
         newCalendar.set(SECOND, 0)
         newCalendar.set(MILLISECOND, 0)
         return newCalendar
     }
+
+    fun debugDateTime(calendar: Calendar): String =
+        SimpleDateFormat("yyyy-MMM-dd HH:mm").format(calendar.time)
 }

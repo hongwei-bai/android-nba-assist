@@ -1,12 +1,15 @@
 package com.hongwei.android_nba_assistant.compat.view
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.hongwei.android_nba_assistant.NbaAssistantApplication
 import com.hongwei.android_nba_assistant.R
 import com.hongwei.android_nba_assistant.databinding.FragmentDashboardBinding
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
@@ -18,6 +21,7 @@ import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownStatus
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownUnit
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.LoadingStatus
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,6 +34,10 @@ class DashboardFragment @Inject constructor() : Fragment() {
 
     @Inject
     lateinit var localSettings: LocalSettings
+
+    @Inject
+    @ApplicationContext
+    lateinit var applicationContext: Context
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +55,11 @@ class DashboardFragment @Inject constructor() : Fragment() {
         observeCountDown()
         setupSwipeRefreshLayout()
         binding.teamBanner.setImageDrawable(getTeamBannerDrawable(requireContext(), localSettings.myTeam))
-        viewModel.load()
+        if ((applicationContext as NbaAssistantApplication).initialiseFlag) {
+            viewModel.load()
+        } else {
+            viewModel.loadCache()
+        }
     }
 
     private fun observeCountDown() {

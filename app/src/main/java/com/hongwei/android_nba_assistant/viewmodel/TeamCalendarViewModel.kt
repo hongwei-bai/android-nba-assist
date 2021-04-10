@@ -11,18 +11,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WarriorsCalendarViewModel @Inject constructor(
+class TeamCalendarViewModel @Inject constructor(
     private val teamScheduleUseCase: TeamScheduleUseCase,
-    exceptionHelper: ExceptionHelper
+    private val exceptionHelper: ExceptionHelper
 ) : ViewModel() {
     val matchEvents: MutableLiveData<List<MatchEvent>> by lazy {
         MutableLiveData<List<MatchEvent>>()
     }
 
-    init {
+    fun load() {
         viewModelScope.launch(Dispatchers.IO + exceptionHelper.handler) {
+            val upcomingSchedule = teamScheduleUseCase.getTeamSchedule()
             launch(Dispatchers.Main) {
-                matchEvents.value = teamScheduleUseCase.getTeamSchedule("gsw")
+                matchEvents.value = upcomingSchedule
             }
         }
     }

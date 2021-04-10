@@ -12,7 +12,10 @@ class NbaStatRepository @Inject constructor(
     private val nbaStatService: NbaStatService,
     private val teamScheduleDao: TeamScheduleDao
 ) {
-    suspend fun getTeamSchedule(team: String): TeamSchedule {
+    suspend fun getTeamScheduleFromLocal(team: String): TeamSchedule =
+        Gson().fromJson(teamScheduleDao.getTeamSchedule(team)!!.data, TeamSchedule::class.java)
+
+    suspend fun requestTeamScheduleFromNetwork(team: String): TeamSchedule {
         val cache = teamScheduleDao.getTeamSchedule(team)
         val currentDataVersion = cache?.dataVersion ?: -1
         val response = nbaStatService.getTeamSchedule(team, currentDataVersion)

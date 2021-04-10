@@ -1,29 +1,40 @@
 package com.hongwei.android_nba_assistant.viewmodel
 
+import android.content.Context
 import android.os.CountDownTimer
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hongwei.android_nba_assistant.NbaAssistantApplication
+import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.COUNTDOWN_ZERO_FREEZE_MILLIS
+import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.DISPLAY_COUNTDOWN_IN_HOURS
+import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.DISPLAY_HOURS_IN_HOURS
+import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.DISPLAY_STARTED_FROM_MINUTES
+import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
+import com.hongwei.android_nba_assistant.usecase.ForceRequestScheduleUseCase
 import com.hongwei.android_nba_assistant.usecase.MatchEvent
-import com.hongwei.android_nba_assistant.usecase.TeamScheduleUseCase
+import com.hongwei.android_nba_assistant.usecase.UpcomingGameUseCase
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.MILLIS_PER_MINUTE
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.MILLIS_PER_SECOND
-import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getAheadOfHours
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val teamScheduleUseCase: TeamScheduleUseCase,
+    private val forceRequestScheduleUseCase: ForceRequestScheduleUseCase,
+    private val upcomingGameUseCase: UpcomingGameUseCase,
     private val localSettings: LocalSettings,
-    private val exceptionHelper: ExceptionHelper
+    private val exceptionHelper: ExceptionHelper,
+    @ApplicationContext private val applicationContext: Context
 ) : ViewModel() {
     val loadingStatus: MutableLiveData<LoadingStatus> by lazy {
         MutableLiveData<LoadingStatus>()
@@ -55,16 +66,25 @@ class DashboardViewModel @Inject constructor(
     fun load() {
         loadingStatus.value = LoadingStatus.Loading
         viewModelScope.launch(Dispatchers.IO + exceptionHelper.handler) {
-            delay(1)
-            val teamSchedule = teamScheduleUseCase.getTeamSchedule(localSettings.myTeam)
-            val scheduleUpcoming = teamSchedule.filter {
-                it.date.after(getAheadOfHours(IGNORE_TODAY_S_GAME_FROM_HOURS))
+            withContext(Dispatchers.IO) {
+                forceRequestScheduleUseCase.forceRequestScheduleFromServer()
+                (applicationContext as NbaAssistantApplication).initialiseFlag = false
             }
-            val upcomingOne = scheduleUpcoming.firstOrNull()
+            loadCache()
+        }
+    }
+
+    fun loadCache() {
+        viewModelScope.launch(Dispatchers.Main + exceptionHelper.handler) {
+            loadingStatus.value = LoadingStatus.Loading
+        }
+        viewModelScope.launch(Dispatchers.IO + exceptionHelper.handler) {
+            val upcomingGame = upcomingGameUseCase.getUpcomingGame()
+            val numberOfGamesLeft = upcomingGameUseCase.getNumberOfGamesLeft()
             viewModelScope.launch(Dispatchers.Main + exceptionHelper.handler) {
                 loadingStatus.value = LoadingStatus.Inactive
-                gamesLeft.value = scheduleUpcoming.size
-                upcomingOne?.run {
+                gamesLeft.value = numberOfGamesLeft
+                upcomingGame?.run {
                     upcomingGameInfo.value = mapToGameInfoViewObject()
                     handleGameCountdown()
                 }

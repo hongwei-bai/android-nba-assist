@@ -17,9 +17,3 @@ enum class CountdownUnit {
 enum class CountdownStatus {
     Inactive, Counting, CountdownZero, Now, Started, Today, Tomorrow
 }
-
-const val DISPLAY_HOURS_IN_HOURS = 8
-const val DISPLAY_COUNTDOWN_IN_HOURS = 2
-const val COUNTDOWN_ZERO_FREEZE_MILLIS = 10L
-const val DISPLAY_STARTED_FROM_MINUTES = 5
-const val IGNORE_TODAY_S_GAME_FROM_HOURS = 5

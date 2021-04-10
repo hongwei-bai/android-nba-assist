@@ -7,10 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey80">#323232</color>
+    <color name="grey60">#666666</color>
+    <color name="grey40">#bbbbbb</color>
     <color name="grey20">#dddddd</color>
+
+    <color name="calendar_red_alpha_background">#60FF0000</color>
+    <color name="calendar_black_alpha_background">#60000000</color>
+    <color name="calendar_black_alpha_past_background">#a0000000</color>
+
+    <color name="warriors_blue_background_alpha">#d004539c</color>
     <color name="warriors_blue_background">#04539c</color>
     <color name="warriors_blue">#1c4189</color>
     <color name="warriors_white">#ffffff</color>
     <color name="warriors_gold">#fcb826</color>
+    <color name="warriors_gold_alpha">#d0fcb826</color>
+    <color name="warriors_transparent">#0000</color>
 
 </resources>

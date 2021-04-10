@@ -55,6 +55,14 @@ class LocalDateTimeUtilTest {
     }
 
     @Test
+    fun testSundayOfWeek() {
+        val calendar = getCalendarInstance(2021, Calendar.APRIL, 8, 10, 0, 0)
+        val sundayOfWeek = LocalDateTimeUtil.getSundayOfWeek(calendar)
+        assertEquals("2021-04-08 10:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2021-04-04 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(sundayOfWeek.time))
+    }
+
+    @Test
     fun testMondayOfWeek() {
         val calendar = getCalendarInstance(2021, Calendar.APRIL, 8, 19, 37, 42)
         val mondayOfWeek = LocalDateTimeUtil.getMondayOfWeek(calendar)

@@ -12,4 +12,7 @@
     <dimen name="dashboard_upcoming_game_at_text_size">19sp</dimen>
     <dimen name="dashboard_upcoming_game_time_text_size">19dp</dimen>
     <dimen name="dashboard_card_shadow_height">8dp</dimen>
+
+    <dimen name="calendar_team_logo_frame_width">50dp</dimen>
+    <dimen name="calendar_team_logo_width">48dp</dimen>
 </resources>
