@@ -52,11 +52,10 @@ class CalendarFragment @Inject constructor() : Fragment() {
 
         viewModel.matchEvents.observe(this, {
             calendarListAdapter.data = it
-            calendarListAdapter.notifyDataSetChanged()
         })
 
         setupSwipeRefreshLayout()
-        viewModel.load()
+        viewModel.loadCache()
     }
 
     private fun setupSwipeRefreshLayout() {

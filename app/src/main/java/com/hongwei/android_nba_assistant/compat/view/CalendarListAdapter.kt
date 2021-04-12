@@ -2,21 +2,20 @@ package com.hongwei.android_nba_assistant.compat.view
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.hongwei.android_nba_assistant.R
-import com.hongwei.android_nba_assistant.constant.AppConfigurations.Debug.DEBUG_CALENDAR
 import com.hongwei.android_nba_assistant.databinding.LayoutCalendarDayBinding
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
 import com.hongwei.android_nba_assistant.usecase.MatchEvent
+import com.hongwei.android_nba_assistant.util.DebugUtil.debugInitBlock
+import com.hongwei.android_nba_assistant.util.DebugUtil.debugSetData
 import com.hongwei.android_nba_assistant.util.DrawableByNameUtil
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.CALENDAR_GAME_DATE_FORMAT
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.DAYS_PER_WEEK
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.dayIdentifierToCalendar
-import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.debugDateTime
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getBeginOfDay
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getDayIdentifier
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getDayIdentifierShift
@@ -37,8 +36,9 @@ class CalendarListAdapter(
             value.forEach { matchEvent ->
                 val position = dayIdList.indexOf(getDayIdentifier(matchEvent.date))
                 eventByPositionHashMap[position] = matchEvent
+                notifyItemChanged(position)
             }
-            debugSetData()
+            debugSetData(value, eventByPositionHashMap)
         }
 
     private val dayIdList: MutableList<Long> = MutableList(localSettings.scheduleWeeks * DAYS_PER_WEEK) { 0L }
@@ -54,7 +54,7 @@ class CalendarListAdapter(
                 dayIdList[index] = getDayIdentifierShift(firstDayId, index)
             }
         }
-        debugInitBlock()
+        debugInitBlock(dayIdList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -108,28 +108,6 @@ class CalendarListAdapter(
                 gameLocation.text = ""
                 opponentLogo.setImageDrawable(null)
                 gameTime.text = ""
-            }
-        }
-    }
-
-    private fun debugSetData() {
-        if (DEBUG_CALENDAR) {
-            data.forEachIndexed { index, matchEvent ->
-                Log.d("bbbb", "setData[$index] ${debugDateTime(matchEvent.date)} ${matchEvent.opponentAbbrev}")
-            }
-            eventByPositionHashMap.forEach { t, u ->
-                Log.d("bbbb", "setData trigger eventByPositionHashMap[$t] -> $u")
-            }
-        }
-    }
-
-    private fun debugInitBlock() {
-        if (DEBUG_CALENDAR) {
-            dayIdList.forEachIndexed { i, l ->
-                Log.d(
-                    "bbbb", "init dayIdList[$i] dayId: $l, " +
-                            "display: ${debugDateTime(Calendar.getInstance().apply { timeInMillis = l })}"
-                )
             }
         }
     }

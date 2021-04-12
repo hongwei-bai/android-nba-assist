@@ -1,13 +1,17 @@
 package com.hongwei.android_nba_assistant.constant
 
 object AppConfigurations {
+    object Splash {
+        const val SPLASH_TIME_OUT = 1000L
+    }
+
     object Network {
         const val HTTP_READ_TIMEOUT = 5000L
         const val HTTP_WRITE_TIMEOUT = 5000L
         const val HTTP_CONNECT_TIMEOUT = 5000L
 
         const val HONGWEI_SERVICE_DOMAIN = "https://hongwei-test1.top"
-        const val NBA_STAT_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-home/"
+        const val NBA_STAT_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-sports/"
 //        const val NBA_STAT_ENDPOINT = "http://10.0.2.2:8081/"
 //        const val NBA_STAT_ENDPOINT = "http://10.0.2.2:8080/application-service-home/"
 

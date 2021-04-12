@@ -20,6 +20,7 @@ import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownCaption
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownStatus
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownUnit
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.LoadingStatus
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -54,7 +55,8 @@ class DashboardFragment @Inject constructor() : Fragment() {
         observeUpcomingGame()
         observeCountDown()
         setupSwipeRefreshLayout()
-        binding.teamBanner.setImageDrawable(getTeamBannerDrawable(requireContext(), localSettings.myTeam))
+//        binding.teamBanner.setImageDrawable(getTeamBannerDrawable(requireContext(), localSettings.myTeam))
+        Picasso.get().load("https://hongwei-test1.top/media/640/app/nba/banner_gsw.jpg").into(binding.teamBanner);
         if ((applicationContext as NbaAssistantApplication).initialiseFlag) {
             viewModel.load()
         } else {
