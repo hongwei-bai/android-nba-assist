@@ -1,8 +1,10 @@
 package com.hongwei.android_nba_assistant.usecase
 
+import androidx.compose.ui.text.toLowerCase
 import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
 import com.hongwei.android_nba_assistant.repository.NbaStatRepository
+import com.hongwei.android_nba_assistant.repository.NbaTeamRepository
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getAheadOfHours
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.unixTimeStampToCalendar
 import java.util.*
@@ -10,6 +12,7 @@ import javax.inject.Inject
 
 class UpcomingGameUseCase @Inject constructor(
     private val nbaStatRepository: NbaStatRepository,
+    private val nbaTeamRepository: NbaTeamRepository,
     private val localSettings: LocalSettings,
 ) {
     suspend fun getUpcomingGame(): MatchEvent? =
@@ -17,8 +20,11 @@ class UpcomingGameUseCase @Inject constructor(
             .events
             .firstOrNull() { after(it.unixTimeStamp) }
             ?.run {
+                val teamShort = opponent.abbrev.toLowerCase(Locale.US)
                 MatchEvent(
-                    opponentAbbrev = opponent.abbrev,
+                    opponentAbbrev = teamShort,
+                    opponentLogoUrl = nbaTeamRepository.getTeamLogoUrl(teamShort),
+                    opponentLogoPlaceholder = nbaTeamRepository.getTeamLogoPlaceholder(teamShort),
                     isHome = opponent.home,
                     location = opponent.location,
                     date = unixTimeStampToCalendar(unixTimeStamp)

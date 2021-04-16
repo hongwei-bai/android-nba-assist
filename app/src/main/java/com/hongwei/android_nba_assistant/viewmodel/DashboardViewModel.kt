@@ -12,9 +12,7 @@ import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamSchedule
 import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.DISPLAY_STARTED_FROM_MINUTES
 import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
-import com.hongwei.android_nba_assistant.usecase.ForceRequestScheduleUseCase
-import com.hongwei.android_nba_assistant.usecase.MatchEvent
-import com.hongwei.android_nba_assistant.usecase.UpcomingGameUseCase
+import com.hongwei.android_nba_assistant.usecase.*
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.MILLIS_PER_MINUTE
@@ -32,6 +30,8 @@ import javax.inject.Inject
 class DashboardViewModel @Inject constructor(
     private val forceRequestScheduleUseCase: ForceRequestScheduleUseCase,
     private val upcomingGameUseCase: UpcomingGameUseCase,
+    private val teamThemeUseCase: TeamThemeUseCase,
+    private val teamLogoUseCase: TeamLogoUseCase,
     private val localSettings: LocalSettings,
     private val exceptionHelper: ExceptionHelper,
     @ApplicationContext private val applicationContext: Context
@@ -54,12 +54,18 @@ class DashboardViewModel @Inject constructor(
     val countdownStatus: MutableLiveData<CountdownStatus> by lazy {
         MutableLiveData<CountdownStatus>()
     }
+    val teamTheme: MutableLiveData<TeamTheme> by lazy {
+        MutableLiveData<TeamTheme>()
+    }
 
     private var countDownTimer: CountDownTimer? = null
 
     init {
         exceptionHelper.postHandler = {
             viewModelScope.launch(Dispatchers.Main) { loadingStatus.value = LoadingStatus.Error }
+        }
+        viewModelScope.launch(Dispatchers.Main + exceptionHelper.handler) {
+            teamTheme.value = teamThemeUseCase.getTeamTheme()
         }
     }
 
@@ -140,12 +146,18 @@ class DashboardViewModel @Inject constructor(
         countdownStatus.value = status
     }
 
-    private fun MatchEvent.mapToGameInfoViewObject(): UpcomingGameInfo = UpcomingGameInfo(
-        homeTeamShort = if (isHome) localSettings.myTeam else teamShort,
-        guestTeamShort = if (isHome) teamShort else localSettings.myTeam,
-        dateString = LocalDateTimeUtil.getLocalDateDisplay(date),
-        timeString = LocalDateTimeUtil.getLocalTimeDisplay(date),
-    )
+    private fun MatchEvent.mapToGameInfoViewObject(): UpcomingGameInfo {
+        val homeTeam = if (isHome) localSettings.myTeam else opponentAbbrev
+        val guestTeam = if (isHome) opponentAbbrev else localSettings.myTeam
+        return UpcomingGameInfo(
+            homeTeamLogoUrl = teamLogoUseCase.getTeamLogoUrl(homeTeam),
+            guestTeamLogoUrl = teamLogoUseCase.getTeamLogoUrl(guestTeam),
+            homeTeamLogoPlaceholder = teamLogoUseCase.getTeamLogoPlaceholder(homeTeam),
+            guestTeamLogoPlaceholder = teamLogoUseCase.getTeamLogoPlaceholder(guestTeam),
+            dateString = LocalDateTimeUtil.getLocalDateDisplay(date),
+            timeString = LocalDateTimeUtil.getLocalTimeDisplay(date),
+        )
+    }
 
     private fun startCountUp(msDiff: Long, referenceMillis: Long) {
         stopCountDown()

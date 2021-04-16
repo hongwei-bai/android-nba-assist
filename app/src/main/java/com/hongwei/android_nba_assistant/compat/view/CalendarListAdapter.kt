@@ -1,7 +1,7 @@
 package com.hongwei.android_nba_assistant.compat.view
 
 import android.content.Context
-import android.graphics.Color
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -12,7 +12,6 @@ import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
 import com.hongwei.android_nba_assistant.usecase.MatchEvent
 import com.hongwei.android_nba_assistant.util.DebugUtil.debugInitBlock
 import com.hongwei.android_nba_assistant.util.DebugUtil.debugSetData
-import com.hongwei.android_nba_assistant.util.DrawableByNameUtil
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.CALENDAR_GAME_DATE_FORMAT
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.DAYS_PER_WEEK
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.dayIdentifierToCalendar
@@ -23,6 +22,7 @@ import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getLocalDateDisp
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getLocalTimeDisplay
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getMondayOfWeek
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getSundayOfWeek
+import com.squareup.picasso.Picasso
 import java.util.*
 
 class CalendarListAdapter(
@@ -80,7 +80,7 @@ class CalendarListAdapter(
                     ContextCompat.getDrawable(context, R.color.warriors_transparent)
                 }
                 binding.gameLocation.text = event.location.toUpperCase(Locale.US)
-                binding.opponentLogo.setImageDrawable(DrawableByNameUtil.getTeamDrawable(context, event.teamShort))
+                Picasso.get().load(event.opponentLogoUrl).placeholder(event.opponentLogoPlaceholder).into(binding.opponentLogo)
                 binding.gameTime.text = getLocalTimeDisplay(event.date)
             } ?: clearItem(context, binding)
         }
@@ -89,15 +89,24 @@ class CalendarListAdapter(
             when (dayId) {
                 getBeginOfDay().timeInMillis -> {
                     binding.root.background = context.getDrawable(R.color.calendar_red_alpha_background)
-                    binding.dateHeader.setTextColor(Color.RED)
+                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_gold)))
+                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
+                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
+                    binding.opponentLogoFrame.alpha = 1f
                 }
                 in Long.MIN_VALUE until getBeginOfDay().timeInMillis -> {
                     binding.root.background = context.getDrawable(R.color.calendar_black_alpha_past_background)
-                    binding.dateHeader.setTextColor(Color.GRAY)
+                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
+                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
+                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
+                    binding.opponentLogoFrame.alpha = 0.2f
                 }
                 in getBeginOfDay().timeInMillis..Long.MAX_VALUE -> {
                     binding.root.background = context.getDrawable(R.color.calendar_black_alpha_background)
-                    binding.dateHeader.setTextColor(Color.WHITE)
+                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
+                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
+                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
+                    binding.opponentLogoFrame.alpha = 1f
                 }
             }
         }

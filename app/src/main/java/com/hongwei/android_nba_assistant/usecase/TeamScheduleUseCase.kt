@@ -2,14 +2,17 @@ package com.hongwei.android_nba_assistant.usecase
 
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
 import com.hongwei.android_nba_assistant.repository.NbaStatRepository
+import com.hongwei.android_nba_assistant.repository.NbaTeamRepository
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getDateInWeeks
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getMondayOfWeek
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getSundayOfWeek
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.unixTimeStampToCalendar
+import java.util.*
 import javax.inject.Inject
 
 class TeamScheduleUseCase @Inject constructor(
     private val nbaStatRepository: NbaStatRepository,
+    private val nbaTeamRepository: NbaTeamRepository,
     private val localSettings: LocalSettings,
 ) {
     suspend fun getTeamSchedule(): List<MatchEvent> =
@@ -27,8 +30,11 @@ class TeamScheduleUseCase @Inject constructor(
                 }
             }
             .map {
+                val teamShort = it.opponent.abbrev.toLowerCase(Locale.US)
                 MatchEvent(
-                    opponentAbbrev = it.opponent.abbrev,
+                    opponentAbbrev = teamShort,
+                    opponentLogoUrl = nbaTeamRepository.getTeamLogoUrl(teamShort),
+                    opponentLogoPlaceholder = nbaTeamRepository.getTeamLogoPlaceholder(teamShort),
                     isHome = it.opponent.home,
                     location = it.opponent.location,
                     date = unixTimeStampToCalendar(it.unixTimeStamp)

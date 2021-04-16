@@ -1,10 +1,6 @@
 package com.hongwei.android_nba_assistant.constant
 
 object AppConfigurations {
-    object Splash {
-        const val SPLASH_TIME_OUT = 1000L
-    }
-
     object Network {
         const val HTTP_READ_TIMEOUT = 5000L
         const val HTTP_WRITE_TIMEOUT = 5000L
@@ -14,6 +10,16 @@ object AppConfigurations {
         const val NBA_STAT_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-sports/"
 //        const val NBA_STAT_ENDPOINT = "http://10.0.2.2:8081/"
 //        const val NBA_STAT_ENDPOINT = "http://10.0.2.2:8080/application-service-home/"
+
+        const val PLACEHOLDER_WIDTH = "{width}"
+        const val NBA_APP_IMG_ENDPOINTS = "$HONGWEI_SERVICE_DOMAIN/resize/$PLACEHOLDER_WIDTH/nba_v1"
+        const val NBA_BANNER_PATH = "$NBA_APP_IMG_ENDPOINTS/banner/"
+        const val NBA_LOGO_PATH = "$NBA_APP_IMG_ENDPOINTS/logo/"
+
+        const val DEFAULT_BANNER_WIDTH = "1080"
+        const val DEFAULT_LOGO_WIDTH = "320"
+        const val DEFAULT_BANNER_EXTENSION = ".jpg"
+        const val DEFAULT_LOGO_EXTENSION = ".png"
 
         const val AUTHORIZATION_HEADER = "Authorization"
         const val AUTHORIZATION_BEARER = "Bearer"

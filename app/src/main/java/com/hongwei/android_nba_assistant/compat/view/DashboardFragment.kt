@@ -13,8 +13,6 @@ import com.hongwei.android_nba_assistant.NbaAssistantApplication
 import com.hongwei.android_nba_assistant.R
 import com.hongwei.android_nba_assistant.databinding.FragmentDashboardBinding
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
-import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getTeamBannerDrawable
-import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getTeamDrawable
 import com.hongwei.android_nba_assistant.viewmodel.DashboardViewModel
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownCaption
 import com.hongwei.android_nba_assistant.viewmodel.viewobject.CountdownStatus
@@ -54,9 +52,8 @@ class DashboardFragment @Inject constructor() : Fragment() {
         observeLoadingSpinner()
         observeUpcomingGame()
         observeCountDown()
+        observeTeamTheme()
         setupSwipeRefreshLayout()
-//        binding.teamBanner.setImageDrawable(getTeamBannerDrawable(requireContext(), localSettings.myTeam))
-        Picasso.get().load("https://hongwei-test1.top/media/640/app/nba/banner_gsw.jpg").into(binding.teamBanner);
         if ((applicationContext as NbaAssistantApplication).initialiseFlag) {
             viewModel.load()
         } else {
@@ -116,8 +113,14 @@ class DashboardFragment @Inject constructor() : Fragment() {
                 binding.gamesLeftCaption.text = resources.getString(R.string.games_left)
                 binding.gameDate.text = dateString
                 binding.gameTime.text = timeString
-                binding.guestTeamLogo.setImageDrawable(getTeamDrawable(requireContext(), guestTeamShort))
-                binding.homeTeamLogo.setImageDrawable(getTeamDrawable(requireContext(), homeTeamShort))
+                Picasso.get()
+                    .load(it.homeTeamLogoUrl)
+                    .placeholder(it.homeTeamLogoPlaceholder)
+                    .into(binding.homeTeamLogo)
+                Picasso.get()
+                    .load(it.guestTeamLogoUrl)
+                    .placeholder(it.guestTeamLogoPlaceholder)
+                    .into(binding.guestTeamLogo)
             }
 
             binding.nextGameLayout.setOnClickListener {
@@ -153,6 +156,15 @@ class DashboardFragment @Inject constructor() : Fragment() {
             binding.nextGameShadow.visibility = contentVisibility
 
             binding.errorText.visibility = if (loadingStatus == LoadingStatus.Error) View.VISIBLE else View.GONE
+        })
+    }
+
+    private fun observeTeamTheme() {
+        viewModel.teamTheme.observe(this, {
+            Picasso.get()
+                .load(it.teamBannerUrl)
+                .placeholder(R.drawable.banner_placeholder)
+                .into(binding.teamBanner)
         })
     }
 }
