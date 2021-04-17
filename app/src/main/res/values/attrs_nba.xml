@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppColors">
+        
+        <attr name="ColorBackgroundPrimary" format="reference" />
+        <attr name="ColorBackgroundSecondary" format="reference" />
+
+    </declare-styleable>
+
+    <declare-styleable name="ThemeColors">
+
+        <attr name="TeamColorPrimary" format="reference" />
+        <attr name="TeamColorPrimaryVariant" format="reference" />
+        <attr name="TeamColorSecondary" format="reference" />
+        <attr name="TeamColorSecondaryVariant" format="reference" />
+        <attr name="TeamColorTextPrimary" format="reference" />
+        <attr name="TeamColorTextSecondary" format="reference" />
+        <attr name="TeamColorBackgroundPrimary" format="reference" />
+        <attr name="TeamColorBackgroundSecondary" format="reference" />
+
+    </declare-styleable>
+</resources>

@@ -12,16 +12,19 @@
     <color name="grey40">#bbbbbb</color>
     <color name="grey20">#dddddd</color>
 
-    <color name="calendar_red_alpha_background">#60FF0000</color>
+    <color name="calendar_red_background">#BC2B0C</color>
+    <color name="calendar_red_alpha_background">#E0BC2B0C</color>
     <color name="calendar_black_alpha_background">#60000000</color>
     <color name="calendar_black_alpha_past_background">#a0000000</color>
 
     <color name="warriors_blue_background_alpha">#d004539c</color>
     <color name="warriors_blue_background">#04539c</color>
     <color name="warriors_blue">#1c4189</color>
-    <color name="warriors_white">#ffffff</color>
     <color name="warriors_gold">#fcb826</color>
     <color name="warriors_gold_alpha">#d0fcb826</color>
     <color name="warriors_transparent">#0000</color>
+
+    <color name="lakers_gold">#FDB827</color>
+    <color name="lakers_purple">#542583</color>
 
 </resources>

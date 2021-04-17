@@ -88,14 +88,16 @@ class CalendarListAdapter(
         private fun paintPastDays(context: Context, binding: LayoutCalendarDayBinding, dayId: Long) {
             when (dayId) {
                 getBeginOfDay().timeInMillis -> {
-                    binding.root.background = context.getDrawable(R.color.calendar_red_alpha_background)
-                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_gold)))
-                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
-                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
+                    binding.root.background = context.getDrawable(R.drawable.bg_calendar_today)
+                    binding.dateHeader.background = context.getDrawable(R.color.calendar_red_background)
+                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
+                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
+                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
                     binding.opponentLogoFrame.alpha = 1f
                 }
                 in Long.MIN_VALUE until getBeginOfDay().timeInMillis -> {
                     binding.root.background = context.getDrawable(R.color.calendar_black_alpha_past_background)
+                    binding.dateHeader.background = context.getDrawable(R.color.grey80)
                     binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
                     binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
                     binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
@@ -103,9 +105,10 @@ class CalendarListAdapter(
                 }
                 in getBeginOfDay().timeInMillis..Long.MAX_VALUE -> {
                     binding.root.background = context.getDrawable(R.color.calendar_black_alpha_background)
-                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
-                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
-                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.warriors_white)))
+                    binding.dateHeader.background = context.getDrawable(R.color.grey80)
+                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
+                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
+                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
                     binding.opponentLogoFrame.alpha = 1f
                 }
             }

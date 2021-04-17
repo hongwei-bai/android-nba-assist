@@ -2,7 +2,6 @@ package com.hongwei.android_nba_assistant.compat.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +21,7 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class DashboardFragment @Inject constructor() : Fragment() {
@@ -161,6 +161,7 @@ class DashboardFragment @Inject constructor() : Fragment() {
 
     private fun observeTeamTheme() {
         viewModel.teamTheme.observe(this, {
+            (activity as NbaTeamTheme).setTeamTheme(localSettings.myTeam)
             Picasso.get()
                 .load(it.teamBannerUrl)
                 .placeholder(R.drawable.banner_placeholder)

@@ -8,7 +8,7 @@ import com.hongwei.android_nba_assistant.constant.AppConfigurations.Network.DEFA
 import com.hongwei.android_nba_assistant.constant.AppConfigurations.Network.NBA_BANNER_PATH
 import com.hongwei.android_nba_assistant.constant.AppConfigurations.Network.NBA_LOGO_PATH
 import com.hongwei.android_nba_assistant.constant.AppConfigurations.Network.PLACEHOLDER_WIDTH
-import com.hongwei.android_nba_assistant.util.DrawableByNameUtil.getDrawableByName
+import com.hongwei.android_nba_assistant.util.ResourceByNameUtil.getDrawableByName
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

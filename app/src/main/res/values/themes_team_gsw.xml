@@ -1,14 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NbaAssistant.DayNight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.NbaAssistant.DayNight.GSW" parent="Theme.NbaAssistant.DayNight">
 
         <item name="android:windowActivityTransitions">true</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/warriors_blue_background</item>
-
-        <item name="ColorBackgroundPrimary">@color/white</item>
-        <item name="ColorBackgroundSecondary">@color/warriors_gold</item>
 
         <item name="TeamColorPrimary">@color/warriors_blue</item>
         <item name="TeamColorPrimaryVariant">@color/warriors_blue</item>
@@ -18,9 +15,5 @@
         <item name="TeamColorTextSecondary">@color/warriors_gold</item>
         <item name="TeamColorBackgroundPrimary">@color/warriors_blue_background</item>
         <item name="TeamColorBackgroundSecondary">@color/warriors_gold</item>
-    </style>
-
-    <style name="Theme.NbaAssistant.DayNight.Bar" parent="Theme.MaterialComponents.DayNight">
-        <item name="android:background">?attr/TeamColorSecondary</item>
     </style>
 </resources>

@@ -5,8 +5,7 @@
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/warriors_white"
-    android:theme="@style/Theme.NbaAssistant.DayNight.NoActionBar"
+    android:background="?attr/ColorBackgroundPrimary"
     tools:context=".compat.view.MainCompatActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,9 +14,9 @@
 
         <View
             android:id="@+id/topBar"
+            style="@style/Theme.NbaAssistant.DayNight.Bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dashboard_loading_spinner_height"
-            android:background="@color/warriors_gold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -147,7 +146,7 @@
                     android:fontFamily="@font/play"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textColor="@color/warriors_white"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/dashboard_upcoming_game_date_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -164,7 +163,7 @@
                     android:paddingBottom="3dp"
                     android:text="@string/game_vs_at"
                     android:textAlignment="center"
-                    android:textColor="@color/warriors_white"
+                    android:textColor="@color/white"
                     android:textSize="28sp"
                     app:layout_constraintBottom_toTopOf="@id/gameTime"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -178,7 +177,7 @@
                     android:fontFamily="@font/play"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textColor="@color/warriors_white"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/dashboard_upcoming_game_time_text_size"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"

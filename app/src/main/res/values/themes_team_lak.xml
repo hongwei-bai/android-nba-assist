@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.NbaAssistant.DayNight.LAK" parent="Theme.NbaAssistant.DayNight">
+
+        <item name="android:windowActivityTransitions">true</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/lakers_gold</item>
+
+        <item name="TeamColorPrimary">@color/lakers_gold</item>
+        <item name="TeamColorPrimaryVariant">@color/lakers_gold</item>
+        <item name="TeamColorSecondary">@color/lakers_purple</item>
+        <item name="TeamColorSecondaryVariant">@color/lakers_purple</item>
+        <item name="TeamColorTextPrimary">@color/lakers_purple</item>
+        <item name="TeamColorTextSecondary">@color/lakers_gold</item>
+        <item name="TeamColorBackgroundPrimary">@color/lakers_gold</item>
+        <item name="TeamColorBackgroundSecondary">@color/lakers_purple</item>
+    </style>
+</resources>
