@@ -1,26 +1,104 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NbaAssistant.DayNight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Nba" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="android:windowActivityTransitions">true</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/warriors_blue_background</item>
 
-        <item name="ColorBackgroundPrimary">@color/white</item>
-        <item name="ColorBackgroundSecondary">@color/warriors_gold</item>
+        <item name="ColorBackground">@color/white</item>
+        <item name="ColorBackgroundDeepFade">@color/calendar_black_alpha_background</item>
+        <item name="ColorBackgroundDeeperFade">@color/calendar_black_alpha_past_background</item>
+        <item name="ColorShadow">@color/grey20</item>
+        <item name="ColorTextNeutral">@color/grey50</item>
+        <item name="ColorTextReverse">@color/white</item>
 
-        <item name="TeamColorPrimary">@color/warriors_blue</item>
-        <item name="TeamColorPrimaryVariant">@color/warriors_blue</item>
-        <item name="TeamColorSecondary">@color/warriors_gold</item>
-        <item name="TeamColorSecondaryVariant">@color/warriors_gold</item>
-        <item name="TeamColorTextPrimary">@color/warriors_blue</item>
-        <item name="TeamColorTextSecondary">@color/warriors_gold</item>
-        <item name="TeamColorBackgroundPrimary">@color/warriors_blue_background</item>
-        <item name="TeamColorBackgroundSecondary">@color/warriors_gold</item>
+        <item name="TeamColorDark">@color/warriors_blue</item>
+        <item name="TeamColorDarkVariant">@color/warriors_blue</item>
+        <item name="TeamColorBright">@color/warriors_gold</item>
+        <item name="TeamColorBrightVariant">@color/warriors_gold</item>
+        <item name="TeamColorText">@color/warriors_blue</item>
+        <item name="TeamColorTextActive">@color/warriors_gold</item>
+        <item name="TeamColorBackground">@color/warriors_blue_background</item>
+        <item name="TeamColorBackgroundFade">@color/warriors_blue_background_alpha</item>
+        <item name="TeamColorBackgroundActive">@color/warriors_gold</item>
     </style>
 
-    <style name="Theme.NbaAssistant.DayNight.Bar" parent="Theme.MaterialComponents.DayNight">
-        <item name="android:background">?attr/TeamColorSecondary</item>
+    <style name="Style.Nba.Bar" parent="Theme.Nba">
+        <item name="android:background">?attr/TeamColorBright</item>
+    </style>
+
+    <style name="Style.Nba.ProgressBar" parent="Theme.Nba">
+        <item name="indicatorColor">?attr/TeamColorBright</item>
+        <item name="android:indeterminate">true</item>
+    </style>
+
+    <style name="TextAppearance.Nba" parent="Theme.Nba">
+        <item name="android:fontFamily">@font/play</item>
+        <item name="android:textColor">?attr/TeamColorText</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Dashboard" parent="TextAppearance.Nba">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Dashboard.Active" parent="TextAppearance.Nba">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">?attr/TeamColorTextActive</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Dashboard.Date" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/ColorTextReverse</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Dashboard.At" parent="TextAppearance.Nba.Dashboard.Date">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Dashboard.Time" parent="TextAppearance.Nba.Dashboard.Date">
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Neutral.Medium" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/ColorTextNeutral</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Calendar.DayHeader" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/ColorTextReverse</item>
+        <item name="android:textSize">6sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Calendar.Location" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/ColorTextReverse</item>
+        <item name="android:textSize">7sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Calendar.Time" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/ColorTextReverse</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Error.Large" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/TeamColorText</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:lineSpacingExtra">14sp</item>
+    </style>
+
+    <style name="Style.Nba.Banner" parent="Theme.Nba">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 </resources>

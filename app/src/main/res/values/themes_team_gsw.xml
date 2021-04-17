@@ -1,19 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NbaAssistant.DayNight.GSW" parent="Theme.NbaAssistant.DayNight">
+    <style name="Theme.Nba.GSW" parent="Theme.Nba">
 
         <item name="android:windowActivityTransitions">true</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/warriors_blue_background</item>
 
-        <item name="TeamColorPrimary">@color/warriors_blue</item>
-        <item name="TeamColorPrimaryVariant">@color/warriors_blue</item>
-        <item name="TeamColorSecondary">@color/warriors_gold</item>
-        <item name="TeamColorSecondaryVariant">@color/warriors_gold</item>
-        <item name="TeamColorTextPrimary">@color/warriors_blue</item>
-        <item name="TeamColorTextSecondary">@color/warriors_gold</item>
-        <item name="TeamColorBackgroundPrimary">@color/warriors_blue_background</item>
-        <item name="TeamColorBackgroundSecondary">@color/warriors_gold</item>
+        <item name="TeamColorDark">@color/warriors_blue</item>
+        <item name="TeamColorDarkVariant">@color/warriors_blue</item>
+        <item name="TeamColorBright">@color/warriors_gold</item>
+        <item name="TeamColorBrightVariant">@color/warriors_gold</item>
+        <item name="TeamColorText">@color/warriors_blue</item>
+        <item name="TeamColorTextActive">@color/warriors_gold</item>
+        <item name="TeamColorBackground">@color/warriors_blue_background</item>
+        <item name="TeamColorBackgroundFade">@color/warriors_blue_background_alpha</item>
+        <item name="TeamColorBackgroundActive">@color/warriors_gold</item>
     </style>
 </resources>

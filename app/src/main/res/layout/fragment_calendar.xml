@@ -5,7 +5,7 @@
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/ColorBackground"
     tools:context=".compat.view.MainCompatActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,17 +14,17 @@
 
         <View
             android:id="@+id/topBar"
+            style="@style/Style.Nba.Bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dashboard_loading_spinner_height"
-            android:background="@color/warriors_gold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/warriors_blue_background_alpha"
             android:layout_marginTop="@dimen/dashboard_loading_spinner_height"
+            android:background="?attr/TeamColorBackgroundFade"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
@@ -35,37 +35,31 @@
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/loadingSpinner"
+            style="@style/Style.Nba.ProgressBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dashboard_loading_spinner_height"
-            android:indeterminate="true"
             android:visibility="gone"
-            app:indicatorColor="@color/warriors_gold"
             app:layout_constraintTop_toBottomOf="@id/recyclerView"
             app:layout_constraintVertical_bias="0.4"
             tools:visibility="visible" />
 
         <TextView
+            style="@style/TextAppearance.Nba.Neutral.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:fontFamily="@font/play"
             android:text="@string/date_is_up_to_date_copy"
-            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/errorText"
+            style="@style/TextAppearance.Nba.Error.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:fontFamily="@font/play"
-            android:lineSpacingExtra="14sp"
             android:text="@string/dashboard_load_error"
-            android:textAlignment="center"
-            android:textColor="@color/warriors_blue"
-            android:textSize="16sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

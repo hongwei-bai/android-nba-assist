@@ -2,8 +2,8 @@
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
-        android:startColor="@color/warriors_gold"
-        android:centerColor="@color/warriors_gold"
+        android:startColor="?attr/TeamColorBackgroundActive"
+        android:centerColor="?attr/TeamColorBackgroundActive"
         android:endColor="@color/grey80"
         android:centerX="0.85"
         android:centerY="0.85"

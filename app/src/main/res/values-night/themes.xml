@@ -1,9 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NbaAssistant.DayNight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Nba" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="android:windowActivityTransitions">true</item>
 
-        <item name="ColorBackgroundPrimary">@color/grey80</item>
+        <item name="ColorBackground">@color/grey80</item>
+        <item name="ColorShadow">@color/grey80</item>
     </style>
 </resources>

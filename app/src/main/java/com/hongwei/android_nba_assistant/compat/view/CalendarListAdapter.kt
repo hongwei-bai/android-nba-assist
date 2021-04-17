@@ -2,6 +2,7 @@ package com.hongwei.android_nba_assistant.compat.view
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -22,8 +23,10 @@ import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getLocalDateDisp
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getLocalTimeDisplay
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getMondayOfWeek
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getSundayOfWeek
+import com.hongwei.android_nba_assistant.util.ResourceByNameUtil.getColorFromAttribute
 import com.squareup.picasso.Picasso
 import java.util.*
+
 
 class CalendarListAdapter(
     private val applicationContext: Context,
@@ -77,7 +80,7 @@ class CalendarListAdapter(
                 binding.opponentLogoFrame.background = if (it.isHome) {
                     ContextCompat.getDrawable(context, R.drawable.bg_calendar_day_home_game)
                 } else {
-                    ContextCompat.getDrawable(context, R.color.warriors_transparent)
+                    ContextCompat.getDrawable(context, android.R.color.transparent)
                 }
                 binding.gameLocation.text = event.location.toUpperCase(Locale.US)
                 Picasso.get().load(event.opponentLogoUrl).placeholder(event.opponentLogoPlaceholder).into(binding.opponentLogo)
@@ -86,37 +89,36 @@ class CalendarListAdapter(
         }
 
         private fun paintPastDays(context: Context, binding: LayoutCalendarDayBinding, dayId: Long) {
+            var colorStateList: ColorStateList? = null
             when (dayId) {
                 getBeginOfDay().timeInMillis -> {
                     binding.root.background = context.getDrawable(R.drawable.bg_calendar_today)
                     binding.dateHeader.background = context.getDrawable(R.color.calendar_red_background)
-                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
-                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
-                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
+                    colorStateList = ColorStateList.valueOf(getColorFromAttribute(context, R.attr.ColorTextReverse))
                     binding.opponentLogoFrame.alpha = 1f
                 }
                 in Long.MIN_VALUE until getBeginOfDay().timeInMillis -> {
                     binding.root.background = context.getDrawable(R.color.calendar_black_alpha_past_background)
                     binding.dateHeader.background = context.getDrawable(R.color.grey80)
-                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
-                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
-                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.grey60)))
+                    colorStateList = ColorStateList.valueOf(getColorFromAttribute(context, R.attr.ColorTextNeutral))
                     binding.opponentLogoFrame.alpha = 0.2f
                 }
                 in getBeginOfDay().timeInMillis..Long.MAX_VALUE -> {
                     binding.root.background = context.getDrawable(R.color.calendar_black_alpha_background)
                     binding.dateHeader.background = context.getDrawable(R.color.grey80)
-                    binding.dateHeader.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
-                    binding.gameLocation.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
-                    binding.gameTime.setTextColor(ColorStateList.valueOf(context.getColor(R.color.white)))
+                    colorStateList = ColorStateList.valueOf(getColorFromAttribute(context, R.attr.ColorTextReverse))
                     binding.opponentLogoFrame.alpha = 1f
                 }
             }
+            Log.d("bbbb", "colorStateList: ${getColorFromAttribute(context, R.attr.ColorTextNeutral)}")
+            binding.dateHeader.setTextColor(colorStateList)
+            binding.gameLocation.setTextColor(colorStateList)
+            binding.gameTime.setTextColor(colorStateList)
         }
 
         private fun clearItem(context: Context, binding: LayoutCalendarDayBinding) {
             with(binding) {
-                opponentLogoFrame.background = ContextCompat.getDrawable(context, R.color.warriors_transparent)
+                opponentLogoFrame.background = ContextCompat.getDrawable(context, android.R.color.transparent)
                 gameLocation.text = ""
                 opponentLogo.setImageDrawable(null)
                 gameTime.text = ""

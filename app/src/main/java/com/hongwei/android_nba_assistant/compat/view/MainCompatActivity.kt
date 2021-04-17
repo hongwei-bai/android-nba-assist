@@ -19,15 +19,13 @@ class MainCompatActivity : AppCompatActivity(), NbaTeamTheme {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(getStyleByName(this, getMyTeam().toUpperCase(Locale.US)))
+        setTheme(getStyleByName(this, "Theme.Nba.${getMyTeam().toUpperCase(Locale.US)}"))
         setContentView(R.layout.activity_main)
         navController = this.findNavController(R.id.nav_fragment)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 
     override fun setTeamTheme(team: String) {
-        setTheme(R.style.Theme_NbaAssistant_DayNight_LAK)
-
         if (getMyTeam() != team) {
             setMyTeam(team)
             finish()
