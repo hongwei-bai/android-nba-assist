@@ -16,7 +16,7 @@ object LocalDateTimeUtil {
     const val MILLIS_PER_WEEK = MILLIS_PER_DAY * 7
 
     const val CALENDAR_GAME_DATE_FORMAT = "EEE MMM d"
-    private const val DASHBOARD_UPCOMING_GAME_DATE_FORMAT = "EEE., MMM.d"
+    private const val DASHBOARD_UPCOMING_GAME_DATE_FORMAT = "EEE, MMM d"
     private const val DASHBOARD_UPCOMING_GAME_TIME_FORMAT = "H:mm a"
 
     fun getLocalDateDisplay(calendar: Calendar, format: String = DASHBOARD_UPCOMING_GAME_DATE_FORMAT): String =
