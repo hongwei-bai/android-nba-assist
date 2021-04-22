@@ -43,6 +43,10 @@ object AppConfigurations {
         const val UTC_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm'Z'"
     }
 
+    object Splash {
+        const val SPLASH_DELAY = 2000L
+    }
+
     object Debug {
         const val DEBUG_CALENDAR = false
     }

@@ -3,7 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nba_navigation"
-    app:startDestination="@id/fragment_id_dashboard">
+    app:startDestination="@id/fragment_id_splash">
+
+    <fragment
+        android:id="@+id/fragment_id_splash"
+        android:name="com.hongwei.android_nba_assistant.compat.view.SplashFragment"
+        android:label=""
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_launch_dashboard"
+            app:destination="@id/fragment_id_dashboard"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/fragment_id_splash"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_id_dashboard"

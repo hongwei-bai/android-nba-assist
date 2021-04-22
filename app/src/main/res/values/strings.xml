@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Watch NBA</string>
+    <string name="splash_loading_text">Hold tight&#8230;</string>
     <string name="games_left">Games Left</string>
     <string name="no_games_left">No Games Left, Season ends.</string>
     <string name="dashboard_load_error">Oops! Something is wrong!\nPlease try again later&#8230;</string>
