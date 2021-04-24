@@ -12,7 +12,7 @@ class NbaStatRepository @Inject constructor(
     private val nbaStatService: NbaStatService,
     private val teamScheduleDao: TeamScheduleDao
 ) {
-    suspend fun getTeamScheduleFromLocal(team: String): TeamSchedule =
+    fun getTeamScheduleFromLocal(team: String): TeamSchedule =
         Gson().fromJson(teamScheduleDao.getTeamSchedule(team)!!.data, TeamSchedule::class.java)
 
     suspend fun requestTeamScheduleFromNetwork(team: String): TeamSchedule {
@@ -22,7 +22,7 @@ class NbaStatRepository @Inject constructor(
         return if (response.code() == DATA_VERSION_UP_TO_DATE) {
             Gson().fromJson(cache?.data, TeamSchedule::class.java)
         } else {
-            response.body()!!.run {
+            response.body()!!.let { teamSchedule ->
                 teamScheduleDao.insert(
                     TeamScheduleEntity(team, teamSchedule.dataVersion, Gson().toJson(teamSchedule))
                 )
