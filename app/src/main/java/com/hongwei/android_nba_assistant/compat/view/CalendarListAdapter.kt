@@ -25,6 +25,7 @@ import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getLocalDateDisp
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getLocalTimeDisplay
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getMondayOfWeek
 import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getSundayOfWeek
+import com.hongwei.android_nba_assistant.util.LocalDateTimeUtil.getWeekAhead
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -50,7 +51,7 @@ class CalendarListAdapter(
     private var eventByPositionHashMap: HashMap<Int, MatchEvent> = hashMapOf()
 
     init {
-        val firstDay = if (localSettings.startsFromMonday) getMondayOfWeek() else getSundayOfWeek()
+        val firstDay = if (localSettings.startsFromMonday) getMondayOfWeek(getWeekAhead(1)) else getSundayOfWeek()
         val firstDayId = getDayIdentifier(firstDay)
         for (weekNo in 0 until localSettings.scheduleWeeks) {
             for (weekday in 0 until DAYS_PER_WEEK) {

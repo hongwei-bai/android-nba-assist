@@ -96,12 +96,19 @@ object LocalDateTimeUtil {
         return newCalendar
     }
 
+    fun getWeekAhead(weekNumber: Int, calendar: Calendar = getInstance()): Calendar {
+        val newCalendar: Calendar = calendar.clone() as Calendar
+        newCalendar.timeInMillis = calendar.timeInMillis - weekNumber * MILLIS_PER_WEEK
+        return newCalendar
+    }
+
     fun getMondayOfWeek(calendar: Calendar = getInstance()): Calendar = getWeekday(calendar, MONDAY)
 
     fun getSundayOfWeek(calendar: Calendar = getInstance()): Calendar = getWeekday(calendar, SUNDAY)
 
-    fun getWeekday(calendar: Calendar = getInstance(), weekday: Int): Calendar {
+    private fun getWeekday(calendar: Calendar = getInstance(), weekday: Int): Calendar {
         val newCalendar: Calendar = calendar.clone() as Calendar
+        println(">>> newCalendar: ${debugDateTime(newCalendar)}")
         newCalendar.set(DAY_OF_WEEK, weekday)
         newCalendar.set(HOUR_OF_DAY, 0)
         newCalendar.set(MINUTE, 0)
