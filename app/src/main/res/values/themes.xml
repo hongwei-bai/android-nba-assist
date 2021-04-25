@@ -90,6 +90,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextAppearance.Nba.Calendar.Result" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/ColorTextNeutral</item>
+        <item name="android:textSize">7sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
     <style name="TextAppearance.Nba.Error.Large" parent="TextAppearance.Nba">
         <item name="android:textColor">?attr/TeamColorText</item>
         <item name="android:textSize">16sp</item>

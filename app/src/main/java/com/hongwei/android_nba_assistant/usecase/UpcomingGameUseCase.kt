@@ -1,6 +1,5 @@
 package com.hongwei.android_nba_assistant.usecase
 
-import androidx.compose.ui.text.toLowerCase
 import com.hongwei.android_nba_assistant.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
 import com.hongwei.android_nba_assistant.repository.NbaStatRepository
@@ -27,7 +26,8 @@ class UpcomingGameUseCase @Inject constructor(
                     opponentLogoPlaceholder = nbaTeamRepository.getTeamLogoPlaceholder(teamShort),
                     isHome = opponent.home,
                     location = opponent.location,
-                    date = unixTimeStampToCalendar(unixTimeStamp)
+                    date = unixTimeStampToCalendar(unixTimeStamp),
+                    result = Result.fromResponseResult(result)
                 )
             }
 

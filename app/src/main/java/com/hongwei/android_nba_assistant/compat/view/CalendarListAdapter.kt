@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -95,6 +96,13 @@ class CalendarListAdapter(
                 binding.gameLocation.text = event.location.toUpperCase(Locale.US)
                 Picasso.get().load(event.opponentLogoUrl).placeholder(event.opponentLogoPlaceholder).into(binding.opponentLogo)
                 binding.gameTime.text = getLocalTimeDisplay(event.date)
+                fun hideResult() {
+                    binding.gameResult.visibility = View.GONE
+                }
+                event.result?.run {
+                    binding.gameResult.visibility = View.VISIBLE
+                    binding.gameResult.text = "$winLossSymbol$currentTeamScore-$opponentTeamScore"
+                } ?: hideResult()
             } ?: clearItem(context, binding)
         }
 

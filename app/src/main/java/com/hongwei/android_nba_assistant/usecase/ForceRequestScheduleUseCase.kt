@@ -1,6 +1,5 @@
 package com.hongwei.android_nba_assistant.usecase
 
-import android.util.Log
 import com.hongwei.android_nba_assistant.datasource.local.LocalSettings
 import com.hongwei.android_nba_assistant.repository.NbaStatRepository
 import com.hongwei.android_nba_assistant.repository.NbaTeamRepository
@@ -17,7 +16,6 @@ class ForceRequestScheduleUseCase @Inject constructor(
         nbaStatRepository.requestTeamScheduleFromNetwork(localSettings.myTeam)
             .events
             .map {
-                Log.d("bbbb", "forceRequestScheduleFromServer request end")
                 val teamShort = it.opponent.abbrev.toLowerCase(Locale.US)
                 MatchEvent(
                     opponentAbbrev = teamShort,
@@ -25,7 +23,8 @@ class ForceRequestScheduleUseCase @Inject constructor(
                     opponentLogoPlaceholder = nbaTeamRepository.getTeamLogoPlaceholder(teamShort),
                     isHome = it.opponent.home,
                     location = it.opponent.location,
-                    date = unixTimeStampToCalendar(it.unixTimeStamp)
+                    date = unixTimeStampToCalendar(it.unixTimeStamp),
+                    result = Result.fromResponseResult(it.result)
                 )
             }
 }

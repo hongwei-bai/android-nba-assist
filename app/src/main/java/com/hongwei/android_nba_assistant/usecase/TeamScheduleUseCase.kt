@@ -38,7 +38,8 @@ class TeamScheduleUseCase @Inject constructor(
                     opponentLogoPlaceholder = nbaTeamRepository.getTeamLogoPlaceholder(teamShort),
                     isHome = it.opponent.home,
                     location = it.opponent.location,
-                    date = unixTimeStampToCalendar(it.unixTimeStamp)
+                    date = unixTimeStampToCalendar(it.unixTimeStamp),
+                    result = Result.fromResponseResult(it.result)
                 )
             }
 }
