@@ -20,9 +20,13 @@
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_dashboard.xml" value="0.2857142857142857" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_dashboard2.xml" value="0.1609375" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_leaderboard.xml" value="0.22146739130434784" />
+        <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_main_host.xml" value="0.20199275362318841" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_splash.xml" value="0.10106382978723404" />
+        <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_standing.xml" value="0.20199275362318841" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_calendar_day.xml" value="0.23476968796433878" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_calendar_week.xml" value="0.16822916666666668" />
+        <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_standing_header.xml" value="0.17135416666666667" />
+        <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_standing_item.xml" value="0.20199275362318841" />
       </map>
     </option>
   </component>

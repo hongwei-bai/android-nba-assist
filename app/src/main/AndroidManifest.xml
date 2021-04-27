@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hongwei.android_nba_assistant">
+    package="com.hongwei.android_nba_assist">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".NbaAssistantApplication"
+        android:name="com.hongwei.android_nba_assist.NbaAssistApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Nba"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".compat.view.MainCompatActivity"
+            android:name="com.hongwei.android_nba_assist.compat.view.MainCompatActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity" />
+        <activity android:name="com.hongwei.android_nba_assist.view.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

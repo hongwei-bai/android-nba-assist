@@ -25,8 +25,12 @@
         <item name="TeamColorBackgroundActive">@color/warriors_gold</item>
     </style>
 
-    <style name="Style.Nba.Bar" parent="Theme.Nba">
+    <style name="Style.Nba.BarBackground" parent="Theme.Nba">
         <item name="android:background">?attr/TeamColorBright</item>
+    </style>
+
+    <style name="Style.Nba.Bar" parent="Theme.Nba">
+        <item name="android:background">?attr/TeamColorDark</item>
     </style>
 
     <style name="Style.Nba.ProgressBar" parent="Theme.Nba">
@@ -106,5 +110,26 @@
     <style name="Style.Nba.Banner" parent="Theme.Nba">
         <item name="android:adjustViewBounds">true</item>
         <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Standing.Team" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/ColorTextReverse</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Standing.Data" parent="TextAppearance.Nba">
+        <item name="android:textColor">?attr/ColorTextReverse</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAlignment">viewEnd</item>
+    </style>
+
+    <style name="TextAppearance.Nba.Standing.Header" parent="TextAppearance.Nba.Standing.Data">
+        <item name="android:textColor">?attr/ColorTextReverse</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAlignment">viewEnd</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 </resources>

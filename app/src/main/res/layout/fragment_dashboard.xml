@@ -12,12 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/topBar"
-            style="@style/Style.Nba.Bar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dashboard_loading_spinner_height"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/topBar"
+                style="@style/Style.Nba.Bar"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dashboard_loading_spinner_height"
+                android:layout_weight="1" />
+
+            <View
+                style="@style/Style.Nba.BarBackground"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dashboard_loading_spinner_height"
+                android:layout_weight="3" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/teamBanner"

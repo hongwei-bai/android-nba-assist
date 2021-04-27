@@ -1,17 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/ColorBackground"
     tools:context=".compat.view.MainCompatActivity">
 
-    <TextView
-        android:id="@+id/content"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/design_default_color_background"
-        android:gravity="center"
-        android:text="Standing"
-        android:textSize="64sp" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dashboard_loading_spinner_height"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                style="@style/Style.Nba.BarBackground"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dashboard_loading_spinner_height"
+                android:layout_weight="2" />
+
+            <View
+                android:id="@+id/topBar"
+                style="@style/Style.Nba.Bar"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dashboard_loading_spinner_height"
+                android:layout_weight="1" />
+
+            <View
+                style="@style/Style.Nba.BarBackground"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dashboard_loading_spinner_height"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dashboard_loading_spinner_height"
+            android:background="?attr/TeamColorBackgroundFade"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dashboard_card_shadow_height"
+            android:background="@drawable/bg_shadow"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/loadingSpinner"
+            style="@style/Style.Nba.ProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dashboard_loading_spinner_height"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView"
+            app:layout_constraintVertical_bias="0.4"
+            tools:visibility="visible" />
+
+        <TextView
+            style="@style/TextAppearance.Nba.Neutral.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/date_is_up_to_date_copy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/errorText"
+            style="@style/TextAppearance.Nba.Error.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/dashboard_load_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
