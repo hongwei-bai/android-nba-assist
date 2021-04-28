@@ -1,6 +1,5 @@
 package com.hongwei.android_nba_assist.view
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -9,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.hongwei.android_nba_assist.viewmodel.TeamCalendarViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
             val navController = rememberNavController()
 
             Scaffold(
-                topBar = {},
                 bottomBar = {
                     val items = listOf(Screen.Dashboard, Screen.Standing, Screen.Goal, Screen.Settings)
                     BottomNavigation {
@@ -41,9 +40,10 @@ class MainActivity : AppCompatActivity() {
                                         navController.graph.startDestination, false
                                     )
                                     if (currentRoute != it.route) {
-                                        navController.navigate(Uri.parse(it.route))
+                                        navController.navigate(it.route)
                                     }
-                                })
+                                }
+                            )
                         }
                     }
                 }
