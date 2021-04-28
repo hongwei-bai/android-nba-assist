@@ -1,6 +1,7 @@
 package com.hongwei.android_nba_assist.viewmodel
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,10 +21,7 @@ import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_MINUTE
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_SECOND
 import com.hongwei.android_nba_assist.viewmodel.viewobject.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -81,6 +79,8 @@ class DashboardViewModel @Inject constructor(
     }
 
     fun loadCache() {
+        Log.d("bbbb", "viewModelScope: $viewModelScope")
+        Log.d("bbbb", "viewModelScope.isActive: ${viewModelScope.isActive}")
         loadingStatus.value = LoadingStatus.Loading
         viewModelScope.launch(Dispatchers.IO + exceptionHelper.handler) {
             val upcomingGame = upcomingGameUseCase.getUpcomingGame()
