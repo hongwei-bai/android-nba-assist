@@ -8,8 +8,8 @@ import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLastMondayForSun
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getMondayOfWeek
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getSundayOfWeek
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.unixTimeStampToCalendar
-import com.hongwei.android_nba_assist.viewmodel.viewobject.MatchEvent
-import com.hongwei.android_nba_assist.viewmodel.viewobject.MatchEvent.Companion.fromResponseModel
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.MatchEvent
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.MatchEvent.Companion.fromResponseModel
 import javax.inject.Inject
 
 class TeamScheduleUseCase @Inject constructor(

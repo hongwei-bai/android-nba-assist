@@ -2,7 +2,7 @@ package com.hongwei.android_nba_assist.util
 
 import android.util.Log
 import com.hongwei.android_nba_assist.constant.AppConfigurations
-import com.hongwei.android_nba_assist.viewmodel.viewobject.MatchEvent
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.MatchEvent
 import java.util.*
 
 object DebugUtil {

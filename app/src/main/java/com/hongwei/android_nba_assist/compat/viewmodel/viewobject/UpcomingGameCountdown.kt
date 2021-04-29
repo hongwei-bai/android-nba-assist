@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.viewmodel.viewobject
+package com.hongwei.android_nba_assist.compat.viewmodel.viewobject
 
 data class UpcomingGameCountdown(
     val countdownCaption: CountdownCaption,

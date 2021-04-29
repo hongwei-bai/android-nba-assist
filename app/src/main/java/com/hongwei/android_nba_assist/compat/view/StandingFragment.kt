@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.databinding.FragmentStandingBinding
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
-import com.hongwei.android_nba_assist.viewmodel.StandingViewModel
+import com.hongwei.android_nba_assist.compat.viewmodel.StandingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

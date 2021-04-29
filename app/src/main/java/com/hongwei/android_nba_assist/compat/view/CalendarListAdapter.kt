@@ -25,7 +25,7 @@ import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLastMondayForSun
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLocalDateDisplay
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLocalTimeDisplay
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getSundayOfWeek
-import com.hongwei.android_nba_assist.viewmodel.viewobject.MatchEvent
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.MatchEvent
 import com.squareup.picasso.Picasso
 import java.util.*
 

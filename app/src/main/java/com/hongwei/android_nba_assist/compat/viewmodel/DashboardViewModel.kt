@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.viewmodel
+package com.hongwei.android_nba_assist.compat.viewmodel
 
 import android.os.CountDownTimer
 import android.util.Log
@@ -19,7 +19,7 @@ import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_MINUTE
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_SECOND
-import com.hongwei.android_nba_assist.viewmodel.viewobject.*
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject

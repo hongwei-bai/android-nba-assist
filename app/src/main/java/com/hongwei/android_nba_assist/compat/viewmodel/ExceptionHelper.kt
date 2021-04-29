@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.viewmodel
+package com.hongwei.android_nba_assist.compat.viewmodel
 
 import android.util.Log
 import com.hongwei.android_nba_assist.LocalProperties

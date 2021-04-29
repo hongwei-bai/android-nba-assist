@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.viewmodel.viewobject
+package com.hongwei.android_nba_assist.compat.viewmodel.viewobject
 
 import android.graphics.drawable.Drawable
 

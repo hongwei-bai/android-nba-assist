@@ -12,7 +12,7 @@ import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.DAYS_PER_CALENDAR_ROW
 import com.hongwei.android_nba_assist.databinding.FragmentCalendarBinding
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
-import com.hongwei.android_nba_assist.viewmodel.TeamCalendarViewModel
+import com.hongwei.android_nba_assist.compat.viewmodel.TeamCalendarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

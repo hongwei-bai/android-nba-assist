@@ -10,11 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.databinding.FragmentDashboardBinding
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
-import com.hongwei.android_nba_assist.viewmodel.DashboardViewModel
-import com.hongwei.android_nba_assist.viewmodel.viewobject.CountdownCaption
-import com.hongwei.android_nba_assist.viewmodel.viewobject.CountdownStatus
-import com.hongwei.android_nba_assist.viewmodel.viewobject.CountdownUnit
-import com.hongwei.android_nba_assist.viewmodel.viewobject.LoadingStatus
+import com.hongwei.android_nba_assist.compat.viewmodel.DashboardViewModel
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.CountdownCaption
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.CountdownStatus
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.CountdownUnit
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.LoadingStatus
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext

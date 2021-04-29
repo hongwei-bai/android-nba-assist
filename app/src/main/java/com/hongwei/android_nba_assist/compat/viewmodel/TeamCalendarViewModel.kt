@@ -1,12 +1,12 @@
-package com.hongwei.android_nba_assist.viewmodel
+package com.hongwei.android_nba_assist.compat.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hongwei.android_nba_assist.usecase.ForceRequestScheduleUseCase
-import com.hongwei.android_nba_assist.viewmodel.viewobject.MatchEvent
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.MatchEvent
 import com.hongwei.android_nba_assist.usecase.TeamScheduleUseCase
-import com.hongwei.android_nba_assist.viewmodel.viewobject.LoadingStatus
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.LoadingStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

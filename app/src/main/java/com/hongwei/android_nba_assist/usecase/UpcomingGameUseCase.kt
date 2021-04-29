@@ -4,9 +4,9 @@ import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleCon
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
 import com.hongwei.android_nba_assist.repository.NbaStatRepository
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository
-import com.hongwei.android_nba_assist.viewmodel.viewobject.MatchEvent.Companion.fromResponseModel
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.MatchEvent.Companion.fromResponseModel
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours
-import com.hongwei.android_nba_assist.viewmodel.viewobject.MatchEvent
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.MatchEvent
 import java.util.*
 import javax.inject.Inject
 

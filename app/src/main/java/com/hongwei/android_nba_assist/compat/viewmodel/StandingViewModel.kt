@@ -1,12 +1,12 @@
-package com.hongwei.android_nba_assist.viewmodel
+package com.hongwei.android_nba_assist.compat.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hongwei.android_nba_assist.usecase.ForceRequestStandingUseCase
 import com.hongwei.android_nba_assist.usecase.StandingUseCase
-import com.hongwei.android_nba_assist.viewmodel.viewobject.LoadingStatus
-import com.hongwei.android_nba_assist.viewmodel.viewobject.TeamStandingViewObject
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.LoadingStatus
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.TeamStandingViewObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -12,7 +12,7 @@ import com.hongwei.android_nba_assist.compat.view.StandingListAdapter.Companion.
 import com.hongwei.android_nba_assist.databinding.LayoutStandingHeaderBinding
 import com.hongwei.android_nba_assist.databinding.LayoutStandingItemBinding
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
-import com.hongwei.android_nba_assist.viewmodel.viewobject.TeamStandingViewObject
+import com.hongwei.android_nba_assist.compat.viewmodel.viewobject.TeamStandingViewObject
 import com.squareup.picasso.Picasso
 import java.util.*
 
