@@ -23,18 +23,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             val navController = rememberNavController()
             val team = viewModel.team.observeAsState(initial = "gs")
             NbaTeamTheme(team.value) {
                 Scaffold(
                     bottomBar = {
-                        val items = listOf(Screen.Dashboard, Screen.Standing, Screen.Goal, Screen.Settings)
                         BottomNavigation {
                             val navBackStackEntry by navController.currentBackStackEntryAsState()
                             val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-
+                            val items = listOf(Screen.Dashboard, Screen.Standing, Screen.Goal, Screen.Settings)
                             items.forEach {
                                 BottomNavigationItem(
                                     icon = { Icon(it.icon, "") },

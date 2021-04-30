@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
-import com.hongwei.android_nba_assist.view.Dashboard
+import com.hongwei.android_nba_assist.view.dashboard.Dashboard
 import com.hongwei.android_nba_assist.view.Goal
 import com.hongwei.android_nba_assist.view.Settings
 import com.hongwei.android_nba_assist.view.TeamSchedule
