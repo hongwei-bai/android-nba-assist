@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.navigation.NavController
-import com.hongwei.android_nba_assist.view.theme.mainTitle
 import com.hongwei.android_nba_assist.viewmodel.NbaViewModel
 
 @Composable
@@ -19,8 +18,7 @@ fun Dashboard(
         Banner()
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "10",
-                style = mainTitle
+                text = "10"
             )
             Text(text = "Games Left")
         }

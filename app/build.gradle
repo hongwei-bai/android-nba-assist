@@ -67,6 +67,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
+        freeCompilerArgs += [
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+        ]
     }
     buildFeatures {
         compose true
@@ -92,13 +97,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:21.1.0'
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.2')
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
-    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation('com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2')
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
-    implementation("com.squareup.moshi:moshi:1.11.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.9.3")
+    implementation('com.squareup.moshi:moshi:1.12.0')
+    implementation('com.squareup.moshi:moshi-kotlin:1.12.0')
 
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -134,13 +139,13 @@ dependencies {
     implementation 'com.airbnb.android:lottie-compose:1.0.0-beta03-1'
 
     implementation platform('com.google.firebase:firebase-bom:27.1.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx:18.0.3'
 
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+    testImplementation('com.squareup.okhttp3:mockwebserver:5.0.0-alpha.2')
     testImplementation "org.mockito.kotlin:mockito-kotlin:3.1.0"
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
