@@ -7,13 +7,13 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NbaStatService {
-    @GET("nba/teamSchedule.do")
+    @GET("teamSchedule.do")
     suspend fun getTeamSchedule(
         @Query("team") team: String,
         @Query("dataVersion") dataVersion: Long = -1
     ): Response<TeamSchedule>
 
-    @GET("nba/standing.do")
+    @GET("standing.do")
     suspend fun getStanding(
         @Query("dataVersion") dataVersion: Long = -1
     ): Response<StandingData>
