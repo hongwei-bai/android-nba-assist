@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.databinding.FragmentSplashBinding
-import com.hongwei.android_nba_assist.usecase.ForceRequestScheduleUseCase
-import com.hongwei.android_nba_assist.usecase.ForceRequestStandingUseCase
-import com.hongwei.android_nba_assist.usecase.TeamThemeUseCase
+import com.hongwei.android_nba_assist.compat.usecase.ForceRequestScheduleUseCase
+import com.hongwei.android_nba_assist.compat.usecase.ForceRequestStandingUseCase
+import com.hongwei.android_nba_assist.compat.usecase.TeamThemeUseCase
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint

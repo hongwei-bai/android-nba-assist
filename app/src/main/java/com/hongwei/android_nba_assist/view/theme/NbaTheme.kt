@@ -1,17 +1,20 @@
 package com.hongwei.android_nba_assist.view.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import com.hongwei.android_nba_assist.compat.view.NbaTeamTheme
 
 @Composable
 fun NbaTheme(
-    teamTheme: NbaTeamTheme,
+    colors: Colors = MaterialTheme.colors,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = LightColors,
+        colors = colors,
         typography = NbaTypography,
+        shapes = MaterialTheme.shapes,
         content = content
     )
 }

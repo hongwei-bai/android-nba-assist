@@ -8,7 +8,7 @@ val WarriorBlue = Color(0xff04539c)
 val WarriorGold = Color(0xfffcb826)
 
 val GSLightColors = lightColors(
-    primary = WarriorWhite,
+    primary = WarriorGold ?: WarriorBlue,
     primaryVariant = WarriorWhite,
     onPrimary = WarriorBlue,
     secondary = WarriorBlue,

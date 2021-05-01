@@ -10,17 +10,27 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.ImageLoadState
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.view.share.LoadingDots
 
+class UrlProvider : PreviewParameterProvider<String> {
+    override val values = sequenceOf(
+        "https://hongwei-test1.top/resize/1080/nba_v1/banner/gs.jpg",
+        "https://hongwei-test1.top/resize/1080/nba_v1/banner/lal.jpg"
+    )
+    override val count: Int = values.count()
+}
+
 @Preview
 @Composable
-fun Banner() {
+fun Banner(@PreviewParameter(UrlProvider::class) url: String?) {
     val painter = rememberCoilPainter(
-        request = "https://hongwei-test1.top/resize/1080/nba_v1/banner/gs.jpg",
+        request = url,
         fadeIn = true,
         previewPlaceholder = R.drawable.banner_placeholder
     )

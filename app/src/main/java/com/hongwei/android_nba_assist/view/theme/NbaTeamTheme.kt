@@ -1,22 +1,21 @@
 package com.hongwei.android_nba_assist.view.theme
 
-import androidx.compose.material.MaterialTheme
+import android.util.Log
 import androidx.compose.runtime.Composable
 
 @Composable
 fun NbaTeamTheme(
-    team1: String,
+    team: String?,
     content: @Composable () -> Unit
 ) {
-    when (team1) {
-        "gs" -> MaterialTheme(
+    Log.d("bbbb", "Composable NbaTeamTheme, team: $team")
+    when (team) {
+        "gs" -> NbaTheme(
             colors = GSLightColors,
-            typography = NbaTypography,
             content = content
         )
-        else -> MaterialTheme(
+        else -> NbaTheme(
             colors = LightColors,
-            typography = NbaTypography,
             content = content
         )
     }

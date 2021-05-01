@@ -11,10 +11,10 @@ import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleCon
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.DISPLAY_STARTED_FROM_MINUTES
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
-import com.hongwei.android_nba_assist.usecase.ForceRequestScheduleUseCase
-import com.hongwei.android_nba_assist.usecase.TeamLogoUseCase
-import com.hongwei.android_nba_assist.usecase.TeamThemeUseCase
-import com.hongwei.android_nba_assist.usecase.UpcomingGameUseCase
+import com.hongwei.android_nba_assist.compat.usecase.ForceRequestScheduleUseCase
+import com.hongwei.android_nba_assist.compat.usecase.TeamLogoUseCase
+import com.hongwei.android_nba_assist.compat.usecase.TeamThemeUseCase
+import com.hongwei.android_nba_assist.compat.usecase.UpcomingGameUseCase
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_MINUTE

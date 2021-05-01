@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.usecase
+package com.hongwei.android_nba_assist.compat.usecase
 
 import android.graphics.drawable.Drawable
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository

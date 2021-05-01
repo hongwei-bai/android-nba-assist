@@ -17,7 +17,7 @@ import com.hongwei.android_nba_assist.R
 @Preview
 @Composable
 fun LoadingDots() {
-    val animationSpec = remember { LottieAnimationSpec.RawRes(R.raw.loading6541) }
+    val animationSpec = remember { LottieAnimationSpec.RawRes(R.raw.loading_dots) }
     val state = LottieAnimationState(isPlaying = true, repeatCount = Integer.MAX_VALUE)
     state.speed = 0.75f
     Column(
