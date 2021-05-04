@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "63ed361f4725cedeb5e8e03b52218017",
+    "identityHash": "d7bf5f0626fc63849897d1653b1d0de5",
     "entities": [
       {
         "tableName": "team_schedule",
@@ -79,12 +79,62 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "team_theme",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team` TEXT NOT NULL, `dataVersion` INTEGER NOT NULL, `bannerUrl` TEXT NOT NULL, `colorLight` INTEGER, `colorHome` INTEGER, `colorGuest` INTEGER, PRIMARY KEY(`team`))",
+        "fields": [
+          {
+            "fieldPath": "team",
+            "columnName": "team",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dataVersion",
+            "columnName": "dataVersion",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bannerUrl",
+            "columnName": "bannerUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colorLight",
+            "columnName": "colorLight",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "colorHome",
+            "columnName": "colorHome",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "colorGuest",
+            "columnName": "colorGuest",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "team"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '63ed361f4725cedeb5e8e03b52218017')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7bf5f0626fc63849897d1653b1d0de5')"
     ]
   }
 }

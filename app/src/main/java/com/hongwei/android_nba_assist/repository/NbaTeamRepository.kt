@@ -2,33 +2,41 @@ package com.hongwei.android_nba_assist.repository
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import androidx.compose.material.Colors
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.DEFAULT_BANNER_EXTENSION
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.DEFAULT_BANNER_WIDTH
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.DEFAULT_LOGO_EXTENSION
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.DEFAULT_LOGO_WIDTH
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.NBA_BANNER_PATH
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.NBA_LOGO_PATH
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.PLACEHOLDER_WIDTH
+import com.hongwei.android_nba_assist.datasource.mapper.NbaTeamThemeMapper.map
+import com.hongwei.android_nba_assist.datasource.model.DataSourceResult
+import com.hongwei.android_nba_assist.datasource.model.DataSourceSuccessResult
 import com.hongwei.android_nba_assist.datasource.network.service.NbaThemeService
+import com.hongwei.android_nba_assist.datasource.room.TeamThemeDao
+import com.hongwei.android_nba_assist.datasource.room.TeamThemeEntity
 import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getDrawableByName
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class NbaTeamRepository @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val nbaThemeService: NbaThemeService
+    private val nbaThemeService: NbaThemeService,
+    private val teamThemeDao: TeamThemeDao
 ) {
-    fun getTeamBannerUrl(team: String): String =
-        "${NBA_BANNER_PATH.replace(PLACEHOLDER_WIDTH, DEFAULT_BANNER_WIDTH)}$team$DEFAULT_BANNER_EXTENSION"
-
-    fun getTeamLogoUrl(team: String): String =
-        "${NBA_LOGO_PATH.replace(PLACEHOLDER_WIDTH, DEFAULT_LOGO_WIDTH)}$team$DEFAULT_LOGO_EXTENSION"
-
     fun getTeamLogoPlaceholder(team: String): Drawable = getDrawableByName(context, team)
 
-    suspend fun getTeamColorPalette(team: String): Colors {
+    suspend fun fetchTeamThemeFromBackend(team: String) {
         val response = nbaThemeService.getTeamTheme(team, -1)
-        
+        if (response.isSuccessful && response.body() != null) {
+            teamThemeDao.save(response.body()!!.map())
+        }
+    }
+
+    fun getTeamTheme(team: String): Flow<DataSourceResult<TeamThemeEntity>> {
+        return teamThemeDao.getTeamTheme(team).filter {
+            if (it == null) {
+                fetchTeamThemeFromBackend(team)
+            }
+            it != null
+        }.map {
+            DataSourceSuccessResult(it!!)
+        }
     }
 }

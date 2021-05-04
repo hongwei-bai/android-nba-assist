@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.view.navigation
+package com.hongwei.android_nba_assist.view.main
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Alarm

@@ -1,6 +1,6 @@
 package com.hongwei.android_nba_assist.datasource.network.model
 
-data class NbaTeamThemeResponse(
+data class NbaTeamTheme(
     val dataVersion: Long,
     val team: String,
     val bannerUrl: String,

@@ -11,7 +11,7 @@ object LocalDateTimeUtil {
     const val MILLIS_PER_SECOND = 1000L
     const val MILLIS_PER_MINUTE = 1000 * 60L
     const val MILLIS_PER_HOUR = 1000 * 3600L
-    private const val MILLIS_PER_DAY = 1000 * 3600 * 24L
+    const val MILLIS_PER_DAY = 1000 * 3600 * 24L
     const val DAYS_PER_WEEK = 7
     const val MILLIS_PER_WEEK = MILLIS_PER_DAY * 7
 

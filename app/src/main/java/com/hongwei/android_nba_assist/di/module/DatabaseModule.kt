@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.hongwei.android_nba_assist.datasource.room.NbaDatabase
 import com.hongwei.android_nba_assist.datasource.room.StandingDao
 import com.hongwei.android_nba_assist.datasource.room.TeamScheduleDao
+import com.hongwei.android_nba_assist.datasource.room.TeamThemeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +26,11 @@ class DatabaseModule {
         return nbaDatabase.standingDao()
     }
 
+    @Provides
+    fun provideTeamThemeDao(nbaDatabase: NbaDatabase): TeamThemeDao {
+        return nbaDatabase.teamThemeDao()
+    }
+    
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): NbaDatabase {
