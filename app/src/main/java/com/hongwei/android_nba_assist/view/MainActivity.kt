@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,13 +13,12 @@ import androidx.navigation.compose.rememberNavController
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository
 import com.hongwei.android_nba_assist.view.main.MainScreen
+import com.hongwei.android_nba_assist.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-//    private val teamViewModel: NbaTeamViewModel by viewModels()
-
     @Inject
     lateinit var localSettings: LocalSettings
 
@@ -33,9 +33,7 @@ class MainActivity : AppCompatActivity() {
             val mainNavController = rememberNavController()
             NavComposeApp(
                 rootNavController,
-                mainNavController,
-                localSettings,
-                nbaTeamRepository
+                mainNavController
             )
         }
     }
@@ -45,13 +43,11 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun NavComposeApp(
     rootNavController: NavHostController,
-    mainNavController: NavHostController,
-    localSettings: LocalSettings,
-    nbaTeamRepository: NbaTeamRepository
+    mainNavController: NavHostController
 ) {
     NavHost(rootNavController, startDestination = "splash") {
         composable("splash") {
-            SplashScreen(rootNavController, localSettings, nbaTeamRepository)
+            SplashScreen(rootNavController)
         }
         composable("main") {
             MainScreen(mainNavController)

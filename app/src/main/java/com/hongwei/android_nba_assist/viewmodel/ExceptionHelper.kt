@@ -3,9 +3,8 @@ package com.hongwei.android_nba_assist.viewmodel
 import android.util.Log
 import com.hongwei.android_nba_assist.LocalProperties
 import kotlinx.coroutines.CoroutineExceptionHandler
-import javax.inject.Inject
 
-class ExceptionHelper @Inject constructor() {
+object ExceptionHelper  {
     var postHandler: (() -> Unit)? = null
 
     val handler = CoroutineExceptionHandler { _, throwable ->

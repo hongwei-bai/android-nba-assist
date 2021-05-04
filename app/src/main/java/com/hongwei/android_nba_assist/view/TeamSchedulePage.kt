@@ -22,16 +22,10 @@ val colors: List<Color> = listOf(
     Color.Blue, Color.Red, Color.Black, Color.Cyan, Color.Gray, Color.Green, Color.Magenta
 )
 
-@ExperimentalFoundationApi
 @Preview
-@Composable
-fun testPreview() {
-    TeamSchedule("gs")
-}
-
 @ExperimentalFoundationApi
 @Composable
-fun TeamSchedule(team: String) {
+fun TeamSchedule() {
     Column {
         Row {
             WEEKDAYS.forEach { weekDay ->

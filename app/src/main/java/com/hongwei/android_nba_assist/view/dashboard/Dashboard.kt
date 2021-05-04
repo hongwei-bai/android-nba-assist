@@ -7,13 +7,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import com.hongwei.android_nba_assist.viewmodel.DashboardViewModel
 
 @Composable
 fun Dashboard(
     navHostController: NavHostController
 ) {
+    val viewModel = hiltNavGraphViewModel<DashboardViewModel>()
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Banner("")
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -26,12 +30,12 @@ fun Dashboard(
         Text(text = "Upcoming game on")
         Text(text = "Today!!")
         Button(onClick = {
-//            EventBus.getDefault().post(NbaTeamSwitchEvent())
+            viewModel.switchTeam("gs")
         }) {
             Text(text = "Switch to gs")
         }
         Button(onClick = {
-//            EventBus.getDefault().post(NbaTeamSwitchEvent("lal"))
+            viewModel.switchTeam("lal")
         }) {
             Text(text = "Switch to lal")
         }
