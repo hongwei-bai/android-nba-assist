@@ -37,6 +37,10 @@ object AppConfigurations {
         const val MARK_TODAY_EVENT_DIM_AFTER_HOURS = 2
     }
 
+    object Room {
+        const val API_VERSION = 1
+    }
+
     object Mock {
         const val TEAM_SCHEDULE_JSON = "mock/schedule_{team}.json"
     }
@@ -46,6 +50,8 @@ object AppConfigurations {
     }
 
     object Debug {
+        const val DEBUG_TEAM_THEME_ON_LOCAL = true
+
         const val DEBUG_CALENDAR = false
     }
 }

@@ -17,7 +17,7 @@ class NbaStatRepository @Inject constructor(
     private val standingDao: StandingDao
 ) {
     suspend fun getTeamScheduleFromLocal(team: String): TeamSchedule =
-        teamScheduleDao.getTeamSchedule(team)?.let {
+        teamScheduleDao.getTeamSchedule()?.let {
             Gson().fromJson(it.data, TeamSchedule::class.java)
         } ?: requestTeamScheduleFromNetwork(team)
 
@@ -27,14 +27,14 @@ class NbaStatRepository @Inject constructor(
         } ?: requestStandingFromNetwork()
 
     suspend fun requestTeamScheduleFromNetwork(team: String): TeamSchedule {
-        val cache = teamScheduleDao.getTeamSchedule(team)
+        val cache = teamScheduleDao.getTeamSchedule()
         val currentDataVersion = cache?.dataVersion ?: -1
         val response = nbaStatService.getTeamSchedule(team, currentDataVersion)
         return if (response.code() == DATA_VERSION_UP_TO_DATE) {
             Gson().fromJson(cache?.data, TeamSchedule::class.java)
         } else {
             response.body()!!.let { teamSchedule ->
-                teamScheduleDao.insert(
+                teamScheduleDao.save(
                     TeamScheduleEntity(
                         team = team,
                         timeStamp = System.currentTimeMillis(),
@@ -55,9 +55,8 @@ class NbaStatRepository @Inject constructor(
             Gson().fromJson(cache?.data, StandingData::class.java)
         } else {
             response.body()!!.let { standingData ->
-                standingDao.insert(
+                standingDao.save(
                     StandingEntity(
-                        dateDiff = 0,
                         timeStamp = System.currentTimeMillis(),
                         dataVersion = standingData.dataVersion,
                         data = Gson().toJson(standingData)

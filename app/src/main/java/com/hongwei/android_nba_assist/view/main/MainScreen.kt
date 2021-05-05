@@ -15,7 +15,6 @@ import com.hongwei.android_nba_assist.view.dashboard.Dashboard
 import com.hongwei.android_nba_assist.view.navigation.BottomNavBar
 import com.hongwei.android_nba_assist.view.theme.NbaTeamTheme
 import com.hongwei.android_nba_assist.viewmodel.MainViewModel
-import com.hongwei.android_nba_assist.viewmodel.SplashViewModel
 
 @Composable
 fun MainScreen(

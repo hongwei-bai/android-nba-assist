@@ -61,10 +61,12 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
         useIR = true
@@ -73,12 +75,13 @@ android {
                 "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
         ]
     }
+
     buildFeatures {
         compose true
         viewBinding true
         composeOptions {
-            kotlinCompilerExtensionVersion "1.0.0-beta01"
-//            kotlinCompilerVersion '$kotlin_version'
+            kotlinCompilerExtensionVersion "1.0.0-beta05"
+            kotlinCompilerVersion '$kotlin_version'
         }
     }
 }

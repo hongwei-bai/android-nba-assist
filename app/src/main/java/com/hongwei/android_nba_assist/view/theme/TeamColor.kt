@@ -11,11 +11,28 @@ val LakersWhite = Color(0xffffffff)
 val LakersGold = Color(0xffFDB827)
 val LakersPurple = Color(0xff542583)
 
+val LakersLightColors = lightColors(
+    primary = LakersGold,
+    primaryVariant = LakersGold,
+    onPrimary = LakersPurple,
+    secondary = LakersWhite,
+    secondaryVariant = LakersWhite,
+    onSecondary = LakersPurple,
+    background = LakersGold,
+    onBackground = LakersPurple,
+    error = LakersGold,
+    onError = LakersPurple
+)
+
 val GSLightColors = lightColors(
-    primary = WarriorGold ?: WarriorBlue,
+    primary = WarriorWhite,
     primaryVariant = WarriorWhite,
     onPrimary = WarriorBlue,
     secondary = WarriorBlue,
     secondaryVariant = WarriorBlue,
-    onSecondary = WarriorWhite
+    onSecondary = WarriorWhite,
+    background = WarriorWhite,
+    onBackground = WarriorBlue,
+    error = WarriorWhite,
+    onError = WarriorBlue
 )

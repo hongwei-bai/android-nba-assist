@@ -1,6 +1,5 @@
 package com.hongwei.android_nba_assist.view.theme
 
-import android.util.Log
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -11,25 +10,17 @@ fun NbaTeamTheme(
     teamTheme: TeamThemeEntity?,
     content: @Composable () -> Unit
 ) {
-    Log.d("bbbb", "Composable NbaTeamTheme, teamTheme: $teamTheme")
-//    when (team) {
-//        "gs" -> NbaTheme(
-//            colors = GSLightColors,
-//            content = content
-//        )
-//        else -> NbaTheme(
-//            colors = LightColors,
-//            content = content
-//        )
-//    }
     teamTheme?.run {
         NbaTheme(
             colors = lightColors(
-                primary = Color(colorLight!!),
-                secondary = Color(colorHome!!),
+                primary = Color(colorHome!!),
+                primaryVariant = Color(colorHome),
+                onPrimary = Color(colorLight!!),
+                secondary = Color(colorGuest!!),
+                secondaryVariant = Color(colorGuest),
+                onSecondary = Color(colorHome),
                 background = Color(colorLight),
-                onPrimary = Color(colorHome),
-                onSecondary = Color(colorGuest!!)
+                onBackground = Color(colorHome)
             ),
             content = content
         )
@@ -38,3 +29,18 @@ fun NbaTeamTheme(
         content = content
     )
 }
+
+//    val testColors = lightColors(
+//        primary = Color.White,
+//        primaryVariant = Color.White,
+//        onPrimary = Color.Yellow,
+//        secondary = Color.Blue,
+//        secondaryVariant = Color.Blue,
+//        onSecondary = Color.White,
+//        background = Color.Red,
+//        onBackground = Color.Green,
+//        error = Color.Gray,
+//        onError = Color.Red,
+//        surface = Color.Green,
+//        onSurface = Color.Red
+//    )

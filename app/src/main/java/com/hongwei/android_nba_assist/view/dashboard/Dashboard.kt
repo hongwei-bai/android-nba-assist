@@ -6,6 +6,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavHostController
@@ -19,7 +20,7 @@ fun Dashboard(
     val viewModel = hiltNavGraphViewModel<DashboardViewModel>()
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Banner("")
+        Banner(viewModel.teamTheme.observeAsState().value?.bannerUrl)
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "10",
@@ -39,10 +40,16 @@ fun Dashboard(
         }) {
             Text(text = "Switch to lal")
         }
-        Button(onClick = {
+        Button(enabled = false, onClick = {
             navHostController.navigate("standing")
         }) {
             Text(text = "Navigate to Standing")
+        }
+
+        Button(onClick = {
+            viewModel.debugRoom()
+        }) {
+            Text(text = "debug Room")
         }
     }
 }

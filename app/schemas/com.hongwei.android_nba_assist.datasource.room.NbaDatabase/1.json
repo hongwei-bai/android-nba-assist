@@ -2,12 +2,18 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d7bf5f0626fc63849897d1653b1d0de5",
+    "identityHash": "7611a60d60dab8041348e29ba436e1b9",
     "entities": [
       {
         "tableName": "team_schedule",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team` TEXT NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `data` TEXT NOT NULL, PRIMARY KEY(`team`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `data` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
         "fields": [
+          {
+            "fieldPath": "apiVersion",
+            "columnName": "apiVersion",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "team",
             "columnName": "team",
@@ -35,7 +41,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "team"
+            "apiVersion"
           ],
           "autoGenerate": false
         },
@@ -44,11 +50,11 @@
       },
       {
         "tableName": "standing",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dateDiff` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `data` TEXT NOT NULL, PRIMARY KEY(`dateDiff`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `data` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
-            "fieldPath": "dateDiff",
-            "columnName": "dateDiff",
+            "fieldPath": "apiVersion",
+            "columnName": "apiVersion",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -73,7 +79,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "dateDiff"
+            "apiVersion"
           ],
           "autoGenerate": false
         },
@@ -82,8 +88,14 @@
       },
       {
         "tableName": "team_theme",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team` TEXT NOT NULL, `dataVersion` INTEGER NOT NULL, `bannerUrl` TEXT NOT NULL, `colorLight` INTEGER, `colorHome` INTEGER, `colorGuest` INTEGER, PRIMARY KEY(`team`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `dataVersion` INTEGER NOT NULL, `bannerUrl` TEXT NOT NULL, `colorLight` INTEGER, `colorHome` INTEGER, `colorGuest` INTEGER, PRIMARY KEY(`apiVersion`))",
         "fields": [
+          {
+            "fieldPath": "apiVersion",
+            "columnName": "apiVersion",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "team",
             "columnName": "team",
@@ -123,7 +135,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "team"
+            "apiVersion"
           ],
           "autoGenerate": false
         },
@@ -134,7 +146,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7bf5f0626fc63849897d1653b1d0de5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7611a60d60dab8041348e29ba436e1b9')"
     ]
   }
 }
