@@ -53,7 +53,7 @@ class NbaTeamRepository @Inject constructor(
 
         val themes = teamThemeDao.getAllRecords()
         themes.forEach {
-            sb.append("[${it.team}]${it.colorHome}")
+            sb.append("[${it.team}]${it.bannerUrl}")
         }
 
         return sb.toString()
