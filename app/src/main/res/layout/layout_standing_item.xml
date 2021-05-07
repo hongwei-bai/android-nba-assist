@@ -61,7 +61,7 @@
             android:id="@+id/losses"
             style="@style/TextAppearance.Nba.Standing.Data"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             tools:text="20" />
 

@@ -8,8 +8,8 @@ import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.hongwei.android_nba_assist.view.Goal
-import com.hongwei.android_nba_assist.view.Settings
+import com.hongwei.android_nba_assist.view.goal.Goal
+import com.hongwei.android_nba_assist.view.settings.Settings
 import com.hongwei.android_nba_assist.view.TeamSchedule
 import com.hongwei.android_nba_assist.view.dashboard.Dashboard
 import com.hongwei.android_nba_assist.view.navigation.BottomNavBar

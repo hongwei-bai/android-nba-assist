@@ -11,11 +11,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import androidx.navigation.compose.popUpTo
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieAnimationSpec
 import com.airbnb.lottie.compose.LottieAnimationState
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.viewmodel.SplashViewModel
+
 
 @Composable
 fun SplashScreen(
@@ -24,11 +26,9 @@ fun SplashScreen(
     val splashViewModel = hiltNavGraphViewModel<SplashViewModel>()
     splashViewModel.preload {
         navController.navigate("main") {
-//            popUpTo("splash") { inclusive = true }
+            popUpTo("splash") { inclusive = true }
             launchSingleTop = true
         }
-        /*TODO how to avoid saving splash screen into backstack?
-        In xml navigation graph, set popUpToInclusive and launchSingleTop can do.*/
     }
     val animationSpec = remember { LottieAnimationSpec.RawRes(R.raw.anim_splash) }
     val state = LottieAnimationState(

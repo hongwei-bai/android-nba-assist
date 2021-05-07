@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.view
+package com.hongwei.android_nba_assist.view.standing
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

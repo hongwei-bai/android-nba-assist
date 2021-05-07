@@ -21,13 +21,7 @@ fun Dashboard(
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Banner(viewModel.teamTheme.observeAsState().value?.bannerUrl)
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "10",
-                color = MaterialTheme.colors.primary
-            )
-            Text(text = "Games Left")
-        }
+        GamesLeftView()
         Text(text = "Upcoming game on")
         Text(text = "Today!!")
         Button(onClick = {
