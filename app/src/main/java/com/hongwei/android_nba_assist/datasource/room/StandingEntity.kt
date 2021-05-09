@@ -7,14 +7,26 @@ import com.hongwei.android_nba_assist.constant.AppConfigurations.Room.API_VERSIO
 
 @Entity(tableName = "standing")
 data class StandingEntity(
-    @PrimaryKey
-    @SerializedName("api_version")
-    val apiVersion: Int = API_VERSION,
-    @SerializedName("time_stamp")
-    val timeStamp: Long,
-    @SerializedName("data_version")
-    val dataVersion: Long = -1,
-    @SerializedName("data")
-    val data: String = "{}"
+        @PrimaryKey
+        @SerializedName("api_version")
+        val apiVersion: Int = API_VERSION,
+        @SerializedName("time_stamp")
+        val timeStamp: Long,
+        @SerializedName("data_version")
+        val dataVersion: Long = -1,
+        @SerializedName("western")
+        val western: List<TeamStanding>,
+        @SerializedName("eastern")
+        val eastern: List<TeamStanding>
 )
 
+data class TeamStanding(
+        val rank: Int,
+        val teamAbbr: String,
+        val teamName: String,
+        val wins: Int,
+        val losses: Int,
+        val gamesBack: Double,
+        val currentStreak: Pair<String, Int>,
+        val last10Records: Pair<Int, Int>
+)

@@ -12,34 +12,34 @@ val NbaTypography = Typography(
     defaultFontFamily = FontFamily(Font(R.font.play, FontWeight.Light)),
 
     h4 = TextStyle(
-        fontWeight = FontWeight.W600,
+        fontWeight = FontWeight.Normal,
         fontSize = 30.sp
     ),
     h5 = TextStyle(
-        fontWeight = FontWeight.W600,
+        fontWeight = FontWeight.Light,
         fontSize = 24.sp
     ),
     h6 = TextStyle(
-        fontWeight = FontWeight.W600,
+        fontWeight = FontWeight.Light,
         fontSize = 20.sp
     ),
     subtitle1 = TextStyle(
-        fontWeight = FontWeight.W600,
+        fontWeight = FontWeight.Light,
         fontSize = 16.sp
     ),
     subtitle2 = TextStyle(
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.Light,
         fontSize = 14.sp
     ),
     body1 = TextStyle(
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Light,
         fontSize = 16.sp
     ),
     body2 = TextStyle(
         fontSize = 14.sp
     ),
     button = TextStyle(
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.Light,
         fontSize = 14.sp
     ),
     caption = TextStyle(
@@ -47,7 +47,7 @@ val NbaTypography = Typography(
         fontSize = 12.sp
     ),
     overline = TextStyle(
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.Light,
         fontSize = 12.sp
     )
 )

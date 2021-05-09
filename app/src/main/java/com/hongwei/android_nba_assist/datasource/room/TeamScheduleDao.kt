@@ -5,11 +5,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.hongwei.android_nba_assist.constant.AppConfigurations.Room.API_VERSION
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TeamScheduleDao {
     @Query("SELECT * FROM team_schedule WHERE apiVersion=$API_VERSION")
-    fun getTeamSchedule(): TeamScheduleEntity?
+    fun getTeamSchedule(): Flow<TeamScheduleEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(teamScheduleEntity: TeamScheduleEntity)

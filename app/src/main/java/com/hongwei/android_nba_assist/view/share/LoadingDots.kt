@@ -13,6 +13,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieAnimationSpec
 import com.airbnb.lottie.compose.LottieAnimationState
 import com.hongwei.android_nba_assist.R
+import com.hongwei.android_nba_assist.constant.AppConfigurations.Dashboard.BANNER_HEIGHT
 
 @Preview
 @Composable
@@ -27,7 +28,7 @@ fun LoadingDots() {
     ) {
         LottieAnimation(
             spec = animationSpec,
-            modifier = Modifier.size(50.dp),
+            modifier = Modifier.size(BANNER_HEIGHT.dp),
             animationState = state
         )
     }

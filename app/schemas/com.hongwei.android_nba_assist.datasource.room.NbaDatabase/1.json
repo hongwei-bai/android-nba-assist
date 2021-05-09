@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7611a60d60dab8041348e29ba436e1b9",
+    "identityHash": "d283abd6ffe80506402b14464f6c71da",
     "entities": [
       {
         "tableName": "team_schedule",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `data` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `events` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
             "fieldPath": "apiVersion",
@@ -33,8 +33,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "data",
-            "columnName": "data",
+            "fieldPath": "events",
+            "columnName": "events",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "standing",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `data` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `western` TEXT NOT NULL, `eastern` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
             "fieldPath": "apiVersion",
@@ -71,8 +71,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "data",
-            "columnName": "data",
+            "fieldPath": "western",
+            "columnName": "western",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eastern",
+            "columnName": "eastern",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -146,7 +152,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7611a60d60dab8041348e29ba436e1b9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd283abd6ffe80506402b14464f6c71da')"
     ]
   }
 }

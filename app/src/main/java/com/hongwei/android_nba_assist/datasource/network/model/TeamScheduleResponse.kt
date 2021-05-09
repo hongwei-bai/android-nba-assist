@@ -1,27 +1,27 @@
 package com.hongwei.android_nba_assist.datasource.network.model
 
-data class TeamSchedule(
-    val dataVersion: Long = 0,
-    val events: List<Event>
+data class TeamScheduleResponse(
+        val dataVersion: Long = 0,
+        val events: List<EventResponse>
 )
 
-data class Event(
-    val unixTimeStamp: Long,
-    val localDisplayTime: String,
-    val opponent: Team,
-    val result: Result? = null
+data class EventResponse(
+        val unixTimeStamp: Long,
+        val localDisplayTime: String,
+        val opponent: TeamResponse,
+        val result: ResultResponse? = null
 )
 
-data class Team(
-    val abbrev: String,
-    val displayName: String,
-    val logo: String,
-    val location: String,
-    val home: Boolean
+data class TeamResponse(
+        val abbrev: String,
+        val displayName: String,
+        val logo: String,
+        val location: String,
+        val home: Boolean
 )
 
-data class Result(
-    val winLossSymbol: String,
-    val currentTeamScore: Int,
-    val opponentTeamScore: Int
+data class ResultResponse(
+        val winLossSymbol: String,
+        val currentTeamScore: Int,
+        val opponentTeamScore: Int
 )

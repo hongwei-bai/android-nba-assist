@@ -5,8 +5,6 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,7 +12,6 @@ import androidx.navigation.compose.rememberNavController
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository
 import com.hongwei.android_nba_assist.view.main.MainScreen
-import com.hongwei.android_nba_assist.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

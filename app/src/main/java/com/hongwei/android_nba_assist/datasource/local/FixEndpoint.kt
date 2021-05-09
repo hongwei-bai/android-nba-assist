@@ -13,6 +13,6 @@ class FixEndpoint @Inject constructor(
 ) {
     fun getDefaultTeamLogo(team: String): Drawable = getDrawableByName(context, team)
 
-    fun getDefaultTeamBanner(team: String): Drawable =
-        ContextCompat.getDrawable(context, R.drawable.banner_placeholder)!!
+//    fun getDefaultTeamBanner(team: String): Drawable =
+//        ContextCompat.getDrawable(context, R.drawable.banner_placeholder)!!
 }

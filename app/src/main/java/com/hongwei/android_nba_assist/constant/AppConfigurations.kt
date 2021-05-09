@@ -37,6 +37,10 @@ object AppConfigurations {
         const val MARK_TODAY_EVENT_DIM_AFTER_HOURS = 2
     }
 
+    object Dashboard {
+        const val BANNER_HEIGHT = 200
+    }
+
     object Room {
         const val API_VERSION = 1
     }

@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val localSettings: LocalSettings,
-    private val nbaTeamRepository: NbaTeamRepository
+        private val localSettings: LocalSettings,
+        private val nbaTeamRepository: NbaTeamRepository
 ) : ViewModel() {
     fun preload(onPreloadComplete: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO + ExceptionHelper.handler) {
