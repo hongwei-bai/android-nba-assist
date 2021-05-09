@@ -2,8 +2,8 @@ package com.hongwei.android_nba_assist.repository
 
 import com.hongwei.android_nba_assist.datasource.mapper.NbaStandingMapper.map
 import com.hongwei.android_nba_assist.datasource.mapper.NbaTeamScheduleMapper.map
-import com.hongwei.android_nba_assist.datasource.model.DataSourceResult
-import com.hongwei.android_nba_assist.datasource.model.DataSourceSuccessResult
+import com.hongwei.android_nba_assist.datasource.DataSourceResult
+import com.hongwei.android_nba_assist.datasource.DataSourceSuccessResult
 import com.hongwei.android_nba_assist.datasource.network.service.NbaStatService
 import com.hongwei.android_nba_assist.datasource.room.StandingDao
 import com.hongwei.android_nba_assist.datasource.room.StandingEntity

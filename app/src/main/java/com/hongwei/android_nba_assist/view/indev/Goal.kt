@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.view.goal
+package com.hongwei.android_nba_assist.view.indev
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

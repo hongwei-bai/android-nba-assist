@@ -14,10 +14,7 @@
         android:theme="@style/Theme.Nba"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.hongwei.android_nba_assist.compat.view.MainCompatActivity"
-            android:exported="true"/>
-        <activity
-            android:name="com.hongwei.android_nba_assist.view.MainActivity"
+            android:name="com.hongwei.android_nba_assist.view.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.view.share
+package com.hongwei.android_nba_assist.view.component
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth

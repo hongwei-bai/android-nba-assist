@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
-import com.hongwei.android_nba_assist.datasource.model.DataSourceSuccessResult
+import com.hongwei.android_nba_assist.datasource.DataSourceSuccessResult
 import com.hongwei.android_nba_assist.datasource.room.TeamThemeEntity
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

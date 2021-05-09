@@ -15,7 +15,7 @@ import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.ImageLoadState
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.constant.AppConfigurations.Dashboard.BANNER_HEIGHT
-import com.hongwei.android_nba_assist.view.share.LoadingDots
+import com.hongwei.android_nba_assist.view.animation.LoadingDots
 
 @Composable
 fun Banner(url: String?) {

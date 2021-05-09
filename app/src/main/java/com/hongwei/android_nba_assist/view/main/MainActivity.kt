@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.view
+package com.hongwei.android_nba_assist.view.main
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.datasource.model
+package com.hongwei.android_nba_assist.datasource
 
 sealed class DataSourceResult<T>
 

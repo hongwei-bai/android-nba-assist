@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.di.module
+package com.hongwei.android_nba_assist.hilt
 
 import android.content.Context
 import com.hongwei.android_nba_assist.constant.AppConfigurations
