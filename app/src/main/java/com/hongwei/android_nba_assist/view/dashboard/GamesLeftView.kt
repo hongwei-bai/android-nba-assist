@@ -15,31 +15,39 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
 
-class UrlProvider : PreviewParameterProvider<Int> {
-    override val values = sequenceOf(0, 1, 82)
+class UrlProvider : PreviewParameterProvider<Int?> {
+    override val values = sequenceOf(0, 1, 82, null)
     override val count: Int = values.count()
 }
 
 @Preview
 @Composable
-fun GamesLeftView(@PreviewParameter(UrlProvider::class) gamesLeft: Int) {
+fun GamesLeftView(@PreviewParameter(UrlProvider::class) gamesLeft: Int?) {
     Row(verticalAlignment = Alignment.Bottom) {
-        if (gamesLeft > 0) {
-            Text(
+        when (gamesLeft) {
+            null -> {
+                Text(
+                    text = " ",
+                    style = MaterialTheme.typography.h4,
+                    color = MaterialTheme.colors.secondary
+                )
+            }
+            0 -> Text(
+                text = stringResource(R.string.no_games_left),
+                style = MaterialTheme.typography.body1
+            )
+            else -> {
+                Text(
                     text = gamesLeft.toString(),
                     style = MaterialTheme.typography.h4,
                     color = MaterialTheme.colors.secondary
-            )
-            Spacer(modifier = Modifier.size(6.dp))
-            Text(
+                )
+                Spacer(modifier = Modifier.size(6.dp))
+                Text(
                     text = stringResource(R.string.games_left),
                     style = MaterialTheme.typography.h6
-            )
-        } else {
-            Text(
-                    text = stringResource(R.string.no_games_left),
-                    style = MaterialTheme.typography.body1
-            )
+                )
+            }
         }
     }
 }

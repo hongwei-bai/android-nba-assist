@@ -7,6 +7,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,18 +19,16 @@ import com.hongwei.android_nba_assist.viewmodel.DashboardViewModel
 
 @Composable
 fun Dashboard(
-        navHostController: NavHostController
+    navHostController: NavHostController
 ) {
     val viewModel = hiltNavGraphViewModel<DashboardViewModel>()
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         SolidColorBar(3.5.dp, MaterialTheme.colors.secondary)
-//        Banner(viewModel.teamTheme.observeAsState().value?.bannerUrl)
-//        SolidColorLoadingBar(3.5.dp, MaterialTheme.colors.secondary, MaterialTheme.colors.background)
+        Banner(viewModel.teamTheme.observeAsState().value?.bannerUrl)
         Spacer(modifier = Modifier.size(10.dp))
-        GamesLeftView(82)
-        Text(text = "Upcoming game on")
-        Text(text = "Today!!")
+        GamesLeftView(viewModel.gamesLeft.observeAsState().value)
+        UpcomingGameForecast(viewModel.upcomingGameTime.observeAsState().value)
         Button(onClick = {
             viewModel.switchTeam("gs")
         }) {
