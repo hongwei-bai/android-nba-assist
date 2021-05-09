@@ -51,6 +51,8 @@ object LocalDateTimeUtil {
 
     fun getInHours(calendar: Calendar): Int = getInHours(calendar, getInstance())
 
+    fun getInMinutes(calendar: Calendar): Int = getInMinutes(calendar, getInstance())
+
     fun getHoursDiff(calendar: Calendar): Int = getHoursDiff(calendar, getInstance())
 
     fun getInMillis(calendar: Calendar): Long = calendar.timeInMillis - getInstance().timeInMillis
@@ -58,6 +60,10 @@ object LocalDateTimeUtil {
     @TestOnly
     fun getInHours(calendar: Calendar, reference: Calendar): Int =
         ((calendar.timeInMillis - reference.timeInMillis) * 1.0 / MILLIS_PER_HOUR).roundToInt()
+
+    @TestOnly
+    fun getInMinutes(calendar: Calendar, reference: Calendar): Int =
+        ((calendar.timeInMillis - reference.timeInMillis) * 1.0 / MILLIS_PER_MINUTE).roundToInt()
 
     @TestOnly
     fun getHoursDiff(calendar: Calendar, reference: Calendar): Int =

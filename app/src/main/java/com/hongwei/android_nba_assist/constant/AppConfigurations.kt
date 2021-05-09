@@ -31,7 +31,7 @@ object AppConfigurations {
         const val DAYS_PER_CALENDAR_ROW = 7
         const val DISPLAY_HOURS_IN_HOURS = 8
         const val DISPLAY_COUNTDOWN_IN_HOURS = 2
-        const val COUNTDOWN_ZERO_FREEZE_MILLIS = 10L
+        const val COUNTDOWN_ZERO_FREEZE_MILLIS = 30L
         const val DISPLAY_STARTED_FROM_MINUTES = 5
         const val IGNORE_TODAY_S_GAME_FROM_HOURS = 1
         const val MARK_TODAY_EVENT_DIM_AFTER_HOURS = 2

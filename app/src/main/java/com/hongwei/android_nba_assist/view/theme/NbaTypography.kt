@@ -12,7 +12,7 @@ val NbaTypography = Typography(
     defaultFontFamily = FontFamily(Font(R.font.play, FontWeight.Light)),
 
     h4 = TextStyle(
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 30.sp
     ),
     h5 = TextStyle(
