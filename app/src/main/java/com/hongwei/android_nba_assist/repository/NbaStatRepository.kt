@@ -1,14 +1,12 @@
 package com.hongwei.android_nba_assist.repository
 
+import com.hongwei.android_nba_assist.datasource.DataSourceEmptyResult
 import com.hongwei.android_nba_assist.datasource.mapper.NbaStandingMapper.map
 import com.hongwei.android_nba_assist.datasource.mapper.NbaTeamScheduleMapper.map
 import com.hongwei.android_nba_assist.datasource.DataSourceResult
 import com.hongwei.android_nba_assist.datasource.DataSourceSuccessResult
 import com.hongwei.android_nba_assist.datasource.network.service.NbaStatService
-import com.hongwei.android_nba_assist.datasource.room.StandingDao
-import com.hongwei.android_nba_assist.datasource.room.StandingEntity
-import com.hongwei.android_nba_assist.datasource.room.TeamScheduleDao
-import com.hongwei.android_nba_assist.datasource.room.TeamScheduleEntity
+import com.hongwei.android_nba_assist.datasource.room.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -20,11 +18,13 @@ class NbaStatRepository @Inject constructor(
         private val teamScheduleDao: TeamScheduleDao,
         private val standingDao: StandingDao
 ) {
-    fun getNextGame(team: String): Flow<DataSourceResult<TeamScheduleEntity>> {
+    fun getNextGame(team: String): Flow<DataSourceResult<Event>> {
         return teamScheduleDao.getTeamSchedule().onEach {
             it ?: fetchTeamScheduleFromBackend(team)
         }.filterNotNull().map {
-            DataSourceSuccessResult(it)
+            it.events.first().let {
+                DataSourceSuccessResult(it)
+            } ?: DataSourceEmptyResult()
         }
     }
 
