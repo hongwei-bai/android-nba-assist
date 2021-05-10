@@ -12,12 +12,12 @@ import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getInDays
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getInHours
-import com.hongwei.android_nba_assist.viewmodel.UpcomingHelper.getUpcomingRange
-import com.hongwei.android_nba_assist.viewmodel.UpcomingRange
+import com.hongwei.android_nba_assist.viewmodel.helper.CountdownHelper.getUpcomingRange
+import com.hongwei.android_nba_assist.viewmodel.helper.UpcomingRange
 import java.util.*
 
 @Composable
-fun UpcomingGameForecast(
+fun UpcomingGameCountdown(
     @PreviewParameter(UrlProvider::class)
     eventTime: Long?,
     countdown: String?

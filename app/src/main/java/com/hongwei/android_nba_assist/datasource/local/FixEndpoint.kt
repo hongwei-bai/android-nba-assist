@@ -4,15 +4,18 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.hongwei.android_nba_assist.R
+import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.DEFAULT_LOGO_EXTENSION
+import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.DEFAULT_LOGO_WIDTH
+import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.NBA_LOGO_PATH
+import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.PLACEHOLDER_WIDTH
 import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getDrawableByName
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-class FixEndpoint @Inject constructor(
-    @ApplicationContext private val context: Context
-) {
-    fun getDefaultTeamLogo(team: String): Drawable = getDrawableByName(context, team)
+object FixEndpoint {
+    fun getDefaultTeamBanner(context: Context, team: String): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.banner_placeholder)!!
 
-//    fun getDefaultTeamBanner(team: String): Drawable =
-//        ContextCompat.getDrawable(context, R.drawable.banner_placeholder)!!
+    fun getTeamLogoUrl(team: String): String = "$NBA_LOGO_PATH$team$DEFAULT_LOGO_EXTENSION"
+        .replace(PLACEHOLDER_WIDTH, DEFAULT_LOGO_WIDTH)
+
+    fun getDefaultTeamLogo(context: Context, team: String): Drawable = getDrawableByName(context, team)
 }

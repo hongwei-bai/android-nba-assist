@@ -7,7 +7,7 @@ class LocalSettings @Inject constructor() {
 
     val conference: Conference = Conference.Western
 
-    val scheduleWeeks: Int = 4
+    val scheduleWeeks: Int = 2
 
     val startsFromMonday: Boolean = true
 }

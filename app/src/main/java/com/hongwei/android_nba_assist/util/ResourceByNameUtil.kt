@@ -15,6 +15,13 @@ object ResourceByNameUtil {
         return color
     }
 
+    fun getResourceIdByName(context: Context, name: String): Int =
+        context.resources.getIdentifier(
+            name,
+            "drawable",
+            context.packageName
+        )
+
     fun getDrawableByName(context: Context, name: String): Drawable =
         context.resources.getDrawable(
             context.resources.getIdentifier(

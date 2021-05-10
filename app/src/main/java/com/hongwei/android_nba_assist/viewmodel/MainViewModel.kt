@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val localSettings: LocalSettings,
-    private val nbaTeamRepository: NbaTeamRepository
+    localSettings: LocalSettings,
+    nbaTeamRepository: NbaTeamRepository
 ) : ViewModel() {
     val teamTheme: LiveData<TeamThemeEntity> =
         nbaTeamRepository.getTeamTheme(localSettings.myTeam)

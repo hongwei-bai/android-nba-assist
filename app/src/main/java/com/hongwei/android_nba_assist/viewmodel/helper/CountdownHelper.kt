@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.viewmodel
+package com.hongwei.android_nba_assist.viewmodel.helper
 
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.COUNTDOWN_ZERO_FREEZE_MILLIS
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.DISPLAY_COUNTDOWN_IN_HOURS
@@ -8,7 +8,7 @@ import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleCon
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_MINUTE
 
-object UpcomingHelper {
+object CountdownHelper {
     fun getUpcomingRange(
         eventTime: Long,
         millisDiff: Long = eventTime - System.currentTimeMillis()

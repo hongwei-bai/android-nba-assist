@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavHostController
+import com.hongwei.android_nba_assist.datasource.DataSourceSuccessResult
 import com.hongwei.android_nba_assist.view.component.SolidColorBar
 import com.hongwei.android_nba_assist.viewmodel.DashboardViewModel
 
@@ -29,13 +30,22 @@ fun Dashboard(
         GamesLeftView(viewModel.gamesLeft.observeAsState().value)
         Spacer(modifier = Modifier.size(20.dp))
 
-        UpcomingGameForecast(
+        UpcomingGameCountdown(
             viewModel.upcomingGameTime.observeAsState().value,
             viewModel.countdownString.observeAsState().value
         )
-        Spacer(modifier = Modifier.size(20.dp))
+        Spacer(modifier = Modifier.size(30.dp))
 
-        
+        UpcomingGameInfo(
+            viewModel.myTeam.observeAsState().value,
+            (viewModel.nextGameInfo.observeAsState().value as? DataSourceSuccessResult)?.data
+        )
+        Spacer(modifier = Modifier.size(10.dp))
+
+        Calendar(
+            viewModel.calendarDays.observeAsState().value,
+            viewModel.upcomingGames.observeAsState().value
+        )
     }
 }
 

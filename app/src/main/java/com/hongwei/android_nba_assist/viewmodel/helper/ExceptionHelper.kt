@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.viewmodel
+package com.hongwei.android_nba_assist.viewmodel.helper
 
 import android.util.Log
 import com.hongwei.android_nba_assist.LocalProperties
@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 object ExceptionHelper  {
     var postHandler: (() -> Unit)? = null
 
-    val handler = CoroutineExceptionHandler { _, throwable ->
+    val nbaExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         if (LocalProperties.isDebug) {
             Log.e("bbbb", "Exception caught: ${throwable.localizedMessage}")
             Log.e("bbbb", Log.getStackTraceString(throwable))

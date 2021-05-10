@@ -19,8 +19,14 @@ object LocalDateTimeUtil {
     private const val DASHBOARD_UPCOMING_GAME_DATE_FORMAT = "EEE, MMM d"
     private const val DASHBOARD_UPCOMING_GAME_TIME_FORMAT = "H:mm a"
 
+    fun getLocalDateDisplay(ts: Long, format: String = DASHBOARD_UPCOMING_GAME_DATE_FORMAT): String =
+        getLocalDateDisplay(getInstance().apply { timeInMillis = ts }, format)
+
     fun getLocalDateDisplay(calendar: Calendar, format: String = DASHBOARD_UPCOMING_GAME_DATE_FORMAT): String =
         SimpleDateFormat(format, Locale.ROOT).format(calendar.time).toUpperCase(Locale.ROOT)
+
+    fun getLocalTimeDisplay(ts: Long, format: String = DASHBOARD_UPCOMING_GAME_TIME_FORMAT): String =
+        getLocalTimeDisplay(getInstance().apply { timeInMillis = ts }, format)
 
     fun getLocalTimeDisplay(calendar: Calendar, format: String = DASHBOARD_UPCOMING_GAME_TIME_FORMAT): String =
         SimpleDateFormat(format, Locale.ROOT).format(calendar.time)

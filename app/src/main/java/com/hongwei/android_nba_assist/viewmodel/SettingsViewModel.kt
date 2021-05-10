@@ -11,16 +11,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(
+class SettingsViewModel @Inject constructor(
     private val localSettings: LocalSettings,
-    private val nbaTeamRepository: NbaTeamRepository
+    private val nbaTeamRepository: NbaTeamRepository,
 ) : ViewModel() {
-    fun preload(onPreloadComplete: () -> Unit) {
+    fun switchTeam(team: String) {
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
-            nbaTeamRepository.fetchTeamThemeFromBackend(localSettings.myTeam)
-            viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) {
-                onPreloadComplete.invoke()
-            }
+            localSettings.myTeam = team
+            nbaTeamRepository.fetchTeamThemeFromBackend(team)
         }
     }
 }

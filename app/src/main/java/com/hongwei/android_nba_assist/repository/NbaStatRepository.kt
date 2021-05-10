@@ -33,11 +33,15 @@ class NbaStatRepository @Inject constructor(
         }
     }
 
-    fun getTeamSchedule(team: String): Flow<DataSourceResult<TeamScheduleEntity>> {
+    fun getTeamSchedule(team: String): Flow<DataSourceResult<List<Event>>> {
         return teamScheduleDao.getTeamSchedule().onEach {
             it ?: fetchTeamScheduleFromBackend(team)
         }.filterNotNull().map {
-            DataSourceSuccessResult(it)
+            it.events.filter { eventTime ->
+                after(eventTime.unixTimeStamp)
+            }.let { events ->
+                DataSourceSuccessResult(events)
+            }
         }
     }
 

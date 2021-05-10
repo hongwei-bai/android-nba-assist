@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.viewmodel
+package com.hongwei.android_nba_assist.viewmodel.helper
 
 import android.os.CountDownTimer
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.COUNTDOWN_ZERO_FREEZE_MILLIS

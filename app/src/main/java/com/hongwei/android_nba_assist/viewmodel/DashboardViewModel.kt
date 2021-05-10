@@ -6,12 +6,15 @@ import com.hongwei.android_nba_assist.datasource.DataSourceResult
 import com.hongwei.android_nba_assist.datasource.DataSourceSuccessResult
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
 import com.hongwei.android_nba_assist.datasource.room.Event
-import com.hongwei.android_nba_assist.datasource.room.TeamScheduleEntity
 import com.hongwei.android_nba_assist.datasource.room.TeamThemeEntity
 import com.hongwei.android_nba_assist.repository.NbaStatRepository
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
-import com.hongwei.android_nba_assist.viewmodel.UpcomingHelper.getUpcomingRange
+import com.hongwei.android_nba_assist.viewmodel.helper.CountdownHelper.getUpcomingRange
+import com.hongwei.android_nba_assist.viewmodel.helper.ExceptionHelper.nbaExceptionHandler
+import com.hongwei.android_nba_assist.viewmodel.helper.GenerateCalendarHelper
+import com.hongwei.android_nba_assist.viewmodel.helper.UpcomingGameCounter
+import com.hongwei.android_nba_assist.viewmodel.helper.UpcomingRange
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -35,6 +38,8 @@ class DashboardViewModel @Inject constructor(
 
     val countdownString: MutableLiveData<String> = MutableLiveData()
 
+    val myTeam: MutableLiveData<String> = MutableLiveData()
+
     val teamTheme: LiveData<TeamThemeEntity> =
         nbaTeamRepository.getTeamTheme(localSettings.myTeam)
             .filterIsInstance<DataSourceSuccessResult<TeamThemeEntity>>()
@@ -44,26 +49,31 @@ class DashboardViewModel @Inject constructor(
     val nextGameInfo: LiveData<DataSourceResult<Event>> =
         nbaStatRepository.getNextGameInfo(localSettings.myTeam).asLiveData()
 
-    init {
-        upcomingGameCounter.countdownCallback = { viewModelScope.launch(Dispatchers.Main) { countdownString.value = it } }
-        viewModelScope.launch(Dispatchers.IO) { subscribeScheduleFlow() }
-        viewModelScope.launch(Dispatchers.IO) { subscribeNextGameFlow() }
-    }
+    val upcomingGames: LiveData<List<Event>> =
+        nbaStatRepository.getTeamSchedule(localSettings.myTeam)
+            .filterIsInstance<DataSourceSuccessResult<List<Event>>>()
+            .map { it.data }
+            .asLiveData(viewModelScope.coroutineContext)
 
-    fun switchTeam(team: String) {
-        viewModelScope.launch(Dispatchers.IO + ExceptionHelper.handler) {
-            localSettings.myTeam = team
-            nbaTeamRepository.fetchTeamThemeFromBackend(team)
-        }
+    val calendarDays: MutableLiveData<List<List<Calendar>>> = MutableLiveData()
+
+    init {
+        myTeam.value = localSettings.myTeam
+        upcomingGameCounter.countdownCallback = { viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) { countdownString.value = it } }
+        viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) { subscribeScheduleFlow() }
+        viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) { subscribeNextGameFlow() }
     }
 
     private suspend fun subscribeScheduleFlow() {
         nbaStatRepository.getTeamSchedule(localSettings.myTeam).onEach {
             when (it) {
-                is DataSourceSuccessResult<TeamScheduleEntity> -> {
-                    viewModelScope.launch(Dispatchers.Main) { gamesLeft.value = it.data.events.size }
+                is DataSourceSuccessResult<List<Event>> -> {
+                    viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) {
+                        gamesLeft.value = it.data.size
+                        calendarDays.value = GenerateCalendarHelper.generateCalendarDays(it.data, localSettings)
+                    }
                 }
-                else -> viewModelScope.launch(Dispatchers.Main) { gamesLeft.value = null }
+                else -> viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) { gamesLeft.value = null }
             }
         }.collect()
     }
@@ -72,7 +82,7 @@ class DashboardViewModel @Inject constructor(
         nbaStatRepository.getNextGameInfo(localSettings.myTeam)
             .filterIsInstance<DataSourceSuccessResult<Event>>()
             .onEach {
-                viewModelScope.launch(Dispatchers.Main) {
+                viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) {
                     val eventTime = it.data.unixTimeStamp
                     upcomingGameTime.value = eventTime
                     when (getUpcomingRange(eventTime)) {
@@ -90,7 +100,7 @@ class DashboardViewModel @Inject constructor(
     private fun inMillis(eventTimeStamp: Long) = LocalDateTimeUtil.getInMillis(Calendar.getInstance().apply { timeInMillis = eventTimeStamp })
 
     fun debugRoom() {
-        viewModelScope.launch(Dispatchers.IO + ExceptionHelper.handler) {
+        viewModelScope.launch(Dispatchers.IO) {
             Log.d("bbbb", nbaTeamRepository.debug())
         }
     }
