@@ -2,6 +2,7 @@ package com.hongwei.android_nba_assist.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assist.datasource.DataSourceResult
 import com.hongwei.android_nba_assist.datasource.DataSourceSuccessResult
 import com.hongwei.android_nba_assist.datasource.local.LocalSettings
@@ -9,7 +10,7 @@ import com.hongwei.android_nba_assist.datasource.room.Event
 import com.hongwei.android_nba_assist.datasource.room.TeamThemeEntity
 import com.hongwei.android_nba_assist.repository.NbaStatRepository
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository
-import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
+import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours
 import com.hongwei.android_nba_assist.viewmodel.helper.CountdownHelper.getUpcomingRange
 import com.hongwei.android_nba_assist.viewmodel.helper.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.viewmodel.helper.GenerateCalendarHelper
@@ -69,7 +70,9 @@ class DashboardViewModel @Inject constructor(
             when (it) {
                 is DataSourceSuccessResult<List<Event>> -> {
                     viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) {
-                        gamesLeft.value = it.data.size
+                        gamesLeft.value = it.data.filter { event ->
+                            after(event.unixTimeStamp)
+                        }.size
                         calendarDays.value = GenerateCalendarHelper.generateCalendarDays(it.data, localSettings)
                     }
                 }
@@ -97,7 +100,9 @@ class DashboardViewModel @Inject constructor(
             }.collect()
     }
 
-    private fun inMillis(eventTimeStamp: Long) = LocalDateTimeUtil.getInMillis(Calendar.getInstance().apply { timeInMillis = eventTimeStamp })
+    private fun after(unixTimeStamp: Long): Boolean = Calendar.getInstance().apply {
+        timeInMillis = unixTimeStamp
+    }.after(getAheadOfHours(IGNORE_TODAY_S_GAME_FROM_HOURS))
 
     fun debugRoom() {
         viewModelScope.launch(Dispatchers.IO) {

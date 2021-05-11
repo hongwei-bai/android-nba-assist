@@ -10,8 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.hongwei.android_nba_assist.view.indev.Goal
 import com.hongwei.android_nba_assist.view.indev.Settings
-import com.hongwei.android_nba_assist.view.indev.TeamSchedule
 import com.hongwei.android_nba_assist.view.dashboard.Dashboard
+import com.hongwei.android_nba_assist.view.standing.Standing
 import com.hongwei.android_nba_assist.view.navigation.BottomNavBar
 import com.hongwei.android_nba_assist.view.theme.NbaTeamTheme
 import com.hongwei.android_nba_assist.viewmodel.MainViewModel
@@ -38,7 +38,7 @@ fun MainNavCompose(
             Dashboard(navController)
         }
         composable("standing") {
-            TeamSchedule()
+            Standing(navController)
         }
         composable("goal") {
             Goal()

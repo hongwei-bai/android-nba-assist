@@ -19,14 +19,14 @@ object NbaTypeConverters {
     }
 
     @TypeConverter
-    fun fromStringToTeamStandingList(value: String?): List<TeamStanding>? {
-        val listType: Type = object : TypeToken<List<TeamStanding>?>() {}.type
-        return Gson().fromJson(value, listType)
+    fun fromStringToConferenceStanding(value: String?): ConferenceStanding? {
+        val type: Type = object : TypeToken<ConferenceStanding?>() {}.type
+        return Gson().fromJson(value, type)
     }
 
     @TypeConverter
-    fun fromTeamStandingList(list: List<TeamStanding>?): String? {
+    fun fromConferenceStanding(obj: ConferenceStanding?): String? {
         val gson = Gson()
-        return gson.toJson(list)
+        return gson.toJson(obj)
     }
 }

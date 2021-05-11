@@ -33,6 +33,7 @@ data class Event(
 
 data class Team(
     val abbrev: String,
+    val name: String?,
     val logo: String
 )
 

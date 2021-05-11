@@ -1,8 +1,10 @@
 package com.hongwei.android_nba_assist.view.dashboard
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -21,7 +23,11 @@ fun Dashboard(
 ) {
     val viewModel = hiltNavGraphViewModel<DashboardViewModel>()
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .verticalScroll(ScrollState(0))
+    ) {
         SolidColorBar(3.5.dp, MaterialTheme.colors.secondary)
 
         Banner(viewModel.teamTheme.observeAsState().value?.bannerUrl)

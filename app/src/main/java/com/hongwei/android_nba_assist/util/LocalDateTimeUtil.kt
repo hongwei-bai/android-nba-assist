@@ -20,16 +20,26 @@ object LocalDateTimeUtil {
     private const val DASHBOARD_UPCOMING_GAME_TIME_FORMAT = "H:mm a"
 
     fun getLocalDateDisplay(ts: Long, format: String = DASHBOARD_UPCOMING_GAME_DATE_FORMAT): String =
-        getLocalDateDisplay(getInstance().apply { timeInMillis = ts }, format)
+        getLocalDateDisplay(getInstance(Locale.US).apply { timeInMillis = ts }, format)
 
     fun getLocalDateDisplay(calendar: Calendar, format: String = DASHBOARD_UPCOMING_GAME_DATE_FORMAT): String =
-        SimpleDateFormat(format, Locale.ROOT).format(calendar.time).toUpperCase(Locale.ROOT)
+        SimpleDateFormat(format, Locale.US).format(calendar.time).toUpperCase(Locale.US)
 
     fun getLocalTimeDisplay(ts: Long, format: String = DASHBOARD_UPCOMING_GAME_TIME_FORMAT): String =
-        getLocalTimeDisplay(getInstance().apply { timeInMillis = ts }, format)
+        getLocalTimeDisplay(getInstance(Locale.US).apply { timeInMillis = ts }, format)
 
     fun getLocalTimeDisplay(calendar: Calendar, format: String = DASHBOARD_UPCOMING_GAME_TIME_FORMAT): String =
-        SimpleDateFormat(format, Locale.ROOT).format(calendar.time)
+        SimpleDateFormat(format, Locale.US).format(calendar.time)
+
+    fun getFirstDayOfWeek(startsFromMonday: Boolean, calendar: Calendar = getInstance()): Calendar = if (startsFromMonday) {
+        if (calendar.get(DAY_OF_WEEK) == SUNDAY) {
+            getLastMondayForSunday(calendar)
+        } else {
+            getMondayOfWeek(calendar)
+        }
+    } else {
+        getSundayOfWeek(calendar)
+    }
 
     fun getDateInWeeks(week: Int): Calendar {
         val calendar: Calendar = getInstance()
@@ -127,7 +137,7 @@ object LocalDateTimeUtil {
 
     private fun getWeekday(calendar: Calendar = getInstance(), weekday: Int): Calendar {
         val newCalendar: Calendar = calendar.clone() as Calendar
-        println(">>> newCalendar: ${debugDateTime(newCalendar)}")
+//        println(">>> newCalendar: ${debugDateTime(newCalendar)}")
         newCalendar.set(DAY_OF_WEEK, weekday)
         newCalendar.set(HOUR_OF_DAY, 0)
         newCalendar.set(MINUTE, 0)

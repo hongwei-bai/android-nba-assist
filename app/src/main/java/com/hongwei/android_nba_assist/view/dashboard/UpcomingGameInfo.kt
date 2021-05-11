@@ -47,7 +47,7 @@ fun UpcomingGameInfo(myTeam: String?, event: Event?) {
                     )
                     .background(MaterialTheme.colors.primary)
             ) {
-                TeamLogo(event.guestTeam, Modifier.height(120.dp))
+                TeamLogo(event.guestTeam, Modifier.size(110.dp))
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -67,7 +67,7 @@ fun UpcomingGameInfo(myTeam: String?, event: Event?) {
                         color = MaterialTheme.colors.onPrimary
                     )
                 }
-                TeamLogo(event.homeTeam, Modifier.height(120.dp))
+                TeamLogo(event.homeTeam, Modifier.size(110.dp))
             }
         }
     }

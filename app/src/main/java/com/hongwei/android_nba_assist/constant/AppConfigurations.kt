@@ -38,7 +38,7 @@ object AppConfigurations {
     }
 
     object Dashboard {
-        const val BANNER_HEIGHT = 200
+        const val BANNER_HEIGHT = 140
     }
 
     object Room {

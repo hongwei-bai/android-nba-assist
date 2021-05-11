@@ -11,7 +11,3 @@ class LocalSettings @Inject constructor() {
 
     val startsFromMonday: Boolean = true
 }
-
-enum class Conference {
-    Eastern, Western
-}

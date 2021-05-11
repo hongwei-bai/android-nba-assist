@@ -17,14 +17,17 @@ object NbaTeamScheduleMapper {
         unixTimeStamp = unixTimeStamp,
         opponent = Team(
             abbrev = opponent.abbrev,
+            name = opponent.displayName,
             logo = getTeamLogoUrl(opponent.abbrev)
         ),
         guestTeam = Team(
             abbrev = if (opponent.home) opponent.abbrev else team,
+            name = if (opponent.home) opponent.displayName else null,
             logo = getTeamLogoUrl(if (opponent.home) opponent.abbrev else team)
         ),
         homeTeam = Team(
             abbrev = if (opponent.home) team else opponent.abbrev,
+            name = if (opponent.home) team else opponent.displayName,
             logo = getTeamLogoUrl(if (opponent.home) team else opponent.abbrev)
         ),
         location = opponent.location,

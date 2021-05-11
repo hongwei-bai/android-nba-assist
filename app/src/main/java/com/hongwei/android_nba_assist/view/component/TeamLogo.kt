@@ -20,15 +20,15 @@ fun TeamLogo(team: Team, modifier: Modifier) {
     when (painter.loadState) {
         is ImageLoadState.Success -> Image(
             painter = painter,
-            contentScale = ContentScale.FillHeight,
+            contentScale = ContentScale.FillWidth,
             contentDescription = null,
             modifier = modifier
         )
         else -> Image(
-            painter = painterResource(id = ResourceByNameUtil.getResourceIdByName(LocalContext.current, team.abbrev)),
+            painter = painterResource(id = ResourceByNameUtil.getResourceIdByName(LocalContext.current, team.abbrev.toLowerCase())),
             contentDescription = null,
             modifier = modifier,
-            contentScale = ContentScale.FillHeight,
+            contentScale = ContentScale.FillWidth,
         )
     }
 }

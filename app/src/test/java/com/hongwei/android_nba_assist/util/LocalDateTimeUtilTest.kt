@@ -58,88 +58,88 @@ class LocalDateTimeUtilTest {
     fun testSundayOfWeek() {
         val calendar = getCalendarInstance(2021, Calendar.APRIL, 8, 10, 0, 0)
         val sundayOfWeek = LocalDateTimeUtil.getSundayOfWeek(calendar)
-        assertEquals("2021-04-08 10:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2021-04-04 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(sundayOfWeek.time))
+        assertEquals("2021-04-08 10:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2021-04-04 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(sundayOfWeek.time))
     }
 
     @Test
     fun testMondayOfWeek() {
         val calendar = getCalendarInstance(2021, Calendar.APRIL, 8, 19, 37, 42)
         val mondayOfWeek = LocalDateTimeUtil.getMondayOfWeek(calendar)
-        assertEquals("2021-04-08 19:37:42", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2021-04-05 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(mondayOfWeek.time))
+        assertEquals("2021-04-08 19:37:42", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2021-04-05 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(mondayOfWeek.time))
     }
 
     @Test
     fun testMondayOfWeek_MondayMorning() {
         val calendar = getCalendarInstance(2021, Calendar.APRIL, 5, 0, 0, 0)
         val mondayOfWeek = LocalDateTimeUtil.getMondayOfWeek(calendar)
-        assertEquals("2021-04-05 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2021-04-05 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(mondayOfWeek.time))
+        assertEquals("2021-04-05 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2021-04-05 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(mondayOfWeek.time))
     }
 
     @Test
     fun testMondayOfWeek_SundayNight() {
         val calendar = getCalendarInstance(2021, Calendar.APRIL, 11, 23, 59, 59)
         val mondayOfWeek = LocalDateTimeUtil.getMondayOfWeek(calendar)
-        assertEquals("2021-04-11 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2021-04-12 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(mondayOfWeek.time))
+        assertEquals("2021-04-11 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2021-04-12 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(mondayOfWeek.time))
     }
 
     @Test
     fun testBeginOfDay() {
         val calendar = getCalendarInstance(2020, Calendar.APRIL, 30, 13, 5, 0)
         val endOfDay = LocalDateTimeUtil.getBeginOfDay(calendar)
-        assertEquals("2020-04-30 13:05:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2020-04-30 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(endOfDay.time))
+        assertEquals("2020-04-30 13:05:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2020-04-30 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(endOfDay.time))
     }
 
     @Test
     fun testEndOfDay() {
         val calendar = getCalendarInstance(2020, Calendar.APRIL, 30, 13, 5, 0)
         val endOfDay = LocalDateTimeUtil.getEndOfDay(calendar)
-        assertEquals("2020-04-30 13:05:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2020-04-30 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(endOfDay.time))
+        assertEquals("2020-04-30 13:05:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2020-04-30 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(endOfDay.time))
     }
 
     @Test
     fun testEndOfDay_23_59_59() {
         val calendar = getCalendarInstance(2020, Calendar.APRIL, 30, 23, 59, 59)
         val endOfDay = LocalDateTimeUtil.getEndOfDay(calendar)
-        assertEquals("2020-04-30 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2020-04-30 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(endOfDay.time))
+        assertEquals("2020-04-30 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2020-04-30 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(endOfDay.time))
     }
 
     @Test
     fun testEndOfDay_0_0_0() {
         val calendar = getCalendarInstance(2020, Calendar.APRIL, 30, 0, 0, 0)
         val endOfDay = LocalDateTimeUtil.getEndOfDay(calendar)
-        assertEquals("2020-04-30 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2020-04-30 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(endOfDay.time))
+        assertEquals("2020-04-30 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2020-04-30 23:59:59", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(endOfDay.time))
     }
 
     @Test
     fun testWeekAhead() {
         val calendar = getCalendarInstance(2020, Calendar.MAY, 1, 0, 0, 0)
         val aWeekAhead = LocalDateTimeUtil.getWeekAhead(1, calendar)
-        assertEquals("2020-05-01 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2020-04-24 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(aWeekAhead.time))
+        assertEquals("2020-05-01 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2020-04-24 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(aWeekAhead.time))
     }
 
     @Test
     fun testLastMondayForNotSunday() {
         val calendar = getCalendarInstance(2020, Calendar.MAY, 1, 0, 0, 0)
         val aWeekAhead = LocalDateTimeUtil.getLastMondayForSunday(calendar)
-        assertEquals("2020-05-01 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2020-04-27 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(aWeekAhead.time))
+        assertEquals("2020-05-01 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2020-04-27 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(aWeekAhead.time))
     }
 
     @Test
     fun testLastMondayForSunday() {
         val calendar = getCalendarInstance(2020, Calendar.MAY, 2, 0, 0, 0)
         val aWeekAhead = LocalDateTimeUtil.getLastMondayForSunday(calendar)
-        assertEquals("2020-05-03 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(calendar.time))
-        assertEquals("2020-04-27 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(aWeekAhead.time))
+        assertEquals("2020-05-03 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(calendar.time))
+        assertEquals("2020-04-27 00:00:00", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(aWeekAhead.time))
     }
 
     companion object {

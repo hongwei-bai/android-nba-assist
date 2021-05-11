@@ -14,6 +14,16 @@
     <string name="upcoming_game_today">Today!</string>
     <string name="upcoming_game_now">Now!!!</string>
     <string name="upcoming_game_countdown_zero">0:00:00</string>
+
+    <string name="calendar_game_at_location">AT %1$s</string>
+    <string name="calendar_result_template">%1$s%2$d-%3$d</string>
+
+    <string name="standing_header_win_lose">W-L</string>
+    <string name="standing_header_games_back">GB</string>
+    <string name="standing_header_streak">Streak</string>
+    <string name="standing_win_lose_template">%1$d-%2$d</string>
+    <string name="standing_streak_template">%1$s%2$d</string>
+
     <string name="date_is_up_to_date_copy">Your schedule data is up to date.</string>
     <string name="copy_right_declaration">\u00a9Copyright: hongwei.bai84\@gmail.com</string>
 </resources>
