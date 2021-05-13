@@ -96,18 +96,18 @@ fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: EventViewObjec
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(8.dp)
+                .height(6.dp)
         ) {
-
             if (isToday) {
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     val canvasWidth = size.width
                     val canvasHeight = size.height
+
                     drawPath(
                         path = Path().apply {
-                            moveTo((canvasWidth - canvasHeight) * 0.5f, canvasHeight)
-                            lineTo((canvasWidth + canvasHeight) * 0.5f, 0f)
-                            lineTo((canvasWidth - canvasHeight) * 0.5f, 0f)
+                            moveTo((canvasWidth) * 0.5f, canvasHeight)
+                            lineTo(canvasWidth * 0.5f + canvasHeight * 0.577f, 0f)
+                            lineTo(canvasWidth * 0.5f - canvasHeight * 0.577f, 0f)
                             close()
                         },
                         color = Color.White
@@ -150,8 +150,9 @@ fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: EventViewObjec
                 color = textColor
             )
             val isWin = result?.startsWith("W", true) == true
-            val resultColor = if (isWin) Green900 else Red900
+            val resultColor = if (isWin) Red900 else Green900
             event.result?.let {
+                Spacer(modifier = Modifier.size(2.dp))
                 Text(
                     text = it,
                     style = MaterialTheme.typography.caption,
