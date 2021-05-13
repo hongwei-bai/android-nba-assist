@@ -13,6 +13,12 @@ val BlackAlphaA0 = Color(0xA0000000)
 val BlackAlphaC0 = Color(0xC0000000)
 val BlackAlphaE0 = Color(0xE0000000)
 
+val Grey80 = Color(0xff323232)
+val Grey60 = Color(0xff666666)
+val Grey50 = Color(0xff888888)
+val Grey40 = Color(0xffbbbbbb)
+val Grey20 = Color(0xffdddddd)
+
 val LightColors = lightColors(
     primary = Red700,
     primaryVariant = Red900,

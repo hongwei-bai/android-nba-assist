@@ -11,16 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
-import com.hongwei.android_nba_assist.datasource.room.Event
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLocalDateDisplay
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLocalTimeDisplay
+import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getResourceIdByName
 import com.hongwei.android_nba_assist.view.component.TeamLogo
 
 @Composable
-fun UpcomingGameInfo(myTeam: String?, event: Event?) {
+fun UpcomingGameInfo(myTeam: String?, event: EventDetailViewObject?) {
     if (myTeam != null && event != null) {
         Surface(
             modifier = Modifier
@@ -47,7 +48,11 @@ fun UpcomingGameInfo(myTeam: String?, event: Event?) {
                     )
                     .background(MaterialTheme.colors.primary)
             ) {
-                TeamLogo(event.guestTeam, Modifier.size(110.dp))
+                TeamLogo(
+                    logoUrl = event.guestTeam.logo,
+                    localPlaceholderResId = getResourceIdByName(LocalContext.current, event.guestTeam.abbrev),
+                    modifier = Modifier.size(110.dp)
+                )
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -67,8 +72,24 @@ fun UpcomingGameInfo(myTeam: String?, event: Event?) {
                         color = MaterialTheme.colors.onPrimary
                     )
                 }
-                TeamLogo(event.homeTeam, Modifier.size(110.dp))
+                TeamLogo(
+                    logoUrl = event.homeTeam.logo,
+                    localPlaceholderResId = getResourceIdByName(LocalContext.current, event.homeTeam.abbrev),
+                    modifier = Modifier.size(110.dp)
+                )
             }
         }
     }
 }
+
+data class EventDetailViewObject(
+    val unixTimeStamp: Long,
+    val guestTeam: TeamViewObject,
+    val homeTeam: TeamViewObject
+)
+
+data class TeamViewObject(
+    val abbrev: String,
+    val name: String?,
+    val logo: String
+)

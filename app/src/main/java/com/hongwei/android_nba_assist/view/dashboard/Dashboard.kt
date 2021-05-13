@@ -12,15 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
-import androidx.navigation.NavHostController
-import com.hongwei.android_nba_assist.datasource.DataSourceSuccessResult
 import com.hongwei.android_nba_assist.view.component.SolidColorBar
 import com.hongwei.android_nba_assist.viewmodel.DashboardViewModel
 
 @Composable
-fun Dashboard(
-    navHostController: NavHostController
-) {
+fun Dashboard() {
     val viewModel = hiltNavGraphViewModel<DashboardViewModel>()
 
     Column(
@@ -30,7 +26,7 @@ fun Dashboard(
     ) {
         SolidColorBar(3.5.dp, MaterialTheme.colors.secondary)
 
-        Banner(viewModel.teamTheme.observeAsState().value?.bannerUrl)
+        Banner(viewModel.teamBanner.observeAsState().value)
         Spacer(modifier = Modifier.size(10.dp))
 
         GamesLeftView(viewModel.gamesLeft.observeAsState().value)
@@ -44,7 +40,7 @@ fun Dashboard(
 
         UpcomingGameInfo(
             viewModel.myTeam.observeAsState().value,
-            (viewModel.nextGameInfo.observeAsState().value as? DataSourceSuccessResult)?.data
+            viewModel.nextGameInfo.observeAsState().value
         )
         Spacer(modifier = Modifier.size(10.dp))
 

@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.ExtraBold
@@ -23,11 +24,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hongwei.android_nba_assist.R
-import com.hongwei.android_nba_assist.datasource.room.Event
-import com.hongwei.android_nba_assist.datasource.room.Team
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.CALENDAR_GAME_DATE_FORMAT
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLocalTimeDisplay
+import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getResourceIdByName
 import com.hongwei.android_nba_assist.view.component.TeamLogo
 import com.hongwei.android_nba_assist.view.theme.BlackAlpha60
 import com.hongwei.android_nba_assist.view.theme.BlackAlphaA0
@@ -35,7 +35,7 @@ import com.hongwei.android_nba_assist.view.theme.BlackAlphaE0
 import java.util.*
 
 @Composable
-fun Calendar(calendarDays: List<List<Calendar>>?, events: List<Event>?) {
+fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?) {
     val weekHeight = 120
     if (calendarDays != null && events != null) {
         Box(
@@ -81,7 +81,7 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<Event>?) {
 }
 
 @Composable
-fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: Event?) {
+fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: EventViewObject?) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -122,10 +122,7 @@ fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: Event?) {
             )
             event.result?.let {
                 Text(
-                    text = stringResource(
-                        id = R.string.calendar_result_template, it.winLossSymbol,
-                        it.currentTeamScore, it.opponentTeamScore
-                    ),
+                    text = it,
                     style = MaterialTheme.typography.caption,
                     fontSize = 8.sp,
                     fontWeight = ExtraBold,
@@ -138,7 +135,7 @@ fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: Event?) {
 }
 
 @Composable
-fun Floor(home: Boolean, modifier: Modifier, opponent: Team) {
+fun Floor(home: Boolean, modifier: Modifier, opponent: OpponentViewObject) {
     val floorBrush = Brush.verticalGradient(
         colors = listOf(
             MaterialTheme.colors.secondary,
@@ -167,7 +164,11 @@ fun Floor(home: Boolean, modifier: Modifier, opponent: Team) {
             Box(modifier = Modifier.background(topBrush)) {
                 Box(modifier = Modifier.background(bottomBrush)) {
                     TeamLogo(
-                        team = opponent,
+                        logoUrl = opponent.logo,
+                        localPlaceholderResId = getResourceIdByName(
+                            LocalContext.current,
+                            opponent.abbrev
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
                     )
@@ -177,10 +178,28 @@ fun Floor(home: Boolean, modifier: Modifier, opponent: Team) {
     } else {
         Box(modifier = modifier) {
             TeamLogo(
-                team = opponent,
+                logoUrl = opponent.logo,
+                localPlaceholderResId = getResourceIdByName(
+                    LocalContext.current,
+                    opponent.abbrev
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
             )
         }
     }
 }
+
+data class EventViewObject(
+    val unixTimeStamp: Long,
+    val opponent: OpponentViewObject,
+    val location: String,
+    val home: Boolean,
+    val result: String? = null
+)
+
+data class OpponentViewObject(
+    val abbrev: String,
+    val name: String? = null,
+    val logo: String
+)

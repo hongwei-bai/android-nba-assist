@@ -20,9 +20,7 @@ import com.hongwei.android_nba_assist.viewmodel.SplashViewModel
 
 
 @Composable
-fun SplashScreen(
-    navController: NavController
-) {
+fun SplashScreen(navController: NavController) {
     val splashViewModel = hiltNavGraphViewModel<SplashViewModel>()
     splashViewModel.preload {
         navController.navigate("main") {

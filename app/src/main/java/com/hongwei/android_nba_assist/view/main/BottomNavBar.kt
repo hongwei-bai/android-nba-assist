@@ -6,17 +6,19 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.hongwei.android_nba_assist.view.main.Screen
+import com.hongwei.android_nba_assist.viewmodel.MainViewModel
 
 @Composable
-fun BottomNavBar(navController: NavController) {
+fun BottomNavBar(navController: NavHostController) {
     BottomNavigation {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-        val items = listOf(Screen.Dashboard, Screen.Standing, Screen.Goal, Screen.Settings)
+        val items = listOf(Screen.Dashboard, Screen.Season, Screen.Goal, Screen.Settings)
         items.forEach {
             BottomNavigationItem(
                 icon = { Icon(it.icon, "") },
