@@ -7,6 +7,8 @@ val Red700 = Color(0xffdd0d3c)
 val Red800 = Color(0xffd00036)
 val Red900 = Color(0xffc20029)
 
+val Green900 = Color(0xff009000)
+
 val BlackAlpha60 = Color(0x60000000)
 val BlackAlpha80 = Color(0x80000000)
 val BlackAlphaA0 = Color(0xA0000000)

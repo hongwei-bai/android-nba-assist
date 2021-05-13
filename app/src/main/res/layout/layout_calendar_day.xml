@@ -53,6 +53,7 @@
         style="@style/TextAppearance.Nba.Calendar.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/archivo_narrow_bold"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

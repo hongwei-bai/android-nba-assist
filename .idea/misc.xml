@@ -14,6 +14,7 @@
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/drawable/bg_calendar_today.xml" value="0.1609375" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/drawable/bg_shadow.xml" value="0.16944444444444445" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/drawable/bg_top_rounded_rect_card.xml" value="0.1609375" />
+        <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/drawable/ic_trophy_outline.xml" value="0.15092592592592594" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/font/play.xml" value="0.16574074074074074" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/activity_main.xml" value="0.16822916666666668" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/activity_splash.xml" value="0.1609375" />
@@ -24,7 +25,7 @@
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_main_host.xml" value="0.20199275362318841" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_splash.xml" value="0.10106382978723404" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/fragment_standing.xml" value="0.20199275362318841" />
-        <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_calendar_day.xml" value="0.23476968796433878" />
+        <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_calendar_day.xml" value="0.5142857142857143" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_calendar_week.xml" value="0.16822916666666668" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_standing_header.xml" value="0.17135416666666667" />
         <entry key="..\:/code/an/nba-assistant-android/app/src/main/res/layout/layout_standing_item.xml" value="0.20199275362318841" />
