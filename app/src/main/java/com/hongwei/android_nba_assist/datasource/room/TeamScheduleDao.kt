@@ -15,6 +15,9 @@ interface TeamScheduleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(teamScheduleEntity: TeamScheduleEntity)
 
+    @Query("UPDATE team_schedule SET timeStamp = :timeStamp WHERE apiVersion=$API_VERSION")
+    suspend fun update(timeStamp: Long)
+    
     @Query("DELETE FROM team_schedule")
     suspend fun clear()
 

@@ -1,10 +1,11 @@
 package com.hongwei.android_nba_assist.view.main
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,15 +16,13 @@ import com.hongwei.android_nba_assist.view.indev.Goal
 import com.hongwei.android_nba_assist.view.indev.Settings
 import com.hongwei.android_nba_assist.view.navigation.BottomNavBar
 import com.hongwei.android_nba_assist.view.season.Season
-import com.hongwei.android_nba_assist.view.theme.NbaTeamTheme
-import com.hongwei.android_nba_assist.viewmodel.MainViewModel
+
 
 @Composable
 fun MainScreen() {
-    val viewModel = hiltNavGraphViewModel<MainViewModel>()
     val navController = rememberNavController()
-    NbaTeamTheme(viewModel.teamTheme.observeAsState().value) {
-        Scaffold(bottomBar = { BottomNavBar(navController) }) {
+    Scaffold(bottomBar = { BottomNavBar(navController) }) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
             MainNavCompose(navController)
         }
     }

@@ -4,6 +4,7 @@ data class NbaTeamTheme(
     val dataVersion: Long,
     val team: String,
     val bannerUrl: String,
+    val backgroundUrl: String,
     val colorLight: Long?,
     val colorHome: Long?,
     val colorGuest: Long?

@@ -1,6 +1,6 @@
 package com.hongwei.android_nba_assist.datasource.mapper
 
-import com.hongwei.android_nba_assist.datasource.local.Conference
+import com.hongwei.android_nba_assist.datasource.league.nba.Conference
 import com.hongwei.android_nba_assist.datasource.local.FixEndpoint.getTeamLogoUrl
 import com.hongwei.android_nba_assist.datasource.network.model.StandingResponse
 import com.hongwei.android_nba_assist.datasource.network.model.TeamStandingResponse

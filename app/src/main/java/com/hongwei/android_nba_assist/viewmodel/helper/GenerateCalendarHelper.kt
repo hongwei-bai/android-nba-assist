@@ -1,6 +1,5 @@
 package com.hongwei.android_nba_assist.viewmodel.helper
 
-import com.hongwei.android_nba_assist.datasource.local.LocalSettings
 import com.hongwei.android_nba_assist.datasource.room.Event
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_DAY
@@ -10,10 +9,10 @@ import java.util.Calendar.SUNDAY
 import java.util.Calendar.getInstance
 
 object GenerateCalendarHelper {
-    fun generateCalendarDays(events: List<Event>, localSettings: LocalSettings): List<List<Calendar>> {
+    fun generateCalendarDays(events: List<Event>, scheduleWeeks: Int, weekStartFromMonday: Boolean): List<List<Calendar>> {
         val today = getInstance()
         val todayWeekday = getInstance().get(Calendar.DAY_OF_WEEK)
-        val firstDay = if (localSettings.startsFromMonday) {
+        val firstDay = if (weekStartFromMonday) {
             if (todayWeekday == SUNDAY) {
                 LocalDateTimeUtil.getLastMondayForSunday(today)
             } else {
@@ -23,7 +22,7 @@ object GenerateCalendarHelper {
             LocalDateTimeUtil.getSundayOfWeek(today)
         }
 
-        val maxWeekOffset = getLastWeekWithEvents(firstDay, events, localSettings.scheduleWeeks)
+        val maxWeekOffset = getLastWeekWithEvents(firstDay, events, scheduleWeeks)
         val calendarDays = mutableListOf<List<Calendar>>()
         val firstDayId = LocalDateTimeUtil.getDayIdentifier(firstDay)
         for (i in 0..maxWeekOffset) {
@@ -50,6 +49,6 @@ object GenerateCalendarHelper {
                 return i - 1
             }
         }
-        return maxNoOfWeek
+        return maxNoOfWeek - 1
     }
 }

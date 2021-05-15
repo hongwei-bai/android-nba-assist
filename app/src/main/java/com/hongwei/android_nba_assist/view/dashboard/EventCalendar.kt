@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Medium
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.coil.rememberCoilPainter
+import com.google.accompanist.imageloading.ImageLoadState
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.CALENDAR_GAME_DATE_FORMAT
@@ -35,18 +37,32 @@ import com.hongwei.android_nba_assist.view.theme.*
 import java.util.*
 
 @Composable
-fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?) {
+fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?, backgroundUrl: String?) {
     val weekHeight = 120
     if (calendarDays != null && events != null) {
         Box {
-            Image(
-                painter = painterResource(id = R.drawable.bg_gs),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height((calendarDays.size * weekHeight).dp),
-                contentScale = ContentScale.FillWidth,
-                contentDescription = null
+            val painter = rememberCoilPainter(
+                request = backgroundUrl,
+                fadeIn = true
             )
+            when (painter.loadState) {
+                is ImageLoadState.Success -> Image(
+                    painter = painter,
+                    contentScale = ContentScale.FillWidth,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height((calendarDays.size * weekHeight).dp)
+                )
+                else -> Image(
+                    painter = painterResource(id = R.drawable.bg_placeholder),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height((calendarDays.size * weekHeight).dp),
+                    contentScale = ContentScale.FillWidth,
+                )
+            }
             Column(
                 modifier = Modifier.background(color = MaterialTheme.colors.primary.copy(alpha = 0.33f))
             ) {

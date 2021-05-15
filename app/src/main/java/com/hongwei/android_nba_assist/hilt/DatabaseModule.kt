@@ -30,7 +30,7 @@ class DatabaseModule {
     fun provideTeamThemeDao(nbaDatabase: NbaDatabase): TeamThemeDao {
         return nbaDatabase.teamThemeDao()
     }
-    
+
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): NbaDatabase {

@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getInDays
@@ -18,7 +17,6 @@ import java.util.*
 
 @Composable
 fun UpcomingGameCountdown(
-    @PreviewParameter(UrlProvider::class)
     eventTime: Long?,
     countdown: String?
 ) {

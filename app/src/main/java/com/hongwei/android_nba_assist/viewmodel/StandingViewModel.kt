@@ -1,26 +1,37 @@
 package com.hongwei.android_nba_assist.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import com.hongwei.android_nba_assist.datasource.local.LocalSettings
+import android.util.Log
+import androidx.lifecycle.*
 import com.hongwei.android_nba_assist.repository.NbaStatRepository
 import com.hongwei.android_nba_assist.view.season.RankedTeamViewObject
 import com.hongwei.android_nba_assist.view.season.TeamViewObject
 import com.hongwei.android_nba_assist.viewmodel.helper.ExceptionHelper.nbaExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class StandingViewModel @Inject constructor(
-    localSettings: LocalSettings,
-    nbaStatRepository: NbaStatRepository
+    private val nbaStatRepository: NbaStatRepository
 ) : ViewModel() {
-    val westernStanding: LiveData<List<RankedTeamViewObject>> = nbaStatRepository.getStanding(localSettings.myTeam)
-        .map {
+    val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    val dataStatus = liveData {
+        nbaStatRepository.dataStatus.collect {
+            emit(it)
+            delay(3000)
+            emit(null)
+        }
+    }
+
+    val westernStanding: LiveData<List<RankedTeamViewObject>> =
+        nbaStatRepository.getStanding().map {
+            Log.d("bbbb", "StandingViewModel: $it")
             it.western.standings.map { entity ->
                 RankedTeamViewObject(
                     rank = entity.rank,
@@ -36,11 +47,10 @@ class StandingViewModel @Inject constructor(
                     last10Records = entity.last10Records
                 )
             }
-        }
-        .asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+        }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
 
-    val easternStanding: LiveData<List<RankedTeamViewObject>> = nbaStatRepository.getStanding(localSettings.myTeam)
-        .map {
+    val easternStanding: LiveData<List<RankedTeamViewObject>> =
+        nbaStatRepository.getStanding().map {
             it.eastern.standings.map { entity ->
                 RankedTeamViewObject(
                     rank = entity.rank,
@@ -56,6 +66,13 @@ class StandingViewModel @Inject constructor(
                     last10Records = entity.last10Records
                 )
             }
+        }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+
+    fun refresh() {
+        isRefreshing.value = true
+        viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
+            nbaStatRepository.fetchStandingFromBackend()
+            isRefreshing.postValue(false)
         }
-        .asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+    }
 }

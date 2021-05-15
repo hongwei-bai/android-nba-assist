@@ -29,7 +29,14 @@ fun BottomNavBar(navController: NavHostController) {
                         navController.graph.startDestination, false
                     )
                     if (currentRoute != it.route) {
-                        navController.navigate(it.route)
+                        if (it.route == "dashboard") {
+                            navController.navigate(it.route) {
+                                popUpTo("dashboard") { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        } else {
+                            navController.navigate(it.route)
+                        }
                     }
                 }
             )

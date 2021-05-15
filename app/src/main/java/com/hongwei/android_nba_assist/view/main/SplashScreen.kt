@@ -1,6 +1,7 @@
 package com.hongwei.android_nba_assist.view.main
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -48,7 +49,11 @@ fun SplashScreen(navController: NavController) {
                 animationState = state
             )
             Spacer(modifier = Modifier.size(2.dp))
-            Text(stringResource(id = R.string.splash_loading_text))
+            Text(
+                text = stringResource(id = R.string.splash_loading_text),
+                color = MaterialTheme.colors.primary,
+                style = MaterialTheme.typography.h5
+            )
         }
     }
 }

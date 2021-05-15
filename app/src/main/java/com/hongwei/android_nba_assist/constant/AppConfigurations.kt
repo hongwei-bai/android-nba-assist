@@ -25,6 +25,11 @@ object AppConfigurations {
 
         const val AUTHORIZATION_HEADER = "Authorization"
         const val AUTHORIZATION_BEARER = "Bearer"
+
+        object HttpCode {
+            const val HTTP_OK = 200
+            const val HTTP_DATA_UP_TO_DATE = 205
+        }
     }
 
     object TeamScheduleConfiguration {
@@ -37,8 +42,13 @@ object AppConfigurations {
         const val MARK_TODAY_EVENT_DIM_AFTER_HOURS = 2
     }
 
+    object ForceRefreshInterval {
+        const val FOR_SCHEDULE_HOUR = 6
+        const val FOR_STANDING_HOUR = 6
+    }
+
     object Dashboard {
-        const val BANNER_HEIGHT = 140
+        const val BANNER_HEIGHT = 180
     }
 
     object Room {
@@ -54,7 +64,7 @@ object AppConfigurations {
     }
 
     object Debug {
-        const val DEBUG_TEAM_THEME_ON_LOCAL = true
+        const val DEBUG_TEAM_THEME_ON_LOCAL = false
 
         const val DEBUG_CALENDAR = false
     }

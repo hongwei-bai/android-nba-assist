@@ -1,10 +1,9 @@
 package com.hongwei.android_nba_assist.repository
 
+import com.hongwei.android_nba_assist.constant.AppConfigurations.ForceRefreshInterval
+import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.HttpCode
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
-import com.hongwei.android_nba_assist.datasource.DataSourceEmptyResult
-import com.hongwei.android_nba_assist.datasource.DataSourceResult
-import com.hongwei.android_nba_assist.datasource.DataSourceSuccessResult
-import com.hongwei.android_nba_assist.datasource.local.LocalSettings
+import com.hongwei.android_nba_assist.datasource.local.AppSettings
 import com.hongwei.android_nba_assist.datasource.mapper.NbaStandingMapper.map
 import com.hongwei.android_nba_assist.datasource.mapper.NbaTeamScheduleMapper.map
 import com.hongwei.android_nba_assist.datasource.network.service.NbaStatService
@@ -12,68 +11,90 @@ import com.hongwei.android_nba_assist.datasource.room.Event
 import com.hongwei.android_nba_assist.datasource.room.StandingDao
 import com.hongwei.android_nba_assist.datasource.room.StandingEntity
 import com.hongwei.android_nba_assist.datasource.room.TeamScheduleDao
+import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getFirstDayOfWeek
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import com.hongwei.android_nba_assist.view.main.DataStatus
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 import java.util.*
 import javax.inject.Inject
 
 class NbaStatRepository @Inject constructor(
     private val nbaStatService: NbaStatService,
     private val teamScheduleDao: TeamScheduleDao,
-    private val standingDao: StandingDao,
-    private val localSettings: LocalSettings
+    private val standingDao: StandingDao
 ) {
-    fun getNextGameInfo(team: String): Flow<DataSourceResult<Event>> {
+    private val dataStatusChannel = Channel<DataStatus>()
+
+    val dataStatus = dataStatusChannel.consumeAsFlow()
+
+    fun getNextGameInfo(team: String): Flow<Event> {
         return teamScheduleDao.getTeamSchedule().onEach {
             it ?: fetchTeamScheduleFromBackend(team)
         }.filterNotNull().map {
-            it.events.firstOrNull { eventTime ->
-                after(eventTime.unixTimeStamp)
-            }?.let { event ->
-                DataSourceSuccessResult(event)
-            } ?: DataSourceEmptyResult()
-        }
+            it.events.firstOrNull { event ->
+                after(event.unixTimeStamp)
+            }
+        }.filterNotNull()
     }
 
-    fun getTeamSchedule(team: String): Flow<DataSourceResult<List<Event>>> {
+    fun getTeamSchedule(team: String): Flow<List<Event>> {
         return teamScheduleDao.getTeamSchedule().onEach {
-            it ?: fetchTeamScheduleFromBackend(team)
+            it ?: fetchTeamScheduleFromBackend(team, it?.dataVersion)
         }.filterNotNull().map {
+            val dataMightExpire = it.timeStamp.dataMayOutdated()
+            if (dataMightExpire) {
+                dataStatusChannel.send(DataStatus.DataMayOutdated)
+                fetchTeamScheduleFromBackend(team, it.dataVersion)
+            }
             it.events.filter { eventTime ->
-                eventTime.unixTimeStamp > getFirstDayOfWeek(localSettings.startsFromMonday).timeInMillis
-            }.let { events ->
-                DataSourceSuccessResult(events)
+                eventTime.unixTimeStamp > getFirstDayOfWeek(AppSettings.weekStartsFromMonday).timeInMillis
             }
         }
     }
 
-    fun getStanding(team: String): Flow<StandingEntity> {
+    fun getStanding(): Flow<StandingEntity> {
         return standingDao.getStanding().onEach {
-            it ?: fetchStandingFromBackend(team)
-        }.filterNotNull()
-    }
-
-    suspend fun fetchTeamScheduleFromBackend(team: String) {
-        val response = nbaStatService.getTeamSchedule(team, -1)
-        val data = response.body()
-        if (response.isSuccessful && data != null) {
-            teamScheduleDao.save(data.map(team))
+            it ?: fetchStandingFromBackend(it?.dataVersion)
+        }.filterNotNull().onEach {
+            val dataMightExpire = it.timeStamp.dataMayOutdated()
+            if (dataMightExpire) {
+                dataStatusChannel.send(DataStatus.DataMayOutdated)
+                fetchStandingFromBackend(it.dataVersion)
+            }
         }
     }
 
-    suspend fun fetchStandingFromBackend(team: String) {
-        val response = nbaStatService.getStanding(-1)
+    suspend fun fetchTeamScheduleFromBackend(team: String, dataVersion: Long? = null) {
+        val response = nbaStatService.getTeamSchedule(team, dataVersion ?: -1)
         val data = response.body()
-        if (response.isSuccessful && data != null) {
-            standingDao.save(data.map())
+        when (response.code()) {
+            HttpCode.HTTP_OK -> data?.let { teamScheduleDao.save(data.map(team)) }
+            HttpCode.HTTP_DATA_UP_TO_DATE -> {
+                dataStatusChannel.send(DataStatus.DataIsUpToDate)
+                teamScheduleDao.update(System.currentTimeMillis())
+            }
+            else -> dataStatusChannel.send(DataStatus.ServiceError)
+        }
+    }
+
+    suspend fun fetchStandingFromBackend(dataVersion: Long? = null) {
+        val response = nbaStatService.getStanding(dataVersion ?: -1)
+        val data = response.body()
+        when (response.code()) {
+            HttpCode.HTTP_OK -> data?.let { standingDao.save(data.map()) }
+            HttpCode.HTTP_DATA_UP_TO_DATE -> {
+                dataStatusChannel.send(DataStatus.DataIsUpToDate)
+                standingDao.update(System.currentTimeMillis())
+            }
+            else -> dataStatusChannel.send(DataStatus.ServiceError)
         }
     }
 
     private fun after(unixTimeStamp: Long): Boolean = Calendar.getInstance().apply {
         timeInMillis = unixTimeStamp
     }.after(getAheadOfHours(IGNORE_TODAY_S_GAME_FROM_HOURS))
+
+    private fun Long.dataMayOutdated(): Boolean = System.currentTimeMillis() - this > ForceRefreshInterval.FOR_SCHEDULE_HOUR * MILLIS_PER_HOUR
 }

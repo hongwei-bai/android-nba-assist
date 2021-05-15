@@ -4,20 +4,23 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.hongwei.android_nba_assist.datasource.local.LocalSettings
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository
+import com.hongwei.android_nba_assist.view.theme.NbaTeamTheme
+import com.hongwei.android_nba_assist.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var localSettings: LocalSettings
-
     @Inject
     lateinit var nbaTeamRepository: NbaTeamRepository
 
@@ -25,8 +28,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            NavComposeApp()
+            val viewModel = hiltNavGraphViewModel<MainViewModel>()
+
+            NbaTeamTheme(viewModel.teamTheme.observeAsState().value) {
+                SystemUiController()
+
+                NavComposeApp()
+            }
         }
+    }
+}
+
+@Composable
+fun SystemUiController() {
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = false //MaterialTheme.colors.isLight
+    val systemBarColor = MaterialTheme.colors.primary
+
+    SideEffect {
+        // Update all of the system bar colors to be transparent, and use
+        // dark icons if we're in light theme
+        systemUiController.setSystemBarsColor(
+            color = systemBarColor,
+            darkIcons = useDarkIcons
+        )
+
+        // setStatusBarsColor() and setNavigationBarsColor() also exist
     }
 }
 

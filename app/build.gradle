@@ -133,6 +133,8 @@ dependencies {
     implementation "com.google.accompanist:accompanist-coil:0.8.1"
     implementation 'com.google.accompanist:accompanist-pager:0.8.1'
     implementation "com.google.accompanist:accompanist-pager-indicators:0.8.1"
+    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.8.1'
+    implementation 'com.google.accompanist:accompanist-swiperefresh:0.8.1'
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"

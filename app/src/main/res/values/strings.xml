@@ -24,6 +24,10 @@
     <string name="standing_win_lose_template">%1$d-%2$d</string>
     <string name="standing_streak_template">%1$s%2$d</string>
 
+    <string name="snack_bar_data_may_outdated">Your data may outdated, will retrieve from server&#8230;</string>
+    <string name="snack_bar_data_up_to_date">Your data is up to date.</string>
+    <string name="snack_bar_service_error">Oops! Something is wrong, please try again later.</string>
+
     <string name="date_is_up_to_date_copy">Your schedule data is up to date.</string>
     <string name="copy_right_declaration">\u00a9Copyright: hongwei.bai84\@gmail.com</string>
 </resources>

@@ -11,6 +11,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.hongwei.android_nba_assist.view.main.DataStatusSnackBar
 import com.hongwei.android_nba_assist.viewmodel.StandingViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,45 +34,55 @@ fun Season() {
 
     val standingViewModel = hiltNavGraphViewModel<StandingViewModel>()
 
-    Column {
-        TabRow(
-            selectedTabIndex = pagerState.currentPage,
-            indicator = { tabPositions ->
-                TabRowDefaults.Indicator(
-                    Modifier.pagerTabIndicatorOffset(
-                        pagerState, tabPositions
-                    )
-                )
-            }
-        ) {
-            pages.forEachIndexed { index, stage ->
-                Tab(
-                    icon = {
-                        Icon(
-                            imageVector = stage.icon,
-                            contentDescription = null
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(standingViewModel.isRefreshing.observeAsState().value == true),
+        onRefresh = { standingViewModel.refresh() },
+    ) {
+        Column {
+            DataStatusSnackBar(standingViewModel.dataStatus.observeAsState().value)
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        Modifier.pagerTabIndicatorOffset(
+                            pagerState, tabPositions
                         )
-                    },
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        GlobalScope.launch {
-                            pagerState.scrollToPage(index)
-                        }
-                    },
-                )
+                    )
+                }
+            ) {
+                pages.forEachIndexed { index, stage ->
+                    Tab(
+                        icon = {
+                            Icon(
+                                imageVector = stage.icon,
+                                contentDescription = null
+                            )
+                        },
+                        selected = pagerState.currentPage == index,
+                        onClick = {
+                            GlobalScope.launch {
+                                pagerState.scrollToPage(index)
+                            }
+                        },
+                    )
+                }
             }
-        }
 
-        HorizontalPager(state = pagerState) { page ->
-            when (page) {
-                0 -> Standing(standingViewModel.westernStanding.observeAsState().value, true)
-                6 -> Standing(standingViewModel.easternStanding.observeAsState().value, false)
-                else -> Text(
-                    text = "Page: $page",
-                    modifier = Modifier.fillMaxWidth()
-                )
+            HorizontalPager(state = pagerState) { page ->
+                when (page) {
+                    0 -> Standing(standingViewModel.westernStanding.observeAsState().value, true)
+                    1 -> PlayInTournament()
+                    2 -> PlayOff()
+                    3 -> Final()
+                    4 -> PlayOff()
+                    5 -> PlayInTournament()
+                    6 -> Standing(standingViewModel.easternStanding.observeAsState().value, false)
+                    else -> Text(
+                        text = "Page: $page",
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }
-
 }
