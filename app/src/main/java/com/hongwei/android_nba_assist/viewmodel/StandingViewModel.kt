@@ -1,6 +1,5 @@
 package com.hongwei.android_nba_assist.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.hongwei.android_nba_assist.repository.NbaStatRepository
 import com.hongwei.android_nba_assist.view.season.RankedTeamViewObject
@@ -31,7 +30,6 @@ class StandingViewModel @Inject constructor(
 
     val westernStanding: LiveData<List<RankedTeamViewObject>> =
         nbaStatRepository.getStanding().map {
-            Log.d("bbbb", "StandingViewModel: $it")
             it.western.standings.map { entity ->
                 RankedTeamViewObject(
                     rank = entity.rank,

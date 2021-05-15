@@ -28,6 +28,9 @@
     <string name="snack_bar_data_up_to_date">Your data is up to date.</string>
     <string name="snack_bar_service_error">Oops! Something is wrong, please try again later.</string>
 
+    <string name="season_play_in_tournament_title_western">Western Conference Play-in Tournament</string>
+    <string name="season_play_in_tournament_title_eastern">Eastern Conference Play-in Tournament</string>
+
     <string name="date_is_up_to_date_copy">Your schedule data is up to date.</string>
     <string name="copy_right_declaration">\u00a9Copyright: hongwei.bai84\@gmail.com</string>
 </resources>

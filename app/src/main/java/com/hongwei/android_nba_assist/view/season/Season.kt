@@ -71,11 +71,11 @@ fun Season() {
             HorizontalPager(state = pagerState) { page ->
                 when (page) {
                     0 -> Standing(standingViewModel.westernStanding.observeAsState().value, true)
-                    1 -> PlayInTournament()
-                    2 -> PlayOff()
+                    1 -> PlayInTournament(standingViewModel.westernStanding.observeAsState().value, true)
+                    2 -> PlayOff(standingViewModel.westernStanding.observeAsState().value, true)
                     3 -> Final()
-                    4 -> PlayOff()
-                    5 -> PlayInTournament()
+                    4 -> PlayOff(standingViewModel.easternStanding.observeAsState().value, false)
+                    5 -> PlayInTournament(standingViewModel.easternStanding.observeAsState().value, false)
                     6 -> Standing(standingViewModel.easternStanding.observeAsState().value, false)
                     else -> Text(
                         text = "Page: $page",
