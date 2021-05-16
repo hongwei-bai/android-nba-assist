@@ -5,7 +5,6 @@ import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_DAY
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_WEEK
 import java.util.*
-import java.util.Calendar.SUNDAY
 import java.util.Calendar.getInstance
 
 object GenerateCalendarHelper {
@@ -13,11 +12,7 @@ object GenerateCalendarHelper {
         val today = getInstance()
         val todayWeekday = getInstance().get(Calendar.DAY_OF_WEEK)
         val firstDay = if (weekStartFromMonday) {
-            if (todayWeekday == SUNDAY) {
-                LocalDateTimeUtil.getLastMondayForSunday(today)
-            } else {
-                LocalDateTimeUtil.getMondayOfWeek(today)
-            }
+            LocalDateTimeUtil.getMondayOfWeek(today)
         } else {
             LocalDateTimeUtil.getSundayOfWeek(today)
         }

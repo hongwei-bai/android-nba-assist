@@ -32,11 +32,7 @@ object LocalDateTimeUtil {
         SimpleDateFormat(format, Locale.US).format(calendar.time)
 
     fun getFirstDayOfWeek(startsFromMonday: Boolean, calendar: Calendar = getInstance()): Calendar = if (startsFromMonday) {
-        if (calendar.get(DAY_OF_WEEK) == SUNDAY) {
-            getLastMondayForSunday(calendar)
-        } else {
-            getMondayOfWeek(calendar)
-        }
+        getMondayOfWeek(calendar)
     } else {
         getSundayOfWeek(calendar)
     }
@@ -118,12 +114,11 @@ object LocalDateTimeUtil {
         return newCalendar
     }
 
-    fun getLastMondayForSunday(calendar: Calendar = getInstance()): Calendar =
-        when (calendar.get(DAY_OF_WEEK)) {
-            SUNDAY -> getWeekday(getWeekAhead(1, calendar), MONDAY)
-            else -> getMondayOfWeek(calendar)
-        }
-
+//    fun getLastMondayForSunday(calendar: Calendar = getInstance()): Calendar =
+//        when (calendar.get(DAY_OF_WEEK)) {
+//            SUNDAY -> getWeekday(getWeekAhead(1, calendar), MONDAY)
+//            else -> getMondayOfWeek(calendar)
+//        }
 
     fun getWeekAhead(weekNumber: Int, calendar: Calendar = getInstance()): Calendar {
         val newCalendar: Calendar = calendar.clone() as Calendar
@@ -131,13 +126,28 @@ object LocalDateTimeUtil {
         return newCalendar
     }
 
-    fun getMondayOfWeek(calendar: Calendar = getInstance()): Calendar = getWeekday(calendar, MONDAY)
+    fun getMondayOfWeek(calendar: Calendar = getInstance()): Calendar =
+        if (calendar.get(DAY_OF_WEEK) == SUNDAY) {
+            getInstance().apply {
+                timeInMillis = getToday(calendar).timeInMillis - MILLIS_PER_DAY * 6
+            }
+        } else {
+            getWeekday(calendar, MONDAY)
+        }
 
     fun getSundayOfWeek(calendar: Calendar = getInstance()): Calendar = getWeekday(calendar, SUNDAY)
 
+    private fun getToday(calendar: Calendar = getInstance()): Calendar {
+        val newCalendar: Calendar = calendar.clone() as Calendar
+        newCalendar.set(HOUR_OF_DAY, 0)
+        newCalendar.set(MINUTE, 0)
+        newCalendar.set(SECOND, 0)
+        newCalendar.set(MILLISECOND, 0)
+        return newCalendar
+    }
+
     private fun getWeekday(calendar: Calendar = getInstance(), weekday: Int): Calendar {
         val newCalendar: Calendar = calendar.clone() as Calendar
-//        println(">>> newCalendar: ${debugDateTime(newCalendar)}")
         newCalendar.set(DAY_OF_WEEK, weekday)
         newCalendar.set(HOUR_OF_DAY, 0)
         newCalendar.set(MINUTE, 0)
