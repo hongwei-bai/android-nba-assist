@@ -94,7 +94,7 @@ private fun Team(rank: RankedTeamViewObject) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .height(40.dp)
+            .height(45.dp)
             .padding(top = 0.dp, bottom = 0.dp)
     ) {
         val color = when (rank.rank) {

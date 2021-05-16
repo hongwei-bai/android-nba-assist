@@ -4,13 +4,11 @@ import com.hongwei.android_nba_assist.constant.AppConfigurations.ForceRefreshInt
 import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.HttpCode
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assist.datasource.local.AppSettings
+import com.hongwei.android_nba_assist.datasource.mapper.NbaPlayOffMapper.map
 import com.hongwei.android_nba_assist.datasource.mapper.NbaStandingMapper.map
 import com.hongwei.android_nba_assist.datasource.mapper.NbaTeamScheduleMapper.map
 import com.hongwei.android_nba_assist.datasource.network.service.NbaStatService
-import com.hongwei.android_nba_assist.datasource.room.Event
-import com.hongwei.android_nba_assist.datasource.room.StandingDao
-import com.hongwei.android_nba_assist.datasource.room.StandingEntity
-import com.hongwei.android_nba_assist.datasource.room.TeamScheduleDao
+import com.hongwei.android_nba_assist.datasource.room.*
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getFirstDayOfWeek
@@ -23,7 +21,8 @@ import javax.inject.Inject
 class NbaStatRepository @Inject constructor(
     private val nbaStatService: NbaStatService,
     private val teamScheduleDao: TeamScheduleDao,
-    private val standingDao: StandingDao
+    private val standingDao: StandingDao,
+    private val playOffDao: PlayOffDao
 ) {
     private val dataStatusChannel = Channel<DataStatus>()
 
@@ -87,6 +86,19 @@ class NbaStatRepository @Inject constructor(
             HttpCode.HTTP_DATA_UP_TO_DATE -> {
                 dataStatusChannel.send(DataStatus.DataIsUpToDate)
                 standingDao.update(System.currentTimeMillis())
+            }
+            else -> dataStatusChannel.send(DataStatus.ServiceError)
+        }
+    }
+
+    suspend fun fetchPlayOffFromBackend(dataVersion: Long? = null) {
+        val response = nbaStatService.getPlayOff(dataVersion ?: -1)
+        val data = response.body()
+        when (response.code()) {
+            HttpCode.HTTP_OK -> data?.let { playOffDao.save(data.map()) }
+            HttpCode.HTTP_DATA_UP_TO_DATE -> {
+                dataStatusChannel.send(DataStatus.DataIsUpToDate)
+                playOffDao.update(System.currentTimeMillis())
             }
             else -> dataStatusChannel.send(DataStatus.ServiceError)
         }

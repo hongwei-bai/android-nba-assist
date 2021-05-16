@@ -36,29 +36,90 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, onLeft: Boolean) {
             modifier = Modifier
                 .padding(vertical = 6.dp)
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .fillMaxHeight()
                 .background(color = BlackAlphaA0)
                 .verticalScroll(ScrollState(0))
         ) {
             PlayInHeader(onLeft)
-            standing?.subList(0, 10)?.forEach {
-                PlayInTeam(it)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(10f)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(3f)
+                ) {
+                    standing?.subList(0, 10)?.forEach {
+                        AllPotentialPlayOffTeams(it, Modifier.weight(1f))
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(2f)
+                ) {
+                    Spacer(modifier = Modifier.weight(6f))
+                    standing?.subList(6, 10)?.forEach {
+                        MidPlayInTeams(it, Modifier.weight(1f))
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f)
+                ) {
+                    Spacer(modifier = Modifier.weight(6f))
+                    standing?.subList(6, 8)?.forEach {
+                        RankTeam(rank = it)
+                        Spacer(modifier = Modifier.weight(0.5f))
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
+            Spacer(modifier = Modifier.weight(1f))
+        }
+    }
+}
+
+@Composable
+private fun MidPlayInTeams(rank: RankedTeamViewObject, modifier: Modifier = Modifier) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .padding(top = 0.dp, bottom = 0.dp)
+    ) {
+        Text(
+            text = if (rank.rank == 7 || rank.rank == 9) "W" else "L",
+            style = MaterialTheme.typography.subtitle2,
+            color = getTextColorByRank(rank.rank),
+            textAlign = TextAlign.End,
+            modifier = Modifier.wrapContentWidth()
+        )
+        RankTeam(modifier = Modifier.weight(1f), rank = rank)
+        val colorOnPrimary = MaterialTheme.colors.onPrimary
+        Row(modifier = Modifier.weight(2f)) {
+            when (rank.rank) {
+                8 -> TournamentLinePrePromotion(colorOnPrimary, true)
+                9 -> TournamentLinePrePromotion(colorOnPrimary, false)
+                else -> {
+                }
             }
         }
     }
 }
 
 @Composable
-private fun PlayInTeam(rank: RankedTeamViewObject) {
+private fun AllPotentialPlayOffTeams(rank: RankedTeamViewObject, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .height(40.dp)
+        modifier = modifier
             .padding(top = 0.dp, bottom = 0.dp)
     ) {
-        RankTeam(modifier = Modifier.weight(3f), rank = rank, isLogoOnly = false)
+        RankTeam(modifier = Modifier.weight(1f), rank = rank, isLogoOnly = false)
         val colorOnPrimary = MaterialTheme.colors.onPrimary
-        Row(modifier = Modifier.weight(2f)) {
+        Row(modifier = Modifier.weight(1f)) {
             when (rank.rank) {
                 7 -> TournamentLinePrePromotion(colorOnPrimary, true)
                 8 -> TournamentLinePrePromotion(colorOnPrimary, false)
@@ -68,13 +129,6 @@ private fun PlayInTeam(rank: RankedTeamViewObject) {
                 }
             }
         }
-        RankTeam(modifier = Modifier.weight(2f), rank = rank)
-        Row(modifier = Modifier.weight(2f)) {
-            Canvas(modifier = Modifier) {
-
-            }
-        }
-        RankTeam(modifier = Modifier.weight(2f), rank = rank)
     }
 }
 
@@ -84,7 +138,7 @@ private fun TournamentLinePrePromotion(onPrimary: Color, highRankTeam: Boolean) 
     Canvas(modifier = Modifier.fillMaxSize()) {
         val canvasWidth = size.width
         val canvasHeight = size.height
-        val nextRoundWidth = canvasWidth * 0.6f
+        val nextRoundWidth = canvasWidth * 0.9f
         drawLine(
             start = Offset(x = 0f, y = canvasHeight / 2),
             end = Offset(x = nextRoundWidth, y = canvasHeight / 2),
@@ -110,7 +164,7 @@ private fun TournamentLinePrePromotion(onPrimary: Color, highRankTeam: Boolean) 
 }
 
 @Composable
-private fun RankTeam(modifier: Modifier, rank: RankedTeamViewObject, isLogoOnly: Boolean = true) {
+private fun RankTeam(modifier: Modifier = Modifier, rank: RankedTeamViewObject, isLogoOnly: Boolean = true) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -121,7 +175,7 @@ private fun RankTeam(modifier: Modifier, rank: RankedTeamViewObject, isLogoOnly:
                 style = MaterialTheme.typography.subtitle2,
                 color = getTextColorByRank(rank.rank),
                 textAlign = TextAlign.End,
-                modifier = Modifier.width(32.dp)
+                modifier = Modifier.width(24.dp)
             )
         }
         TeamLogo(

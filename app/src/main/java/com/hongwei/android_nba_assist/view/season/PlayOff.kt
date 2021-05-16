@@ -36,24 +36,27 @@ fun PlayOff(standing: List<RankedTeamViewObject>?, onLeft: Boolean) {
             modifier = Modifier
                 .padding(vertical = 6.dp)
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .fillMaxHeight()
                 .background(color = BlackAlphaA0)
                 .verticalScroll(ScrollState(0))
         ) {
             PlayInHeader(onLeft)
-            standing?.subList(0, 8)?.forEach {
-                PlayOffTeam(it)
+            playOffMatching.forEach { rank ->
+                val rankTeam = standing?.get(rank - 1)
+                rankTeam?.let {
+                    PlayOffTeam(rankTeam, Modifier.weight(1f))
+                }
             }
+            Spacer(modifier = Modifier.weight(3f))
         }
     }
 }
 
 @Composable
-private fun PlayOffTeam(rank: RankedTeamViewObject) {
+private fun PlayOffTeam(rank: RankedTeamViewObject, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .height(40.dp)
+        modifier = modifier
             .padding(top = 0.dp, bottom = 0.dp)
     ) {
         RankTeam(modifier = Modifier.weight(3f), rank = rank, isLogoOnly = false)
@@ -177,3 +180,5 @@ private fun getTeamLogoAlphaByRank(rank: Int): Float = when (rank) {
     in 9..10 -> 0.9f
     else -> 0.6f
 }
+
+private val playOffMatching = listOf(1, 8, 4, 5, 3, 6, 2, 7)

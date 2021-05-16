@@ -47,10 +47,6 @@ object AppConfigurations {
         const val FOR_STANDING_HOUR = 6
     }
 
-    object Dashboard {
-        const val BANNER_HEIGHT = 180
-    }
-
     object Room {
         const val API_VERSION = 1
     }

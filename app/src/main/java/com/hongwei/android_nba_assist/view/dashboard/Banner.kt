@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.ImageLoadState
 import com.hongwei.android_nba_assist.R
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Dashboard.BANNER_HEIGHT
 import com.hongwei.android_nba_assist.view.animation.LoadingDots
 
 @Composable
@@ -36,11 +35,11 @@ fun Banner(url: String?) {
                 contentScale = ContentScale.FillWidth,
                 contentDescription = null,
                 modifier = Modifier
-                    .height(BANNER_HEIGHT.dp)
+                    .height(bannerHeight)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(bottomStart = 6.dp, bottomEnd = 6.dp))
             )
-            ImageLoadState.Loading -> LoadingDots()
+            ImageLoadState.Loading -> LoadingDots(Modifier.height(bannerHeight))
             else -> Image(
                 painter = painterResource(id = R.drawable.banner_placeholder),
                 contentDescription = null,
@@ -50,3 +49,5 @@ fun Banner(url: String?) {
         }
     }
 }
+
+private val bannerHeight = 150.dp

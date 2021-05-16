@@ -2,10 +2,7 @@ package com.hongwei.android_nba_assist.hilt
 
 import android.content.Context
 import androidx.room.Room
-import com.hongwei.android_nba_assist.datasource.room.NbaDatabase
-import com.hongwei.android_nba_assist.datasource.room.StandingDao
-import com.hongwei.android_nba_assist.datasource.room.TeamScheduleDao
-import com.hongwei.android_nba_assist.datasource.room.TeamThemeDao
+import com.hongwei.android_nba_assist.datasource.room.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +21,11 @@ class DatabaseModule {
     @Provides
     fun provideStandingDao(nbaDatabase: NbaDatabase): StandingDao {
         return nbaDatabase.standingDao()
+    }
+
+    @Provides
+    fun providePlayOff(nbaDatabase: NbaDatabase): PlayOffDao {
+        return nbaDatabase.playOff()
     }
 
     @Provides
