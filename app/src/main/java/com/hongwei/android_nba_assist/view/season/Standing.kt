@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getResourceIdByName
+import com.hongwei.android_nba_assist.view.animation.LoadingContent
 import com.hongwei.android_nba_assist.view.component.TeamLogo
 import com.hongwei.android_nba_assist.view.theme.BlackAlphaA0
 import com.hongwei.android_nba_assist.view.theme.Grey50
@@ -29,36 +30,38 @@ import java.util.*
 
 @Composable
 fun Standing(standing: List<RankedTeamViewObject>?, onLeft: Boolean) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = MaterialTheme.colors.primary)
-    ) {
-        val modifier = if (onLeft) {
-            Modifier
-                .padding(top = 6.dp, start = 6.dp, bottom = 6.dp)
-                .clip(RoundedCornerShape(topStart = 4.dp, bottomStart = 4.dp))
-        } else {
-            Modifier
-                .padding(top = 6.dp, end = 6.dp, bottom = 6.dp)
-                .clip(RoundedCornerShape(topEnd = 4.dp, bottomEnd = 4.dp))
-        }
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .background(color = BlackAlphaA0)
-                .verticalScroll(ScrollState(0))
+    standing?.let {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colors.primary)
         ) {
-            StandingHeader()
-            standing?.forEach {
-                Team(it)
-                if (it.rank == 10) {
-                    Divider(color = Red900, thickness = 1.dp)
+            val modifier = if (onLeft) {
+                Modifier
+                    .padding(top = 6.dp, start = 6.dp, bottom = 6.dp)
+                    .clip(RoundedCornerShape(topStart = 4.dp, bottomStart = 4.dp))
+            } else {
+                Modifier
+                    .padding(top = 6.dp, end = 6.dp, bottom = 6.dp)
+                    .clip(RoundedCornerShape(topEnd = 4.dp, bottomEnd = 4.dp))
+            }
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .background(color = BlackAlphaA0)
+                    .verticalScroll(ScrollState(0))
+            ) {
+                StandingHeader()
+                standing?.forEach {
+                    Team(it)
+                    if (it.rank == 10) {
+                        Divider(color = Red900, thickness = 1.dp)
+                    }
                 }
             }
         }
-    }
+    } ?: LoadingContent(modifier = Modifier.background(color = MaterialTheme.colors.primary))
 }
 
 @Composable
@@ -124,8 +127,8 @@ private fun Team(rank: RankedTeamViewObject) {
                 logoUrl = rank.team.logo,
                 localPlaceholderResId = getResourceIdByName(LocalContext.current, rank.team.abbrev),
                 modifier = Modifier
-                    .size(40.dp)
                     .padding(start = 4.dp, end = 4.dp)
+                    .size(40.dp)
                     .alpha(iconAlpha)
             )
             Text(

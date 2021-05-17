@@ -14,10 +14,10 @@ import com.hongwei.android_nba_assist.R
 
 @Preview
 @Composable
-fun LoadingDots(modifier: Modifier = Modifier) {
-    val animationSpec = remember { LottieAnimationSpec.RawRes(R.raw.loading_dots) }
+fun LoadingImage(modifier: Modifier = Modifier) {
+    val animationSpec = remember { LottieAnimationSpec.RawRes(R.raw.loading_small) }
     val state = LottieAnimationState(isPlaying = true, repeatCount = Integer.MAX_VALUE)
-    state.speed = 0.75f
+    state.speed = 1f
     Column(
         modifier = Modifier
             .fillMaxWidth(),

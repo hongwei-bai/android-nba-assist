@@ -69,7 +69,9 @@ object NbaPlayOffMapper {
 
     private fun PlayInConferenceResponse.map() = PlayInConferenceEntity(
         winnerOf78 = winnerOf78,
+        loserOf78 = loserOf78,
         winnerOf910 = winnerOf910,
+        loserOf910 = loserOf910,
         lastWinner = lastWinner
     )
 }

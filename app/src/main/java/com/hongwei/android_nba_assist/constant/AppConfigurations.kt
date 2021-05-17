@@ -32,6 +32,10 @@ object AppConfigurations {
         }
     }
 
+    object LogoConfiguration {
+        const val useLocalLogos: Boolean = true
+    }
+
     object TeamScheduleConfiguration {
         const val DAYS_PER_CALENDAR_ROW = 7
         const val DISPLAY_HOURS_IN_HOURS = 8
@@ -45,6 +49,7 @@ object AppConfigurations {
     object ForceRefreshInterval {
         const val FOR_SCHEDULE_HOUR = 6
         const val FOR_STANDING_HOUR = 6
+        const val FOR_STANDING_PLAYOFF = 6
     }
 
     object Room {

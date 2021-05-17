@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5b986fb82c98ec18648b3fee8c9d6bfd",
+    "identityHash": "185211e3370db6b073ad042afdb3046c",
     "entities": [
       {
         "tableName": "team_schedule",
@@ -93,6 +93,68 @@
         "foreignKeys": []
       },
       {
+        "tableName": "playoff",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `seasonOngoing` INTEGER NOT NULL, `playInOngoing` INTEGER NOT NULL, `playOffOngoing` INTEGER NOT NULL, `playIn` TEXT NOT NULL, `playOff` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
+        "fields": [
+          {
+            "fieldPath": "apiVersion",
+            "columnName": "apiVersion",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeStamp",
+            "columnName": "timeStamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dataVersion",
+            "columnName": "dataVersion",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "seasonOngoing",
+            "columnName": "seasonOngoing",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playInOngoing",
+            "columnName": "playInOngoing",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playOffOngoing",
+            "columnName": "playOffOngoing",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playIn",
+            "columnName": "playIn",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playOff",
+            "columnName": "playOff",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "apiVersion"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
         "tableName": "team_theme",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `dataVersion` INTEGER NOT NULL, `bannerUrl` TEXT NOT NULL, `backgroundUrl` TEXT NOT NULL, `colorLight` INTEGER, `colorHome` INTEGER, `colorGuest` INTEGER, PRIMARY KEY(`apiVersion`))",
         "fields": [
@@ -158,7 +220,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5b986fb82c98ec18648b3fee8c9d6bfd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '185211e3370db6b073ad042afdb3046c')"
     ]
   }
 }

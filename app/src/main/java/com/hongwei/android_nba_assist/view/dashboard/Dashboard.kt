@@ -13,44 +13,55 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.hongwei.android_nba_assist.view.animation.LoadingContent
 import com.hongwei.android_nba_assist.view.main.DataStatusSnackBar
 import com.hongwei.android_nba_assist.viewmodel.DashboardViewModel
 
 @Composable
 fun Dashboard() {
     val viewModel = hiltNavGraphViewModel<DashboardViewModel>()
-
     SwipeRefresh(
         state = rememberSwipeRefreshState(viewModel.isRefreshing.observeAsState().value == true),
         onRefresh = { viewModel.refresh() },
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .verticalScroll(ScrollState(0))
+        val gamesLeft = viewModel.gamesLeft.observeAsState().value
+        val calendarDays = viewModel.calendarDays.observeAsState().value
+        val upcomingGames = viewModel.upcomingGames.observeAsState().value
+
+        if (calendarDays != null
+            && gamesLeft != null
+            && upcomingGames != null
         ) {
-            DataStatusSnackBar(viewModel.dataStatus.observeAsState().value)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .verticalScroll(ScrollState(0))
+            ) {
+                DataStatusSnackBar(viewModel.dataStatus.observeAsState().value)
 
-            GamesLeftView(viewModel.gamesLeft.observeAsState().value)
-            Spacer(modifier = Modifier.size(20.dp))
+                GamesLeftView(gamesLeft)
+                Spacer(modifier = Modifier.size(20.dp))
 
-            UpcomingGameCountdown(
-                viewModel.upcomingGameTime.observeAsState().value,
-                viewModel.countdownString.observeAsState().value
-            )
-            Spacer(modifier = Modifier.size(30.dp))
+                UpcomingGameCountdown(
+                    eventTime = viewModel.upcomingGameTime.observeAsState().value,
+                    countdown = viewModel.countdownString.observeAsState().value
+                )
+                Spacer(modifier = Modifier.size(30.dp))
 
-            UpcomingGameInfo(
-                viewModel.myTeam.observeAsState().value,
-                viewModel.nextGameInfo.observeAsState().value
-            )
-            Spacer(modifier = Modifier.size(10.dp))
+                UpcomingGameInfo(
+                    myTeam = viewModel.myTeam.observeAsState().value,
+                    event = viewModel.nextGameInfo.observeAsState().value
+                )
+                Spacer(modifier = Modifier.size(10.dp))
 
-            Calendar(
-                calendarDays = viewModel.calendarDays.observeAsState().value,
-                events = viewModel.upcomingGames.observeAsState().value,
-                backgroundUrl = viewModel.teamBackground.observeAsState().value
-            )
+                Calendar(
+                    calendarDays = calendarDays,
+                    events = upcomingGames,
+                    backgroundUrl = viewModel.teamBackground.observeAsState().value
+                )
+            }
+        } else {
+            LoadingContent()
         }
     }
 }

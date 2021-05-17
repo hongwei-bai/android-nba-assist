@@ -31,6 +31,7 @@ class SettingsViewModel @Inject constructor(
             nbaTeamRepository.fetchTeamThemeFromBackend(team)
             nbaStatRepository.fetchTeamScheduleFromBackend(team)
             nbaStatRepository.fetchStandingFromBackend()
+            nbaStatRepository.fetchPlayOffFromBackend()
         }
     }
 }

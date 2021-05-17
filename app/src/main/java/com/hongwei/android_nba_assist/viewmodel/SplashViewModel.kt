@@ -17,7 +17,7 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
     fun preload(onPreloadComplete: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
-            delay(500)
+            delay(20)
             nbaTeamRepository.fetchTeamThemeFromBackend(AppSettings.myTeam)
             viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) {
                 onPreloadComplete.invoke()

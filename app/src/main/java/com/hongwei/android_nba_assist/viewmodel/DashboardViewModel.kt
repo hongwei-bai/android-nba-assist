@@ -128,10 +128,10 @@ class DashboardViewModel @Inject constructor(
                 upcomingGameTime.postValue(eventTime)
                 when (getUpcomingRange(eventTime)) {
                     UpcomingRange.CountingDown -> {
-                        upcomingGameCounter.startCountDown(eventTime)
+                        upcomingGameCounter.startCountDown(viewModelScope, eventTime)
                     }
                     UpcomingRange.CountingUp -> {
-                        upcomingGameCounter.startCountUp(eventTime)
+                        upcomingGameCounter.startCountUp(viewModelScope, eventTime)
                     }
                 }
             }.collect()

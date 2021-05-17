@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PlayOffDao {
     @Query("SELECT * FROM playoff WHERE apiVersion=$API_VERSION")
-    fun getStanding(): Flow<PlayOffEntity?>
+    fun getPlayOff(): Flow<PlayOffEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(playOffEntity: PlayOffEntity)

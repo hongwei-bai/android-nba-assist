@@ -22,7 +22,7 @@ data class PlayOffEntity(
     val playOffOngoing: Boolean,
     @SerializedName("play_in")
     val playIn: PlayInEntity,
-    @SerializedName("playoff")
+    @SerializedName("playoff_sub")
     val playOff: PlayOffSubEntity
 )
 
@@ -39,7 +39,9 @@ data class PlayOffSubEntity(
 
 data class PlayInConferenceEntity(
     val winnerOf78: String,
+    val loserOf78: String,
     val winnerOf910: String,
+    val loserOf910: String,
     val lastWinner: String
 )
 

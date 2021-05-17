@@ -2,6 +2,7 @@ package com.hongwei.android_nba_assist.view.dashboard
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -34,7 +35,8 @@ fun GamesLeftView(@PreviewParameter(UrlProvider::class) gamesLeft: Int?) {
             }
             0 -> Text(
                 text = stringResource(R.string.no_games_left),
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.padding(top = 24.dp)
             )
             else -> {
                 Text(

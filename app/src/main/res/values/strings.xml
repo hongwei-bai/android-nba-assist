@@ -33,6 +33,8 @@
     <string name="season_play_off_title_western">Western Conference PlayOff</string>
     <string name="season_play_off_title_eastern">Eastern Conference PlayOff</string>
     <string name="season_final">Grand Final</string>
+    <string name="season_winner_symbol">W</string>
+    <string name="season_loser_symbol">L</string>
 
     <string name="settings_weeks_start_from_monday">Week starts from Monday</string>
     <string name="settings_monday">Monday</string>

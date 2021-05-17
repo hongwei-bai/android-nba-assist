@@ -14,7 +14,9 @@ import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.hongwei.android_nba_assist.view.main.DataStatusSnackBar
-import com.hongwei.android_nba_assist.viewmodel.StandingViewModel
+import com.hongwei.android_nba_assist.view.season.playin.PlayInTournament
+import com.hongwei.android_nba_assist.view.season.playoff.PlayOff
+import com.hongwei.android_nba_assist.viewmodel.SeasonViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -32,14 +34,14 @@ fun Season() {
     )
     val pagerState = rememberPagerState(pageCount = pages.size)
 
-    val standingViewModel = hiltNavGraphViewModel<StandingViewModel>()
+    val seasonViewModel = hiltNavGraphViewModel<SeasonViewModel>()
 
     SwipeRefresh(
-        state = rememberSwipeRefreshState(standingViewModel.isRefreshing.observeAsState().value == true),
-        onRefresh = { standingViewModel.refresh() },
+        state = rememberSwipeRefreshState(seasonViewModel.isRefreshing.observeAsState().value == true),
+        onRefresh = { seasonViewModel.refresh() },
     ) {
         Column {
-            DataStatusSnackBar(standingViewModel.dataStatus.observeAsState().value)
+            DataStatusSnackBar(seasonViewModel.dataStatus.observeAsState().value)
             TabRow(
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
@@ -70,13 +72,29 @@ fun Season() {
 
             HorizontalPager(state = pagerState) { page ->
                 when (page) {
-                    0 -> Standing(standingViewModel.westernStanding.observeAsState().value, true)
-                    1 -> PlayInTournament(standingViewModel.westernStanding.observeAsState().value, true)
-                    2 -> PlayOff(standingViewModel.westernStanding.observeAsState().value, true)
-                    3 -> Final()
-                    4 -> PlayOff(standingViewModel.easternStanding.observeAsState().value, false)
-                    5 -> PlayInTournament(standingViewModel.easternStanding.observeAsState().value, false)
-                    6 -> Standing(standingViewModel.easternStanding.observeAsState().value, false)
+                    0 -> Standing(seasonViewModel.westernStanding.observeAsState().value, true)
+                    1 -> PlayInTournament(
+                        seasonViewModel.westernStanding.observeAsState().value,
+                        seasonViewModel.westernPlayIn.observeAsState().value,
+                        true
+                    )
+                    2 -> PlayOff(
+                        seasonViewModel.westernStanding.observeAsState().value,
+                        seasonViewModel.westernPlayOff.observeAsState().value,
+                        true
+                    )
+                    3 -> Final(seasonViewModel.playOffGrandFinal.observeAsState().value)
+                    4 -> PlayOff(
+                        seasonViewModel.easternStanding.observeAsState().value,
+                        seasonViewModel.westernPlayOff.observeAsState().value,
+                        false
+                    )
+                    5 -> PlayInTournament(
+                        seasonViewModel.easternStanding.observeAsState().value,
+                        seasonViewModel.easternPlayIn.observeAsState().value,
+                        false
+                    )
+                    6 -> Standing(seasonViewModel.easternStanding.observeAsState().value, false)
                     else -> Text(
                         text = "Page: $page",
                         modifier = Modifier.fillMaxWidth()

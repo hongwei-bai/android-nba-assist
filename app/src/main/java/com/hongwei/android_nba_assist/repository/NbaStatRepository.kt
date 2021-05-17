@@ -42,7 +42,7 @@ class NbaStatRepository @Inject constructor(
         return teamScheduleDao.getTeamSchedule().onEach {
             it ?: fetchTeamScheduleFromBackend(team, it?.dataVersion)
         }.filterNotNull().map {
-            val dataMightExpire = it.timeStamp.dataMayOutdated()
+            val dataMightExpire = it.dataMayOutdated()
             if (dataMightExpire) {
                 dataStatusChannel.send(DataStatus.DataMayOutdated)
                 fetchTeamScheduleFromBackend(team, it.dataVersion)
@@ -57,10 +57,22 @@ class NbaStatRepository @Inject constructor(
         return standingDao.getStanding().onEach {
             it ?: fetchStandingFromBackend(it?.dataVersion)
         }.filterNotNull().onEach {
-            val dataMightExpire = it.timeStamp.dataMayOutdated()
+            val dataMightExpire = it.dataMayOutdated()
             if (dataMightExpire) {
                 dataStatusChannel.send(DataStatus.DataMayOutdated)
                 fetchStandingFromBackend(it.dataVersion)
+            }
+        }
+    }
+
+    fun getPlayOff(): Flow<PlayOffEntity> {
+        return playOffDao.getPlayOff().onEach {
+            it ?: fetchPlayOffFromBackend(it?.dataVersion)
+        }.filterNotNull().onEach {
+            val dataMightExpire = it.dataMayOutdated()
+            if (dataMightExpire) {
+                dataStatusChannel.send(DataStatus.DataMayOutdated)
+                fetchPlayOffFromBackend(it.dataVersion)
             }
         }
     }
@@ -95,7 +107,9 @@ class NbaStatRepository @Inject constructor(
         val response = nbaStatService.getPlayOff(dataVersion ?: -1)
         val data = response.body()
         when (response.code()) {
-            HttpCode.HTTP_OK -> data?.let { playOffDao.save(data.map()) }
+            HttpCode.HTTP_OK -> data?.let {
+                playOffDao.save(data.map())
+            }
             HttpCode.HTTP_DATA_UP_TO_DATE -> {
                 dataStatusChannel.send(DataStatus.DataIsUpToDate)
                 playOffDao.update(System.currentTimeMillis())
@@ -108,5 +122,12 @@ class NbaStatRepository @Inject constructor(
         timeInMillis = unixTimeStamp
     }.after(getAheadOfHours(IGNORE_TODAY_S_GAME_FROM_HOURS))
 
-    private fun Long.dataMayOutdated(): Boolean = System.currentTimeMillis() - this > ForceRefreshInterval.FOR_SCHEDULE_HOUR * MILLIS_PER_HOUR
+    private fun TeamScheduleEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
+            ForceRefreshInterval.FOR_SCHEDULE_HOUR * MILLIS_PER_HOUR
+
+    private fun StandingEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
+            ForceRefreshInterval.FOR_STANDING_HOUR * MILLIS_PER_HOUR
+
+    private fun PlayOffEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
+            ForceRefreshInterval.FOR_STANDING_PLAYOFF * MILLIS_PER_HOUR
 }
