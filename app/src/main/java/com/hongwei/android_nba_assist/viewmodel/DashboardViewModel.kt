@@ -35,10 +35,15 @@ class DashboardViewModel @Inject constructor(
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val dataStatus = liveData {
-        nbaStatRepository.dataStatus.collect {
-            emit(it)
-            delay(3000)
-            emit(null)
+        try {
+            nbaStatRepository.dataStatus.collect {
+                emit(it)
+                delay(3000)
+                emit(null)
+            }
+        } catch (e: Exception) {
+            Log.d("bbbb", "[AGAIN]java.lang.IllegalStateException: ReceiveChannel.consumeAsFlow can be collected just once")
+            e.printStackTrace()
         }
     }
 
@@ -50,7 +55,7 @@ class DashboardViewModel @Inject constructor(
 
     val myTeam: MutableLiveData<String> = MutableLiveData()
 
-    val teamBackground: LiveData<String> =
+    val teamBackground: LiveData<String?> =
         nbaTeamRepository.getTeamTheme(AppSettings.myTeam)
             .map { it.backgroundUrl }
             .asLiveData(viewModelScope.coroutineContext)

@@ -10,7 +10,6 @@ import java.util.Calendar.getInstance
 object GenerateCalendarHelper {
     fun generateCalendarDays(events: List<Event>, scheduleWeeks: Int, weekStartFromMonday: Boolean): List<List<Calendar>> {
         val today = getInstance()
-        val todayWeekday = getInstance().get(Calendar.DAY_OF_WEEK)
         val firstDay = if (weekStartFromMonday) {
             LocalDateTimeUtil.getMondayOfWeek(today)
         } else {

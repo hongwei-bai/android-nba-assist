@@ -12,7 +12,7 @@ fun DataStatusSnackBar(dataStatus: DataStatus?) {
     val message: String? = when (dataStatus) {
         is DataStatus.DataMayOutdated -> stringResource(id = R.string.snack_bar_data_may_outdated)
         is DataStatus.DataIsUpToDate -> stringResource(id = R.string.snack_bar_data_up_to_date)
-        is DataStatus.ServiceError -> stringResource(id = R.string.snack_bar_service_error)
+        is DataStatus.ServiceError -> dataStatus.message ?: stringResource(id = R.string.snack_bar_service_error)
         else -> null
     }
     message?.let {
@@ -29,5 +29,5 @@ fun DataStatusSnackBar(dataStatus: DataStatus?) {
 sealed class DataStatus {
     object DataMayOutdated : DataStatus()
     object DataIsUpToDate : DataStatus()
-    object ServiceError : DataStatus()
+    data class ServiceError(val message: String? = null) : DataStatus()
 }

@@ -1,10 +1,7 @@
 package com.hongwei.android_nba_assist.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.hongwei.android_nba_assist.datasource.local.AppSettings
 import com.hongwei.android_nba_assist.repository.NbaStatRepository
 import com.hongwei.android_nba_assist.repository.NbaTeamRepository
@@ -25,13 +22,40 @@ class SettingsViewModel @Inject constructor(
             .map { it.bannerUrl }
             .asLiveData(viewModelScope.coroutineContext)
 
+    val scheduleWeeksSettingChanged: MutableLiveData<Boolean> = MutableLiveData()
+
+    val weekStartFromMondaySettingChanged: MutableLiveData<Boolean> = MutableLiveData()
+
+    init {
+        scheduleWeeksSettingChanged.value = AppSettings.hasScheduleWeeksSettingChanged()
+        weekStartFromMondaySettingChanged.value = AppSettings.hasWeekStartFromMondaySettingChanged()
+    }
+
     fun switchTeam(context: Context, team: String) {
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
             AppSettings.setTeam(context, team)
-            nbaTeamRepository.fetchTeamThemeFromBackend(team)
-            nbaStatRepository.fetchTeamScheduleFromBackend(team)
-            nbaStatRepository.fetchStandingFromBackend()
-            nbaStatRepository.fetchPlayOffFromBackend()
+            reloadAll()
         }
+    }
+
+    fun setScheduleWeeks(context: Context, weeks: Int) {
+        viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
+            AppSettings.setScheduleWeeks(context, weeks)
+            scheduleWeeksSettingChanged.postValue(AppSettings.hasScheduleWeeksSettingChanged())
+        }
+    }
+
+    fun setWeekStartFromMonday(context: Context, isStartFromMonday: Boolean) {
+        viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
+            AppSettings.setStartFromMonday(context, isStartFromMonday)
+            weekStartFromMondaySettingChanged.postValue(AppSettings.hasWeekStartFromMondaySettingChanged())
+        }
+    }
+
+    private suspend fun reloadAll() {
+        nbaTeamRepository.fetchTeamThemeFromBackend(AppSettings.myTeam)
+        nbaStatRepository.fetchTeamScheduleFromBackend(AppSettings.myTeam)
+        nbaStatRepository.fetchStandingFromBackend()
+        nbaStatRepository.fetchPlayOffFromBackend()
     }
 }

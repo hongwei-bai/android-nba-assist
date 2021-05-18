@@ -86,7 +86,7 @@ class NbaStatRepository @Inject constructor(
                 dataStatusChannel.send(DataStatus.DataIsUpToDate)
                 teamScheduleDao.update(System.currentTimeMillis())
             }
-            else -> dataStatusChannel.send(DataStatus.ServiceError)
+            else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch schedules data error, code: ${response.code()}"))
         }
     }
 
@@ -99,7 +99,7 @@ class NbaStatRepository @Inject constructor(
                 dataStatusChannel.send(DataStatus.DataIsUpToDate)
                 standingDao.update(System.currentTimeMillis())
             }
-            else -> dataStatusChannel.send(DataStatus.ServiceError)
+            else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch standings data error, code: ${response.code()}"))
         }
     }
 
@@ -114,7 +114,7 @@ class NbaStatRepository @Inject constructor(
                 dataStatusChannel.send(DataStatus.DataIsUpToDate)
                 playOffDao.update(System.currentTimeMillis())
             }
-            else -> dataStatusChannel.send(DataStatus.ServiceError)
+            else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch Playoff data error, code: ${response.code()}"))
         }
     }
 

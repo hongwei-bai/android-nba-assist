@@ -13,9 +13,9 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.hongwei.android_nba_assist.view.dashboard.Dashboard
 import com.hongwei.android_nba_assist.view.indev.Goal
-import com.hongwei.android_nba_assist.view.indev.Settings
 import com.hongwei.android_nba_assist.view.navigation.BottomNavBar
 import com.hongwei.android_nba_assist.view.season.Season
+import com.hongwei.android_nba_assist.view.settings.Settings
 
 
 @Composable

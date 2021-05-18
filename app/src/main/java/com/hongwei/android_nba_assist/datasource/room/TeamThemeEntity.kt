@@ -17,7 +17,7 @@ data class TeamThemeEntity(
     @SerializedName("banner_url")
     val bannerUrl: String = "",
     @SerializedName("background_url")
-    val backgroundUrl: String = "",
+    val backgroundUrl: String? = null,
     @SerializedName("color_light")
     val colorLight: Long? = null,
     @SerializedName("color_home")

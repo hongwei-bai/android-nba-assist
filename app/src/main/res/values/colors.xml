@@ -18,14 +18,8 @@
     <color name="calendar_black_alpha_background">#60000000</color>
     <color name="calendar_black_alpha_past_background">#a0000000</color>
 
-    <color name="warriors_blue_background_alpha">#d004539c</color>
-    <color name="warriors_blue_background">#04539c</color>
-    <color name="warriors_blue">#1c4189</color>
-    <color name="warriors_gold">#fcb826</color>
-    <color name="warriors_gold_alpha">#d0fcb826</color>
-
-    <color name="lakers_gold">#FDB827</color>
-    <color name="lakers_purple">#542583</color>
-    <color name="lakers_purple_fade">#D0542583</color>
+    <color name="nba_white">#FFFFFFFF</color>
+    <color name="nba_blue">#FF17408B</color>
+    <color name="nba_red">#FFC9082A</color>
 
 </resources>

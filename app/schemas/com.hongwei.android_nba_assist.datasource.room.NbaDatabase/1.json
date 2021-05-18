@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "185211e3370db6b073ad042afdb3046c",
+    "identityHash": "dee3a97957f24b0a7033174554cc5adc",
     "entities": [
       {
         "tableName": "team_schedule",
@@ -156,7 +156,7 @@
       },
       {
         "tableName": "team_theme",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `dataVersion` INTEGER NOT NULL, `bannerUrl` TEXT NOT NULL, `backgroundUrl` TEXT NOT NULL, `colorLight` INTEGER, `colorHome` INTEGER, `colorGuest` INTEGER, PRIMARY KEY(`apiVersion`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `dataVersion` INTEGER NOT NULL, `bannerUrl` TEXT NOT NULL, `backgroundUrl` TEXT, `colorLight` INTEGER, `colorHome` INTEGER, `colorGuest` INTEGER, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
             "fieldPath": "apiVersion",
@@ -186,7 +186,7 @@
             "fieldPath": "backgroundUrl",
             "columnName": "backgroundUrl",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "colorLight",
@@ -220,7 +220,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '185211e3370db6b073ad042afdb3046c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dee3a97957f24b0a7033174554cc5adc')"
     ]
   }
 }

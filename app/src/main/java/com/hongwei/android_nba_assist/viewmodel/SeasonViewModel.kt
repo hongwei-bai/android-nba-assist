@@ -3,10 +3,11 @@ package com.hongwei.android_nba_assist.viewmodel
 import androidx.lifecycle.*
 import com.hongwei.android_nba_assist.repository.NbaStatRepository
 import com.hongwei.android_nba_assist.view.season.PlayOffGrandFinalViewObject
-import com.hongwei.android_nba_assist.view.season.playoff.PlayOffViewObject
 import com.hongwei.android_nba_assist.view.season.RankedTeamViewObject
 import com.hongwei.android_nba_assist.view.season.TeamViewObject
+import com.hongwei.android_nba_assist.view.season.common.SeasonStatus
 import com.hongwei.android_nba_assist.view.season.playin.PlayInViewObject
+import com.hongwei.android_nba_assist.view.season.playoff.PlayOffViewObject
 import com.hongwei.android_nba_assist.viewmodel.helper.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.viewmodel.mapper.PlayOffViewObjectMapper.map
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,25 @@ class SeasonViewModel @Inject constructor(
             emit(it)
             delay(3000)
             emit(null)
+        }
+    }
+
+    val seasonStatus: LiveData<SeasonStatus> = liveData {
+        nbaStatRepository.getPlayOff().collect {
+            when {
+                it.playOffOngoing -> {
+                    emit(SeasonStatus.PlayOff)
+                }
+                it.playInOngoing -> {
+                    emit(SeasonStatus.PlayInTournament)
+                }
+                it.seasonOngoing -> {
+                    emit(SeasonStatus.RegularSeason)
+                }
+                else -> {
+                    emit(SeasonStatus.End)
+                }
+            }
         }
     }
 

@@ -3,8 +3,12 @@
     <style name="Theme.Nba" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="android:windowActivityTransitions">true</item>
-
-        <item name="ColorBackground">@color/grey80</item>
-        <item name="ColorShadow">@color/grey80</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/nba_blue</item>
+        <item name="android:colorPrimary">@color/nba_blue</item>
+        <item name="android:textColorPrimary">@color/nba_white</item>
+        <item name="android:colorSecondary" tools:targetApi="n_mr1">@color/nba_red</item>
+        <item name="android:textColorSecondary">@color/nba_white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:colorBackground">@color/nba_blue</item>
     </style>
 </resources>

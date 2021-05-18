@@ -32,7 +32,7 @@
     <string name="season_play_in_tournament_title_eastern">Eastern Conference Play-in Tournament</string>
     <string name="season_play_off_title_western">Western Conference PlayOff</string>
     <string name="season_play_off_title_eastern">Eastern Conference PlayOff</string>
-    <string name="season_final">Grand Final</string>
+    <string name="season_grand_final">Grand Final</string>
     <string name="season_winner_symbol">W</string>
     <string name="season_loser_symbol">L</string>
 
@@ -42,6 +42,8 @@
     <string name="settings_schedule_weeks">Number of weeks displayed in schedule</string>
     <string name="settings_2_weeks">2</string>
     <string name="settings_4_weeks">4</string>
+    <string name="settings_changed_need_restart">Your setting has changed, Please restart your App to take effect.</string>
+    <string name="settings_switch_team">Switch my team</string>
 
     <string name="date_is_up_to_date_copy">Your schedule data is up to date.</string>
     <string name="copy_right_declaration">\u00a9Copyright: hongwei.bai84\@gmail.com</string>

@@ -13,34 +13,19 @@ fun NbaTeamTheme(
     teamTheme?.run {
         NbaTheme(
             colors = lightColors(
-                primary = Color(colorHome!!),
-                primaryVariant = Color(colorHome),
-                onPrimary = Color(colorLight!!),
-                secondary = Color(colorGuest!!),
-                secondaryVariant = Color(colorGuest),
-                onSecondary = Color(colorHome),
-                background = Color(colorLight),
-                onBackground = Color(colorHome)
+                primary = colorHome?.let { Color(it) } ?: NBALightColors.primary,
+                primaryVariant = colorHome?.let { Color(it) } ?: NBALightColors.primaryVariant,
+                onPrimary = colorLight?.let { Color(it) } ?: NBALightColors.onPrimary,
+                secondary = colorGuest?.let { Color(it) } ?: NBALightColors.secondary,
+                secondaryVariant = colorGuest?.let { Color(it) } ?: NBALightColors.secondaryVariant,
+                onSecondary = colorHome?.let { Color(it) } ?: NBALightColors.onSecondary,
+                background = colorLight?.let { Color(it) } ?: NBALightColors.background,
+                onBackground = colorHome?.let { Color(it) } ?: NBALightColors.onBackground
             ),
             content = content
         )
     } ?: NbaTheme(
-        colors = GSLightColors,
+        colors = NBALightColors,
         content = content
     )
 }
-
-//    val testColors = lightColors(
-//        primary = Color.White,
-//        primaryVariant = Color.White,
-//        onPrimary = Color.Yellow,
-//        secondary = Color.Blue,
-//        secondaryVariant = Color.Blue,
-//        onSecondary = Color.White,
-//        background = Color.Red,
-//        onBackground = Color.Green,
-//        error = Color.Gray,
-//        onError = Color.Red,
-//        surface = Color.Green,
-//        onSurface = Color.Red
-//    )

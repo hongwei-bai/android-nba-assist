@@ -10,6 +10,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
     object Dashboard : Screen("dashboard", "Dashboard", Icons.Outlined.Alarm)
     object Season : Screen("season", "Season", Icons.Outlined.TrendingUp)
-    object Goal : Screen("goal", "Goal", Icons.Outlined.Star)
+    object Goal : Screen("goal", "Design", Icons.Outlined.Star)
     object Settings : Screen("settings", "Settings", Icons.Outlined.Settings)
 }

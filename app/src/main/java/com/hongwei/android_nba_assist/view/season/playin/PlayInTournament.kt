@@ -29,6 +29,17 @@ import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper.getTextCol
 import com.hongwei.android_nba_assist.view.theme.BlackAlphaA0
 import java.util.*
 
+val roundWidthWeight = listOf(3f, 2f, 1.5f)
+
+// rank + Logo + Abbr, line
+val round1SubWidthWeight = listOf(2f, 1f)
+
+//  line, W + TBD/Logo
+val round2SubWidthWeight = listOf(1f, 2f, 1.5f)
+
+// aggr.line, rank + TBD/Logo(20.dp)
+val round3SubWidthWeight = listOf(1f, 1f)
+
 @Composable
 fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: PlayInViewObject?, onLeft: Boolean) {
     if (standing != null && playInViewObject != null) {
@@ -51,11 +62,10 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: Pl
                         .fillMaxWidth()
                         .weight(10f)
                 ) {
-                    val columnWeight = listOf(3f, 2f, 2f)
                     Column(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .weight(columnWeight[0])
+                            .weight(roundWidthWeight[0])
                     ) {
                         standing.subList(0, 10).forEach {
                             PlayInColumn1(it, playInViewObject, Modifier.weight(1f))
@@ -64,7 +74,7 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: Pl
                     Column(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .weight(columnWeight[1])
+                            .weight(roundWidthWeight[1])
                     ) {
                         Spacer(modifier = Modifier.weight(6f))
                         val winnerSymbols = listOf(true, false, true)
@@ -84,7 +94,7 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: Pl
                     Column(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .weight(columnWeight[2])
+                            .weight(roundWidthWeight[2])
                     ) {
                         standing.subList(0, 6).forEach {
                             PlayInColumn3(
@@ -125,10 +135,10 @@ private fun PlayInColumn1(team: RankedTeamViewObject, playInViewObject: PlayInVi
         modifier = modifier
             .padding(top = 0.dp, bottom = 0.dp)
     ) {
-        PlayInTeam(team = team, playInViewObject = playInViewObject, modifier = Modifier.weight(1.5f))
+        PlayInTeam(team = team, playInViewObject = playInViewObject, modifier = Modifier.weight(round1SubWidthWeight[0]))
         val colorOnPrimary = MaterialTheme.colors.onPrimary
         val colorSecondary = MaterialTheme.colors.secondary
-        Row(modifier = Modifier.weight(1f)) {
+        Row(modifier = Modifier.weight(round1SubWidthWeight[1])) {
             when (team.rank) {
                 7 -> TournamentLinePreAdvance(
                     colorOnPrimary, colorSecondary, true,
@@ -172,15 +182,15 @@ private fun PlayInColumn2(
             style = MaterialTheme.typography.subtitle2,
             color = MaterialTheme.colors.onPrimary,
             textAlign = TextAlign.End,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(round2SubWidthWeight[0])
         )
 
         PlayInTeamLogo(
             teamAbbr = teamAbbr,
             modifier = Modifier
-                .weight(2f)
+                .weight(round2SubWidthWeight[1])
         )
-        Row(modifier = Modifier.weight(1.5f)) {
+        Row(modifier = Modifier.weight(round2SubWidthWeight[2])) {
             if (withLine) {
                 TournamentLinePreAdvance(
                     lineColor = MaterialTheme.colors.onPrimary,
@@ -211,17 +221,17 @@ private fun PlayInColumn3(
                 lineColor = MaterialTheme.colors.onPrimary,
                 colorHighlight = MaterialTheme.colors.secondary,
                 hasWinner = teamAbbr != TBD,
-                modifier = modifier.weight(1f)
+                modifier = modifier.weight(round3SubWidthWeight[0])
             )
         } else {
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(round3SubWidthWeight[0]))
         }
         Text(
             text = if (rank > 0) rank.toString() else "",
             style = MaterialTheme.typography.subtitle2,
             color = if (participateRound1) MaterialTheme.colors.onPrimary else NonParticipatorTextColor,
             textAlign = TextAlign.End,
-            modifier = Modifier.width(20.dp)
+            modifier = Modifier.weight(round3SubWidthWeight[1])
         )
         val teamStatus = if (participateRound1) PlayInTeamStatus.Normal else PlayInTeamStatus.NonParticipate
         PlayInTeamLogoWrapper(teamAbbr, teamStatus)

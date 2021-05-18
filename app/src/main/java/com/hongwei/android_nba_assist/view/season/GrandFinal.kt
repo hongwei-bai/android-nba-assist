@@ -76,7 +76,7 @@ private fun GrandFinalHeader() {
     ) {
         Column(modifier = Modifier.padding(horizontal = 8.dp)) {
             Text(
-                text = stringResource(R.string.season_final),
+                text = stringResource(R.string.season_grand_final),
                 style = MaterialTheme.typography.subtitle2,
                 color = MaterialTheme.colors.onPrimary
             )
