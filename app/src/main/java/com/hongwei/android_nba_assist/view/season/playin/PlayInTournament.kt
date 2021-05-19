@@ -21,8 +21,8 @@ import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.datasource.league.Tournament.TBD
 import com.hongwei.android_nba_assist.view.animation.LoadingContent
 import com.hongwei.android_nba_assist.view.season.RankedTeamViewObject
+import com.hongwei.android_nba_assist.view.season.common.SeasonTeamLogoWrapper
 import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper.NonParticipatorTextColor
-import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper.PlayInTeamLogoWrapper
 import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper.getRankByTeamAbbr
 import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper.getTeamStatus
 import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper.getTextColorByTeam
@@ -234,7 +234,7 @@ private fun PlayInColumn3(
             modifier = Modifier.weight(round3SubWidthWeight[1])
         )
         val teamStatus = if (participateRound1) PlayInTeamStatus.Normal else PlayInTeamStatus.NonParticipate
-        PlayInTeamLogoWrapper(teamAbbr, teamStatus)
+        SeasonTeamLogoWrapper(teamAbbr, teamStatus)
     }
 }
 
@@ -301,7 +301,7 @@ private fun PlayInTeamLogo(teamAbbr: String, modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-        PlayInTeamLogoWrapper(teamAbbr)
+        SeasonTeamLogoWrapper(teamAbbr)
     }
 }
 
@@ -318,7 +318,7 @@ private fun PlayInTeam(team: RankedTeamViewObject, playInViewObject: PlayInViewO
             textAlign = TextAlign.End,
             modifier = Modifier.width(24.dp)
         )
-        PlayInTeamLogoWrapper(team.team.abbrev, getTeamStatus(team, playInViewObject))
+        SeasonTeamLogoWrapper(team.team.abbrev, getTeamStatus(team, playInViewObject))
         Text(
             text = team.team.abbrev.toUpperCase(Locale.US),
             style = MaterialTheme.typography.subtitle2,

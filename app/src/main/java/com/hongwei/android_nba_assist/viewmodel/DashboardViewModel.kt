@@ -18,7 +18,6 @@ import com.hongwei.android_nba_assist.viewmodel.helper.UpcomingGameCounter
 import com.hongwei.android_nba_assist.viewmodel.helper.UpcomingRange
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -34,18 +33,7 @@ class DashboardViewModel @Inject constructor(
 ) : ViewModel() {
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    val dataStatus = liveData {
-        try {
-            nbaStatRepository.dataStatus.collect {
-                emit(it)
-                delay(3000)
-                emit(null)
-            }
-        } catch (e: Exception) {
-            Log.d("bbbb", "[AGAIN]java.lang.IllegalStateException: ReceiveChannel.consumeAsFlow can be collected just once")
-            e.printStackTrace()
-        }
-    }
+    val dataStatus = nbaStatRepository.dataStatus.asLiveData()
 
     val gamesLeft: MutableLiveData<Int> = MutableLiveData()
 

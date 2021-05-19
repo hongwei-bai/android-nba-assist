@@ -13,24 +13,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
-import com.hongwei.android_nba_assist.util.ResourceByNameUtil
 import com.hongwei.android_nba_assist.view.animation.LoadingContent
-import com.hongwei.android_nba_assist.view.component.TeamLogo
 import com.hongwei.android_nba_assist.view.season.RankedTeamViewObject
+import com.hongwei.android_nba_assist.view.season.common.SeasonTeamLogoWrapper
 import com.hongwei.android_nba_assist.view.season.playin.AdvancedLineStroke
 import com.hongwei.android_nba_assist.view.season.playin.LineStroke
+import com.hongwei.android_nba_assist.view.season.playin.PlayInViewObject
 import com.hongwei.android_nba_assist.view.theme.BlackAlphaA0
 import java.util.*
 
 @Composable
-fun PlayOff(standing: List<RankedTeamViewObject>?, playOffViewObject: PlayOffViewObject?, onLeft: Boolean) {
-    if (standing != null && playOffViewObject != null) {
+fun PlayOff(
+    standing: List<RankedTeamViewObject>?,
+    playOffViewObject: PlayOffViewObject?,
+    playInViewObject: PlayInViewObject?,
+    onLeft: Boolean
+) {
+    if (standing != null && playOffViewObject != null && playInViewObject != null) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -63,7 +67,12 @@ fun PlayOff(standing: List<RankedTeamViewObject>?, playOffViewObject: PlayOffVie
                         )
                         playOffMatching.forEachIndexed { i, rank ->
                             PlayOffColumn1(
-                                team = standing[rank - 1],
+                                rank = rank,
+                                teamAbbr = when (rank) {
+                                    7 -> playInViewObject.winnerOf78
+                                    8 -> playInViewObject.lastWinner
+                                    else -> standing[rank - 1].team.abbrev
+                                },
                                 scoreUpper = seriesDataRound1[i / 2].scoreHighRank,
                                 scoreLower = seriesDataRound1[i / 2].scoreLowRank,
                                 winner = seriesDataRound1[i / 2].winner,
@@ -146,7 +155,8 @@ fun PlayOff(standing: List<RankedTeamViewObject>?, playOffViewObject: PlayOffVie
 
 @Composable
 private fun PlayOffColumn1(
-    team: RankedTeamViewObject,
+    rank: Int,
+    teamAbbr: String,
     scoreUpper: Int,
     scoreLower: Int,
     winner: String,
@@ -157,9 +167,9 @@ private fun PlayOffColumn1(
         modifier = modifier
             .padding(top = 0.dp, bottom = 0.dp)
     ) {
-        PlayOffTeam(modifier = Modifier.weight(3f), team = team)
+        PlayOffTeam(modifier = Modifier.weight(3f), rank = rank, teamAbbr = teamAbbr)
         Box(modifier = Modifier.weight(1f)) {
-            val isHighRankTeam = when (team.rank) {
+            val isHighRankTeam = when (rank) {
                 1, 4, 3, 2 -> true
                 else -> false
             }
@@ -341,27 +351,21 @@ private fun PlayOffTeamLogo(teamAbbr: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun PlayOffTeam(modifier: Modifier = Modifier, team: RankedTeamViewObject) {
+private fun PlayOffTeam(modifier: Modifier = Modifier, rank: Int, teamAbbr: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
         Text(
-            text = team.rank.toString(),
+            text = rank.toString(),
             style = MaterialTheme.typography.subtitle2,
             color = MaterialTheme.colors.onPrimary,
             textAlign = TextAlign.End,
             modifier = Modifier.width(24.dp)
         )
-        TeamLogo(
-            logoUrl = team.team.logo,
-            localPlaceholderResId = ResourceByNameUtil.getResourceIdByName(LocalContext.current, team.team.abbrev),
-            modifier = Modifier
-                .padding(start = 4.dp, end = 4.dp)
-                .size(40.dp)
-        )
+        SeasonTeamLogoWrapper(teamAbbr = teamAbbr)
         Text(
-            text = team.team.abbrev.toUpperCase(Locale.US),
+            text = teamAbbr.toUpperCase(Locale.US),
             style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.onPrimary,
             textAlign = TextAlign.Center,

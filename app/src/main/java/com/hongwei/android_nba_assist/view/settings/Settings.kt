@@ -58,7 +58,7 @@ fun Settings() {
         }
 
         Divider(color = MaterialTheme.colors.secondary, thickness = 1.dp, modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp))
-        SettingsWeekStart(modifier = Modifier.height(24.dp))
+        SettingsStartFromMonday(modifier = Modifier.height(24.dp))
 
         Divider(color = MaterialTheme.colors.secondary, thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp))
         SettingsScheduleWeeks(modifier = Modifier.height(24.dp))
@@ -68,7 +68,7 @@ fun Settings() {
 }
 
 @Composable
-private fun SettingsWeekStart(modifier: Modifier) {
+private fun SettingsStartFromMonday(modifier: Modifier) {
     val viewModel = hiltNavGraphViewModel<SettingsViewModel>()
     val context = LocalContext.current
     Row(
@@ -78,7 +78,7 @@ private fun SettingsWeekStart(modifier: Modifier) {
             .fillMaxWidth()
             .padding(horizontal = 12.dp)
     ) {
-        Text(text = stringResource(id = R.string.settings_schedule_weeks))
+        Text(text = stringResource(id = R.string.settings_start_from_monday))
     }
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -98,7 +98,7 @@ private fun SettingsWeekStart(modifier: Modifier) {
             })
         Text(text = stringResource(id = R.string.settings_monday))
     }
-    if (viewModel.weekStartFromMondaySettingChanged.observeAsState().value == true) {
+    if (viewModel.startFromMondaySettingChanged.observeAsState().value == true) {
         SettingChangedNeedRestartText()
     }
 }
@@ -114,7 +114,7 @@ private fun SettingsScheduleWeeks(modifier: Modifier) {
             .fillMaxWidth()
             .padding(horizontal = 12.dp)
     ) {
-        Text(text = stringResource(id = R.string.settings_weeks_start_from_monday))
+        Text(text = stringResource(id = R.string.settings_schedule_weeks))
     }
     Row(
         verticalAlignment = Alignment.CenterVertically,

@@ -36,7 +36,7 @@
     <string name="season_winner_symbol">W</string>
     <string name="season_loser_symbol">L</string>
 
-    <string name="settings_weeks_start_from_monday">Week starts from Monday</string>
+    <string name="settings_start_from_monday">Week starts from Monday</string>
     <string name="settings_monday">Monday</string>
     <string name="settings_sunday">Sunday</string>
     <string name="settings_schedule_weeks">Number of weeks displayed in schedule</string>

@@ -24,11 +24,11 @@ class SettingsViewModel @Inject constructor(
 
     val scheduleWeeksSettingChanged: MutableLiveData<Boolean> = MutableLiveData()
 
-    val weekStartFromMondaySettingChanged: MutableLiveData<Boolean> = MutableLiveData()
+    val startFromMondaySettingChanged: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
         scheduleWeeksSettingChanged.value = AppSettings.hasScheduleWeeksSettingChanged()
-        weekStartFromMondaySettingChanged.value = AppSettings.hasWeekStartFromMondaySettingChanged()
+        startFromMondaySettingChanged.value = AppSettings.hasWeekStartFromMondaySettingChanged()
     }
 
     fun switchTeam(context: Context, team: String) {
@@ -48,7 +48,7 @@ class SettingsViewModel @Inject constructor(
     fun setWeekStartFromMonday(context: Context, isStartFromMonday: Boolean) {
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
             AppSettings.setStartFromMonday(context, isStartFromMonday)
-            weekStartFromMondaySettingChanged.postValue(AppSettings.hasWeekStartFromMondaySettingChanged())
+            startFromMondaySettingChanged.postValue(AppSettings.hasWeekStartFromMondaySettingChanged())
         }
     }
 

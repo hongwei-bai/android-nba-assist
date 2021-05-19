@@ -12,7 +12,7 @@ import com.hongwei.android_nba_assist.datasource.room.*
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getFirstDayOfWeek
-import com.hongwei.android_nba_assist.view.main.DataStatus
+import com.hongwei.android_nba_assist.view.component.DataStatus
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import java.util.*
@@ -40,13 +40,14 @@ class NbaStatRepository @Inject constructor(
 
     fun getTeamSchedule(team: String): Flow<List<Event>> {
         return teamScheduleDao.getTeamSchedule().onEach {
-            it ?: fetchTeamScheduleFromBackend(team, it?.dataVersion)
-        }.filterNotNull().map {
-            val dataMightExpire = it.dataMayOutdated()
-            if (dataMightExpire) {
-                dataStatusChannel.send(DataStatus.DataMayOutdated)
-                fetchTeamScheduleFromBackend(team, it.dataVersion)
+            when {
+                it == null -> fetchTeamScheduleFromBackend(team)
+                it.dataMayOutdated() -> {
+                    dataStatusChannel.send(DataStatus.DataMayOutdated)
+                    fetchTeamScheduleFromBackend(team, it.dataVersion)
+                }
             }
+        }.filterNotNull().map {
             it.events.filter { eventTime ->
                 eventTime.unixTimeStamp > getFirstDayOfWeek(AppSettings.weekStartsFromMonday).timeInMillis
             }
@@ -55,26 +56,26 @@ class NbaStatRepository @Inject constructor(
 
     fun getStanding(): Flow<StandingEntity> {
         return standingDao.getStanding().onEach {
-            it ?: fetchStandingFromBackend(it?.dataVersion)
-        }.filterNotNull().onEach {
-            val dataMightExpire = it.dataMayOutdated()
-            if (dataMightExpire) {
-                dataStatusChannel.send(DataStatus.DataMayOutdated)
-                fetchStandingFromBackend(it.dataVersion)
+            when {
+                it == null -> fetchStandingFromBackend()
+                it.dataMayOutdated() -> {
+                    dataStatusChannel.send(DataStatus.DataMayOutdated)
+                    fetchStandingFromBackend(it.dataVersion)
+                }
             }
-        }
+        }.filterNotNull()
     }
 
     fun getPlayOff(): Flow<PlayOffEntity> {
         return playOffDao.getPlayOff().onEach {
-            it ?: fetchPlayOffFromBackend(it?.dataVersion)
-        }.filterNotNull().onEach {
-            val dataMightExpire = it.dataMayOutdated()
-            if (dataMightExpire) {
-                dataStatusChannel.send(DataStatus.DataMayOutdated)
-                fetchPlayOffFromBackend(it.dataVersion)
+            when {
+                it == null -> fetchPlayOffFromBackend()
+                it.dataMayOutdated() -> {
+                    dataStatusChannel.send(DataStatus.DataMayOutdated)
+                    fetchPlayOffFromBackend(it.dataVersion)
+                }
             }
-        }
+        }.filterNotNull()
     }
 
     suspend fun fetchTeamScheduleFromBackend(team: String, dataVersion: Long? = null) {

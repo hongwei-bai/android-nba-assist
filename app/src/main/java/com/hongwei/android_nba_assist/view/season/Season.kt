@@ -16,7 +16,7 @@ import com.hongwei.android_nba_assist.datasource.league.nba.Conference
 import com.hongwei.android_nba_assist.datasource.league.nba.getConferenceByTeam
 import com.hongwei.android_nba_assist.datasource.local.AppSettings
 import com.hongwei.android_nba_assist.view.animation.LoadingContent
-import com.hongwei.android_nba_assist.view.main.DataStatusSnackBar
+import com.hongwei.android_nba_assist.view.component.DataStatusSnackBar
 import com.hongwei.android_nba_assist.view.season.common.SeasonStatus
 import com.hongwei.android_nba_assist.view.season.playin.PlayInTournament
 import com.hongwei.android_nba_assist.view.season.playoff.PlayOff
@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 fun Season() {
     val seasonViewModel = hiltNavGraphViewModel<SeasonViewModel>()
     val seasonStatus = seasonViewModel.seasonStatus.observeAsState().value
-
+    val dataStatus = seasonViewModel.dataStatus.observeAsState().value
     if (seasonStatus != null) {
         val pages = listOf(
             SeasonScreens.WestStanding,
@@ -64,7 +64,7 @@ fun Season() {
             onRefresh = { seasonViewModel.refresh() },
         ) {
             Column {
-                DataStatusSnackBar(seasonViewModel.dataStatus.observeAsState().value)
+                DataStatusSnackBar(dataStatus)
                 TabRow(
                     selectedTabIndex = pagerState.currentPage,
                     indicator = { tabPositions ->
@@ -106,12 +106,14 @@ fun Season() {
                         2 -> PlayOff(
                             seasonViewModel.westernStanding.observeAsState().value,
                             seasonViewModel.westernPlayOff.observeAsState().value,
+                            seasonViewModel.westernPlayIn.observeAsState().value,
                             true
                         )
                         3 -> Final(seasonViewModel.playOffGrandFinal.observeAsState().value)
                         4 -> PlayOff(
                             seasonViewModel.easternStanding.observeAsState().value,
-                            seasonViewModel.westernPlayOff.observeAsState().value,
+                            seasonViewModel.easternPlayOff.observeAsState().value,
+                            seasonViewModel.easternPlayIn.observeAsState().value,
                             false
                         )
                         5 -> PlayInTournament(

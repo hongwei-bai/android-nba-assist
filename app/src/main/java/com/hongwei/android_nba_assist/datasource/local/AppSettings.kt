@@ -9,11 +9,11 @@ object AppSettings {
 
     private var _scheduleWeeks by Delegates.notNull<Int>()
 
-    private var _weekStartsFromMonday by Delegates.notNull<Boolean>()
+    private var _startsFromMonday by Delegates.notNull<Boolean>()
 
     private var savedValueForScheduleWeeks by Delegates.notNull<Int>()
 
-    private var savedValueWeekStartsFromMonday by Delegates.notNull<Boolean>()
+    private var savedValueStartsFromMonday by Delegates.notNull<Boolean>()
 
     val myTeam: String
         get() = _myTeam
@@ -22,22 +22,22 @@ object AppSettings {
         get() = _scheduleWeeks
 
     val weekStartsFromMonday: Boolean
-        get() = _weekStartsFromMonday
+        get() = _startsFromMonday
 
     fun initialize(context: Context) {
         _myTeam = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
             .getString("MyTeam", "gs") ?: "gs"
         _scheduleWeeks = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
             .getInt("scheduleWeeks", 2)
-        _weekStartsFromMonday = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
+        _startsFromMonday = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
             .getBoolean("weekStartsFromMonday", true)
         savedValueForScheduleWeeks = _scheduleWeeks
-        savedValueWeekStartsFromMonday = _weekStartsFromMonday
+        savedValueStartsFromMonday = _startsFromMonday
     }
 
     fun hasScheduleWeeksSettingChanged(): Boolean = _scheduleWeeks != savedValueForScheduleWeeks
 
-    fun hasWeekStartFromMondaySettingChanged(): Boolean = _weekStartsFromMonday != savedValueWeekStartsFromMonday
+    fun hasWeekStartFromMondaySettingChanged(): Boolean = _startsFromMonday != savedValueStartsFromMonday
 
     fun setTeam(context: Context, team: String) {
         _myTeam = team
@@ -56,7 +56,7 @@ object AppSettings {
     }
 
     fun setStartFromMonday(context: Context, startFromMonday: Boolean) {
-        _weekStartsFromMonday = startFromMonday
+        _startsFromMonday = startFromMonday
         context.getSharedPreferences("AppSettings", MODE_PRIVATE)
             .edit()
             .putBoolean("weekStartsFromMonday", startFromMonday)

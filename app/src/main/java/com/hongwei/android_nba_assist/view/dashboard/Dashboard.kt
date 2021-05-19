@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.hongwei.android_nba_assist.view.animation.LoadingContent
-import com.hongwei.android_nba_assist.view.main.DataStatusSnackBar
+import com.hongwei.android_nba_assist.view.component.DataStatusSnackBar
 import com.hongwei.android_nba_assist.viewmodel.DashboardViewModel
 
 @Composable

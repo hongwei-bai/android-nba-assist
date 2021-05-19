@@ -11,9 +11,11 @@ import com.hongwei.android_nba_assist.view.season.playoff.PlayOffViewObject
 import com.hongwei.android_nba_assist.viewmodel.helper.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.viewmodel.mapper.PlayOffViewObjectMapper.map
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -23,44 +25,30 @@ class SeasonViewModel @Inject constructor(
 ) : ViewModel() {
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    val dataStatus = liveData {
-        nbaStatRepository.dataStatus.collect {
-            emit(it)
-            delay(3000)
-            emit(null)
-        }
-    }
+    val dataStatus = nbaStatRepository.dataStatus.asLiveData()
 
-    val seasonStatus: LiveData<SeasonStatus> = liveData {
-        nbaStatRepository.getPlayOff().collect {
-            when {
-                it.playOffOngoing -> {
-                    emit(SeasonStatus.PlayOff)
+    val seasonStatus: LiveData<SeasonStatus> =
+        nbaStatRepository.getPlayOff()
+            .map {
+                when {
+                    it.playOffOngoing -> SeasonStatus.PlayOff
+                    it.playInOngoing -> SeasonStatus.PlayInTournament
+                    it.seasonOngoing -> SeasonStatus.RegularSeason
+                    else -> SeasonStatus.End
                 }
-                it.playInOngoing -> {
-                    emit(SeasonStatus.PlayInTournament)
-                }
-                it.seasonOngoing -> {
-                    emit(SeasonStatus.RegularSeason)
-                }
-                else -> {
-                    emit(SeasonStatus.End)
-                }
-            }
-        }
-    }
+            }.asLiveData()
 
     val westernPlayOff: LiveData<PlayOffViewObject> =
         nbaStatRepository.getPlayOff()
             .map {
                 it.playOff.western.map()
-            }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+            }.asLiveData()
 
     val easternPlayOff: LiveData<PlayOffViewObject> =
         nbaStatRepository.getPlayOff()
             .map {
                 it.playOff.eastern.map()
-            }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+            }.asLiveData()
 
     val playOffGrandFinal: LiveData<PlayOffGrandFinalViewObject> =
         nbaStatRepository.getPlayOff()
@@ -72,7 +60,7 @@ class SeasonViewModel @Inject constructor(
                     scoreEasternWinner = it.playOff.grandFinal.scoreEasternWinner,
                     winner = it.playOff.grandFinal.winner
                 )
-            }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+            }.asLiveData()
 
     val westernPlayIn: LiveData<PlayInViewObject> =
         nbaStatRepository.getPlayOff()
@@ -84,7 +72,7 @@ class SeasonViewModel @Inject constructor(
                     loserOf910 = it.playIn.western.loserOf910,
                     lastWinner = it.playIn.western.lastWinner
                 )
-            }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+            }.asLiveData()
 
     val easternPlayIn: LiveData<PlayInViewObject> =
         nbaStatRepository.getPlayOff()
@@ -96,7 +84,7 @@ class SeasonViewModel @Inject constructor(
                     loserOf910 = it.playIn.eastern.loserOf910,
                     lastWinner = it.playIn.eastern.lastWinner
                 )
-            }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+            }.asLiveData()
 
     val westernStanding: LiveData<List<RankedTeamViewObject>> =
         nbaStatRepository.getStanding().map {
@@ -115,7 +103,7 @@ class SeasonViewModel @Inject constructor(
                     last10Records = entity.last10Records
                 )
             }
-        }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+        }.asLiveData()
 
     val easternStanding: LiveData<List<RankedTeamViewObject>> =
         nbaStatRepository.getStanding().map {
@@ -134,7 +122,7 @@ class SeasonViewModel @Inject constructor(
                     last10Records = entity.last10Records
                 )
             }
-        }.asLiveData(viewModelScope.coroutineContext + nbaExceptionHandler)
+        }.asLiveData()
 
     fun refresh() {
         isRefreshing.value = true
