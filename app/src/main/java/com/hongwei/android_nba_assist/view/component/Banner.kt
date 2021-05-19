@@ -1,9 +1,6 @@
-package com.hongwei.android_nba_assist.view.dashboard
+package com.hongwei.android_nba_assist.view.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -19,15 +16,14 @@ import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.view.animation.LoadingImage
 
 @Composable
-fun Banner(url: String?) {
+fun Banner(url: String?, modifier: Modifier = Modifier) {
     val painter = rememberCoilPainter(
         request = url,
         fadeIn = true
     )
 
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .shadow(10.dp, RoundedCornerShape(bottomStart = 6.dp, bottomEnd = 6.dp))
     ) {
         when (painter.loadState) {
@@ -35,24 +31,16 @@ fun Banner(url: String?) {
                 painter = painter,
                 contentScale = ContentScale.FillWidth,
                 contentDescription = null,
-                modifier = Modifier
-                    .height(bannerHeight)
-                    .fillMaxWidth()
+                modifier = modifier
                     .clip(RoundedCornerShape(bottomStart = 6.dp, bottomEnd = 6.dp))
             )
-            ImageLoadState.Loading -> LoadingImage(
-                Modifier
-                    .height(bannerHeight)
-                    .padding(16.dp)
-            )
+            ImageLoadState.Loading -> LoadingImage(modifier = modifier)
             else -> Image(
                 painter = painterResource(id = R.drawable.banner_placeholder),
                 contentDescription = null,
-                Modifier.fillMaxWidth(),
+                modifier = modifier,
                 contentScale = ContentScale.FillWidth,
             )
         }
     }
 }
-
-private val bannerHeight = 150.dp
