@@ -1,6 +1,5 @@
 package com.hongwei.android_nba_assist.view.season.common
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,7 +40,6 @@ fun SeasonTeamLogoWrapper(teamAbbr: String, teamStatus: SeasonTeamStatus = Seaso
             )
         }
     } else {
-        Log.d("bbbb", "teamAbbr: $teamAbbr")
         TeamLogo(
             localPlaceholderResId = ResourceByNameUtil.getResourceIdByName(LocalContext.current, teamAbbr),
             modifier = Modifier

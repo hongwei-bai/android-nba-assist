@@ -1,7 +1,7 @@
 package com.hongwei.android_nba_assist.view.animation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -18,10 +18,9 @@ fun LoadingImage(modifier: Modifier = Modifier) {
     val animationSpec = remember { LottieAnimationSpec.RawRes(R.raw.loading_small) }
     val state = LottieAnimationState(isPlaying = true, repeatCount = Integer.MAX_VALUE)
     state.speed = 1f
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         LottieAnimation(
             spec = animationSpec,
