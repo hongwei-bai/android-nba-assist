@@ -3,17 +3,17 @@ package com.hongwei.android_nba_assist.viewmodel
 import androidx.lifecycle.*
 import com.hongwei.android_nba_assist.repository.NbaStatRepository
 import com.hongwei.android_nba_assist.view.season.PlayOffGrandFinalViewObject
-import com.hongwei.android_nba_assist.view.season.RankedTeamViewObject
-import com.hongwei.android_nba_assist.view.season.TeamViewObject
+import com.hongwei.android_nba_assist.view.season.TeamStat
 import com.hongwei.android_nba_assist.view.season.common.SeasonStatus
-import com.hongwei.android_nba_assist.view.season.playin.PlayInViewObject
-import com.hongwei.android_nba_assist.view.season.playoff.PlayOffViewObject
+import com.hongwei.android_nba_assist.view.season.playin.PlayInStat
+import com.hongwei.android_nba_assist.view.season.playoff.PlayOffStat
 import com.hongwei.android_nba_assist.viewmodel.helper.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.viewmodel.mapper.PlayOffViewObjectMapper.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
@@ -38,17 +38,15 @@ class SeasonViewModel @Inject constructor(
                 }
             }.asLiveData()
 
-    val westernPlayOff: LiveData<PlayOffViewObject> =
-        nbaStatRepository.getPlayOff()
-            .map {
-                it.playOff.western.map()
-            }.asLiveData()
+    val westernPlayOff: LiveData<PlayOffStat> =
+        nbaStatRepository.getPlayOff().combine(nbaStatRepository.getStanding()) { playOff, standing ->
+            playOff.playOff.western.map(standing.western, playOff.playIn.western)
+        }.asLiveData()
 
-    val easternPlayOff: LiveData<PlayOffViewObject> =
-        nbaStatRepository.getPlayOff()
-            .map {
-                it.playOff.eastern.map()
-            }.asLiveData()
+    val easternPlayOff: LiveData<PlayOffStat> =
+        nbaStatRepository.getPlayOff().combine(nbaStatRepository.getStanding()) { playOff, standing ->
+            playOff.playOff.eastern.map(standing.eastern, playOff.playIn.eastern)
+        }.asLiveData()
 
     val playOffGrandFinal: LiveData<PlayOffGrandFinalViewObject> =
         nbaStatRepository.getPlayOff()
@@ -62,40 +60,39 @@ class SeasonViewModel @Inject constructor(
                 )
             }.asLiveData()
 
-    val westernPlayIn: LiveData<PlayInViewObject> =
-        nbaStatRepository.getPlayOff()
-            .map {
-                PlayInViewObject(
-                    winnerOf78 = it.playIn.western.winnerOf78,
-                    loserOf78 = it.playIn.western.loserOf78,
-                    winnerOf910 = it.playIn.western.winnerOf910,
-                    loserOf910 = it.playIn.western.loserOf910,
-                    lastWinner = it.playIn.western.lastWinner
-                )
-            }.asLiveData()
+    val westernPlayIn: LiveData<PlayInStat> =
+        nbaStatRepository.getPlayOff().combine(nbaStatRepository.getStanding()) { playOff, standing ->
+            PlayInStat(
+                teamsAbbr = standing.western.standings.subList(0, 10).map { it.team.abbrev.toLowerCase(Locale.US) },
+                winnerOf78 = playOff.playIn.western.winnerOf78,
+                loserOf78 = playOff.playIn.western.loserOf78,
+                winnerOf910 = playOff.playIn.western.winnerOf910,
+                loserOf910 = playOff.playIn.western.loserOf910,
+                lastWinner = playOff.playIn.western.lastWinner
+            )
+        }.asLiveData()
 
-    val easternPlayIn: LiveData<PlayInViewObject> =
-        nbaStatRepository.getPlayOff()
-            .map {
-                PlayInViewObject(
-                    winnerOf78 = it.playIn.eastern.winnerOf78,
-                    loserOf78 = it.playIn.eastern.loserOf78,
-                    winnerOf910 = it.playIn.eastern.winnerOf910,
-                    loserOf910 = it.playIn.eastern.loserOf910,
-                    lastWinner = it.playIn.eastern.lastWinner
-                )
-            }.asLiveData()
+    val easternPlayIn: LiveData<PlayInStat> =
+        nbaStatRepository.getPlayOff().combine(nbaStatRepository.getStanding()) { playOff, standing ->
+            PlayInStat(
+                teamsAbbr = standing.eastern.standings.subList(0, 10).map { it.team.abbrev.toLowerCase(Locale.US) },
+                winnerOf78 = playOff.playIn.eastern.winnerOf78,
+                loserOf78 = playOff.playIn.eastern.loserOf78,
+                winnerOf910 = playOff.playIn.eastern.winnerOf910,
+                loserOf910 = playOff.playIn.eastern.loserOf910,
+                lastWinner = playOff.playIn.eastern.lastWinner
+            )
+        }.asLiveData()
 
-    val westernStanding: LiveData<List<RankedTeamViewObject>> =
+    val westernStanding: LiveData<List<TeamStat>> =
         nbaStatRepository.getStanding().map {
             it.western.standings.map { entity ->
-                RankedTeamViewObject(
+                TeamStat(
                     rank = entity.rank,
-                    team = TeamViewObject(
-                        abbrev = entity.team.abbrev.toLowerCase(Locale.US),
-                        name = entity.team.name,
-                        logo = entity.team.logo
-                    ),
+                    teamAbbr = entity.team.abbrev.toLowerCase(Locale.US),
+                    team = entity.team.name ?: entity.team.abbrev.toUpperCase(Locale.US),
+                    logoResourceName = entity.team.abbrev.toLowerCase(Locale.US),
+                    logoUrl = entity.team.logo,
                     wins = entity.wins,
                     losses = entity.losses,
                     gamesBack = entity.gamesBack,
@@ -105,16 +102,15 @@ class SeasonViewModel @Inject constructor(
             }
         }.asLiveData()
 
-    val easternStanding: LiveData<List<RankedTeamViewObject>> =
+    val easternStanding: LiveData<List<TeamStat>> =
         nbaStatRepository.getStanding().map {
             it.eastern.standings.map { entity ->
-                RankedTeamViewObject(
+                TeamStat(
                     rank = entity.rank,
-                    team = TeamViewObject(
-                        abbrev = entity.team.abbrev.toLowerCase(Locale.US),
-                        name = entity.team.name,
-                        logo = entity.team.logo
-                    ),
+                    teamAbbr = entity.team.abbrev.toLowerCase(Locale.US),
+                    team = entity.team.name ?: entity.team.abbrev.toUpperCase(Locale.US),
+                    logoResourceName = entity.team.abbrev.toLowerCase(Locale.US),
+                    logoUrl = entity.team.logo,
                     wins = entity.wins,
                     losses = entity.losses,
                     gamesBack = entity.gamesBack,

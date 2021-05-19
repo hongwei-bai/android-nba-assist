@@ -19,22 +19,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.view.animation.LoadingContent
-import com.hongwei.android_nba_assist.view.season.RankedTeamViewObject
 import com.hongwei.android_nba_assist.view.season.common.SeasonTeamLogoWrapper
 import com.hongwei.android_nba_assist.view.season.playin.AdvancedLineStroke
 import com.hongwei.android_nba_assist.view.season.playin.LineStroke
-import com.hongwei.android_nba_assist.view.season.playin.PlayInViewObject
 import com.hongwei.android_nba_assist.view.theme.BlackAlphaA0
 import java.util.*
 
 @Composable
-fun PlayOff(
-    standing: List<RankedTeamViewObject>?,
-    playOffViewObject: PlayOffViewObject?,
-    playInViewObject: PlayInViewObject?,
-    onLeft: Boolean
-) {
-    if (standing != null && playOffViewObject != null && playInViewObject != null) {
+fun PlayOff(stat: PlayOffStat?, isLTR: Boolean) {
+    if (stat != null) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -47,7 +40,7 @@ fun PlayOff(
                     .background(color = BlackAlphaA0)
                     .verticalScroll(ScrollState(0))
             ) {
-                PlayOffHeader(onLeft)
+                PlayOffHeader(isLTR)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -60,21 +53,18 @@ fun PlayOff(
                             .weight(columnWeight[0])
                     ) {
                         val seriesDataRound1 = listOf(
-                            playOffViewObject.round1series18,
-                            playOffViewObject.round1series45,
-                            playOffViewObject.round1series36,
-                            playOffViewObject.round1series27
+                            stat.round1series18,
+                            stat.round1series45,
+                            stat.round1series36,
+                            stat.round1series27
                         )
                         playOffMatching.forEachIndexed { i, rank ->
                             PlayOffColumn1(
                                 rank = rank,
-                                teamAbbr = when (rank) {
-                                    7 -> playInViewObject.winnerOf78
-                                    8 -> playInViewObject.lastWinner
-                                    else -> standing[rank - 1].team.abbrev
-                                },
-                                scoreUpper = seriesDataRound1[i / 2].scoreHighRank,
-                                scoreLower = seriesDataRound1[i / 2].scoreLowRank,
+                                teamAbbr = if (i % 2 == 0) seriesDataRound1[i / 2].teamFromUpper
+                                else seriesDataRound1[i / 2].teamFromLower,
+                                scoreUpper = seriesDataRound1[i / 2].scoreUpperWinner,
+                                scoreLower = seriesDataRound1[i / 2].scoreLowerWinner,
                                 winner = seriesDataRound1[i / 2].winner,
                                 modifier = Modifier.weight(1f)
                             )
@@ -88,14 +78,14 @@ fun PlayOff(
                             .weight(columnWeight[1])
                     ) {
                         val round2Teams = listOf(
-                            playOffViewObject.round1series18.winner,
-                            playOffViewObject.round1series45.winner,
-                            playOffViewObject.round1series36.winner,
-                            playOffViewObject.round1series27.winner
+                            stat.round1series18.winner,
+                            stat.round1series45.winner,
+                            stat.round1series36.winner,
+                            stat.round1series27.winner
                         )
                         val seriesDataRound2 = listOf(
-                            playOffViewObject.round2up,
-                            playOffViewObject.round2low
+                            stat.round2up,
+                            stat.round2low
                         )
                         round2Teams.forEachIndexed { i, teamAbbr ->
                             PlayOffColumn2(
@@ -116,19 +106,19 @@ fun PlayOff(
                             .weight(columnWeight[2])
                     ) {
                         PlayOffColumn3(
-                            teamAbbr = playOffViewObject.round2up.winner,
+                            teamAbbr = stat.round2up.winner,
                             isUpperTeam = true,
-                            scoreUpper = playOffViewObject.conferenceFinal.scoreUpperWinner,
-                            scoreLower = playOffViewObject.conferenceFinal.scoreLowerWinner,
-                            winner = playOffViewObject.conferenceFinal.winner,
+                            scoreUpper = stat.conferenceFinal.scoreUpperWinner,
+                            scoreLower = stat.conferenceFinal.scoreLowerWinner,
+                            winner = stat.conferenceFinal.winner,
                             modifier = Modifier.weight(1f)
                         )
                         PlayOffColumn3(
-                            teamAbbr = playOffViewObject.round2low.winner,
+                            teamAbbr = stat.round2low.winner,
                             isUpperTeam = false,
-                            scoreUpper = playOffViewObject.conferenceFinal.scoreUpperWinner,
-                            scoreLower = playOffViewObject.conferenceFinal.scoreLowerWinner,
-                            winner = playOffViewObject.conferenceFinal.winner,
+                            scoreUpper = stat.conferenceFinal.scoreUpperWinner,
+                            scoreLower = stat.conferenceFinal.scoreLowerWinner,
+                            winner = stat.conferenceFinal.winner,
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -140,7 +130,7 @@ fun PlayOff(
                             .weight(columnWeight[2])
                     ) {
                         PlayOffColumn4(
-                            teamAbbr = playOffViewObject.conferenceFinal.winner,
+                            teamAbbr = stat.conferenceFinal.winner,
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -377,7 +367,7 @@ private fun PlayOffTeam(modifier: Modifier = Modifier, rank: Int, teamAbbr: Stri
 }
 
 @Composable
-private fun PlayOffHeader(onLeft: Boolean) {
+private fun PlayOffHeader(isLTR: Boolean) {
     Row(
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxWidth()
@@ -385,7 +375,7 @@ private fun PlayOffHeader(onLeft: Boolean) {
         Column(modifier = Modifier.padding(horizontal = 8.dp)) {
             Text(
                 text = stringResource(
-                    if (onLeft) R.string.season_play_off_title_western
+                    if (isLTR) R.string.season_play_off_title_western
                     else R.string.season_play_off_title_eastern
                 ),
                 style = MaterialTheme.typography.subtitle2,
@@ -402,23 +392,17 @@ private fun getScoreString(upperScore: Int, lowerScore: Int, isUpperTeam: Boolea
         ""
     }
 
-data class PlayOffViewObject(
-    val round1series18: PlayOffSeriesViewObjectRound1,
-    val round1series45: PlayOffSeriesViewObjectRound1,
-    val round1series36: PlayOffSeriesViewObjectRound1,
-    val round1series27: PlayOffSeriesViewObjectRound1,
-    val round2up: PlayOffSeriesViewObject,
-    val round2low: PlayOffSeriesViewObject,
-    val conferenceFinal: PlayOffSeriesViewObject
+data class PlayOffStat(
+    val round1series18: PlayOffSeriesStat,
+    val round1series45: PlayOffSeriesStat,
+    val round1series36: PlayOffSeriesStat,
+    val round1series27: PlayOffSeriesStat,
+    val round2up: PlayOffSeriesStat,
+    val round2low: PlayOffSeriesStat,
+    val conferenceFinal: PlayOffSeriesStat
 )
 
-data class PlayOffSeriesViewObjectRound1(
-    val scoreHighRank: Int,
-    val scoreLowRank: Int,
-    val winner: String
-)
-
-data class PlayOffSeriesViewObject(
+data class PlayOffSeriesStat(
     val teamFromUpper: String,
     val teamFromLower: String,
     val scoreUpperWinner: Int,

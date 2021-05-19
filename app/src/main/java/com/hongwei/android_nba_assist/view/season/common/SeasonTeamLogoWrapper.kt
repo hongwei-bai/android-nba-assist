@@ -1,5 +1,6 @@
 package com.hongwei.android_nba_assist.view.season.common
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,11 +17,11 @@ import com.hongwei.android_nba_assist.datasource.league.Tournament
 import com.hongwei.android_nba_assist.util.ResourceByNameUtil
 import com.hongwei.android_nba_assist.view.component.TeamLogo
 import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper
-import com.hongwei.android_nba_assist.view.season.playin.PlayInTeamStatus
+import com.hongwei.android_nba_assist.view.season.playin.SeasonTeamStatus
 
 
 @Composable
-fun SeasonTeamLogoWrapper(teamAbbr: String, teamStatus: PlayInTeamStatus = PlayInTeamStatus.Normal) {
+fun SeasonTeamLogoWrapper(teamAbbr: String, teamStatus: SeasonTeamStatus = SeasonTeamStatus.Normal) {
     if (teamAbbr.equals(Tournament.TBD, true)) {
         Box(
             contentAlignment = Alignment.Center,
@@ -32,14 +33,15 @@ fun SeasonTeamLogoWrapper(teamAbbr: String, teamStatus: PlayInTeamStatus = PlayI
                 text = Tournament.TBD,
                 style = MaterialTheme.typography.body1,
                 color = when (teamStatus) {
-                    PlayInTeamStatus.Normal -> MaterialTheme.colors.onPrimary
-                    PlayInTeamStatus.Eliminated -> PlayInHelper.EliminatedTeamTextColor
-                    PlayInTeamStatus.NonParticipate -> PlayInHelper.NonParticipatorTextColor
+                    SeasonTeamStatus.Normal -> MaterialTheme.colors.onPrimary
+                    SeasonTeamStatus.Eliminated -> PlayInHelper.EliminatedTeamTextColor
+                    SeasonTeamStatus.NonParticipate -> PlayInHelper.NonParticipatorTextColor
                 },
                 textAlign = TextAlign.Center
             )
         }
     } else {
+        Log.d("bbbb", "teamAbbr: $teamAbbr")
         TeamLogo(
             localPlaceholderResId = ResourceByNameUtil.getResourceIdByName(LocalContext.current, teamAbbr),
             modifier = Modifier
@@ -47,9 +49,9 @@ fun SeasonTeamLogoWrapper(teamAbbr: String, teamStatus: PlayInTeamStatus = PlayI
                 .size(40.dp)
                 .alpha(
                     when (teamStatus) {
-                        PlayInTeamStatus.Normal -> 1f
-                        PlayInTeamStatus.Eliminated -> PlayInHelper.EliminatedAlpha
-                        PlayInTeamStatus.NonParticipate -> PlayInHelper.NonParticipatorAlpha
+                        SeasonTeamStatus.Normal -> 1f
+                        SeasonTeamStatus.Eliminated -> PlayInHelper.EliminatedAlpha
+                        SeasonTeamStatus.NonParticipate -> PlayInHelper.NonParticipatorAlpha
                     }
                 )
         )

@@ -98,29 +98,11 @@ fun Season() {
                 HorizontalPager(state = pagerState) { page ->
                     when (page) {
                         0 -> Standing(seasonViewModel.westernStanding.observeAsState().value, true)
-                        1 -> PlayInTournament(
-                            seasonViewModel.westernStanding.observeAsState().value,
-                            seasonViewModel.westernPlayIn.observeAsState().value,
-                            true
-                        )
-                        2 -> PlayOff(
-                            seasonViewModel.westernStanding.observeAsState().value,
-                            seasonViewModel.westernPlayOff.observeAsState().value,
-                            seasonViewModel.westernPlayIn.observeAsState().value,
-                            true
-                        )
+                        1 -> PlayInTournament(seasonViewModel.westernPlayIn.observeAsState().value, true)
+                        2 -> PlayOff(seasonViewModel.westernPlayOff.observeAsState().value, true)
                         3 -> Final(seasonViewModel.playOffGrandFinal.observeAsState().value)
-                        4 -> PlayOff(
-                            seasonViewModel.easternStanding.observeAsState().value,
-                            seasonViewModel.easternPlayOff.observeAsState().value,
-                            seasonViewModel.easternPlayIn.observeAsState().value,
-                            false
-                        )
-                        5 -> PlayInTournament(
-                            seasonViewModel.easternStanding.observeAsState().value,
-                            seasonViewModel.easternPlayIn.observeAsState().value,
-                            false
-                        )
+                        4 -> PlayOff(seasonViewModel.easternPlayOff.observeAsState().value, false)
+                        5 -> PlayInTournament(seasonViewModel.easternPlayIn.observeAsState().value, false)
                         6 -> Standing(seasonViewModel.easternStanding.observeAsState().value, false)
                         else -> {
 

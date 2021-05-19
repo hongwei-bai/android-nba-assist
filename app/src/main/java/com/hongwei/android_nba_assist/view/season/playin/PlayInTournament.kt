@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.datasource.league.Tournament.TBD
 import com.hongwei.android_nba_assist.view.animation.LoadingContent
-import com.hongwei.android_nba_assist.view.season.RankedTeamViewObject
 import com.hongwei.android_nba_assist.view.season.common.SeasonTeamLogoWrapper
 import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper.NonParticipatorTextColor
 import com.hongwei.android_nba_assist.view.season.playin.PlayInHelper.getRankByTeamAbbr
@@ -41,8 +40,8 @@ val round2SubWidthWeight = listOf(1f, 2f, 1.5f)
 val round3SubWidthWeight = listOf(1f, 1f)
 
 @Composable
-fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: PlayInViewObject?, onLeft: Boolean) {
-    if (standing != null && playInViewObject != null) {
+fun PlayInTournament(stat: PlayInStat?, isLTR: Boolean) {
+    if (stat != null) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -56,7 +55,7 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: Pl
                     .background(color = BlackAlphaA0)
                     .verticalScroll(ScrollState(0))
             ) {
-                PlayInHeader(onLeft)
+                PlayInHeader(isLTR)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -67,8 +66,8 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: Pl
                             .fillMaxHeight()
                             .weight(roundWidthWeight[0])
                     ) {
-                        standing.subList(0, 10).forEach {
-                            PlayInColumn1(it, playInViewObject, Modifier.weight(1f))
+                        stat.teamsAbbr.forEachIndexed { i, teamAbbr ->
+                            PlayInColumn1(i + 1, teamAbbr, stat, Modifier.weight(1f))
                         }
                     }
                     Column(
@@ -79,13 +78,13 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: Pl
                         Spacer(modifier = Modifier.weight(6f))
                         val winnerSymbols = listOf(true, false, true)
                         val hasRound2 = listOf(false, true, true)
-                        listOf(playInViewObject.winnerOf78, playInViewObject.loserOf78, playInViewObject.winnerOf910)
+                        listOf(stat.winnerOf78, stat.loserOf78, stat.winnerOf910)
                             .forEachIndexed { i, teamAbbr ->
                                 PlayInColumn2(
                                     teamAbbr = teamAbbr,
                                     lastRoundWinner = winnerSymbols[i],
                                     withLine = hasRound2[i],
-                                    advancedRound2 = playInViewObject.lastWinner != TBD && teamAbbr == playInViewObject.lastWinner,
+                                    advancedRound2 = stat.lastWinner != TBD && teamAbbr == stat.lastWinner,
                                     modifier = Modifier.weight(1f)
                                 )
                             }
@@ -96,23 +95,23 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: Pl
                             .fillMaxHeight()
                             .weight(roundWidthWeight[2])
                     ) {
-                        standing.subList(0, 6).forEach {
+                        stat.teamsAbbr.subList(0, 6).forEachIndexed { i, teamAbbr ->
                             PlayInColumn3(
-                                teamAbbr = it.team.abbrev,
-                                rank = it.rank,
+                                teamAbbr = teamAbbr,
+                                rank = i + 1,
                                 modifier = Modifier.weight(1f)
                             )
                         }
                         PlayInColumn3(
-                            teamAbbr = playInViewObject.winnerOf78,
-                            rank = getRankByTeamAbbr(standing, playInViewObject.winnerOf78),
+                            teamAbbr = stat.winnerOf78,
+                            rank = getRankByTeamAbbr(stat.winnerOf78, stat),
                             participateRound1 = true,
                             modifier = Modifier.weight(1f)
                         )
                         Spacer(modifier = Modifier.weight(0.5f))
                         PlayInColumn3(
-                            teamAbbr = playInViewObject.lastWinner,
-                            rank = getRankByTeamAbbr(standing, playInViewObject.lastWinner),
+                            teamAbbr = stat.lastWinner,
+                            rank = getRankByTeamAbbr(stat.lastWinner, stat),
                             participateRound1 = true,
                             participateRound2 = true,
                             modifier = Modifier.weight(1f)
@@ -129,32 +128,32 @@ fun PlayInTournament(standing: List<RankedTeamViewObject>?, playInViewObject: Pl
 }
 
 @Composable
-private fun PlayInColumn1(team: RankedTeamViewObject, playInViewObject: PlayInViewObject, modifier: Modifier = Modifier) {
+private fun PlayInColumn1(rank: Int, teamAbbr: String, stat: PlayInStat, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .padding(top = 0.dp, bottom = 0.dp)
     ) {
-        PlayInTeam(team = team, playInViewObject = playInViewObject, modifier = Modifier.weight(round1SubWidthWeight[0]))
+        PlayInTeam(rank, teamAbbr, stat, Modifier.weight(round1SubWidthWeight[0]))
         val colorOnPrimary = MaterialTheme.colors.onPrimary
         val colorSecondary = MaterialTheme.colors.secondary
         Row(modifier = Modifier.weight(round1SubWidthWeight[1])) {
-            when (team.rank) {
+            when (rank) {
                 7 -> TournamentLinePreAdvance(
                     colorOnPrimary, colorSecondary, true,
-                    playInViewObject.winnerOf78 != TBD && team.team.abbrev == playInViewObject.winnerOf78
+                    stat.winnerOf78 != TBD && teamAbbr == stat.winnerOf78
                 )
                 8 -> TournamentLinePreAdvance(
                     colorOnPrimary, colorSecondary, false,
-                    playInViewObject.winnerOf78 != TBD && team.team.abbrev == playInViewObject.winnerOf78
+                    stat.winnerOf78 != TBD && teamAbbr == stat.winnerOf78
                 )
                 9 -> TournamentLinePreAdvance(
                     colorOnPrimary, colorSecondary, true,
-                    playInViewObject.winnerOf910 != TBD && team.team.abbrev == playInViewObject.winnerOf910
+                    stat.winnerOf910 != TBD && teamAbbr == stat.winnerOf910
                 )
                 10 -> TournamentLinePreAdvance(
                     colorOnPrimary, colorSecondary, false,
-                    playInViewObject.winnerOf910 != TBD && team.team.abbrev == playInViewObject.winnerOf910
+                    stat.winnerOf910 != TBD && teamAbbr == stat.winnerOf910
                 )
                 else -> {
                 }
@@ -233,7 +232,7 @@ private fun PlayInColumn3(
             textAlign = TextAlign.End,
             modifier = Modifier.weight(round3SubWidthWeight[1])
         )
-        val teamStatus = if (participateRound1) PlayInTeamStatus.Normal else PlayInTeamStatus.NonParticipate
+        val teamStatus = if (participateRound1) SeasonTeamStatus.Normal else SeasonTeamStatus.NonParticipate
         SeasonTeamLogoWrapper(teamAbbr, teamStatus)
     }
 }
@@ -306,23 +305,23 @@ private fun PlayInTeamLogo(teamAbbr: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun PlayInTeam(team: RankedTeamViewObject, playInViewObject: PlayInViewObject, modifier: Modifier = Modifier) {
+private fun PlayInTeam(rank: Int, teamAbbr: String, stat: PlayInStat, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
         Text(
-            text = team.rank.toString(),
+            text = rank.toString(),
             style = MaterialTheme.typography.subtitle2,
-            color = getTextColorByTeam(team, playInViewObject),
+            color = getTextColorByTeam(rank, teamAbbr, stat),
             textAlign = TextAlign.End,
             modifier = Modifier.width(24.dp)
         )
-        SeasonTeamLogoWrapper(team.team.abbrev, getTeamStatus(team, playInViewObject))
+        SeasonTeamLogoWrapper(teamAbbr, getTeamStatus(rank, teamAbbr, stat))
         Text(
-            text = team.team.abbrev.toUpperCase(Locale.US),
+            text = teamAbbr.toUpperCase(Locale.US),
             style = MaterialTheme.typography.subtitle2,
-            color = getTextColorByTeam(team, playInViewObject),
+            color = getTextColorByTeam(rank, teamAbbr, stat),
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Clip,
             maxLines = 1,
@@ -332,7 +331,7 @@ private fun PlayInTeam(team: RankedTeamViewObject, playInViewObject: PlayInViewO
 }
 
 @Composable
-private fun PlayInHeader(onLeft: Boolean) {
+private fun PlayInHeader(isLTR: Boolean) {
     Row(
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxWidth()
@@ -340,7 +339,7 @@ private fun PlayInHeader(onLeft: Boolean) {
         Column(modifier = Modifier.padding(horizontal = 8.dp)) {
             Text(
                 text = stringResource(
-                    if (onLeft) R.string.season_play_in_tournament_title_western
+                    if (isLTR) R.string.season_play_in_tournament_title_western
                     else R.string.season_play_in_tournament_title_eastern
                 ),
                 style = MaterialTheme.typography.subtitle2,
