@@ -8,7 +8,7 @@ import com.hongwei.android_nba_assist.view.theme.Grey60
 import com.hongwei.android_nba_assist.view.theme.Grey80
 
 object PlayInHelper {
-    fun getRankByTeamAbbr(teamAbbr: String, stat: PlayInStat): Int = stat.teamsAbbr.indexOf(teamAbbr)
+    fun getRankByTeamAbbr(teamAbbr: String, stat: PlayInStat): Int = stat.teamsAbbr.indexOf(teamAbbr) + 1
 
     private fun isEliminatedByTeam(rank: Int, teamAbbr: String, stat: PlayInStat) =
         when (rank) {
