@@ -9,10 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
-import androidx.navigation.compose.popUpTo
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieAnimationSpec
 import com.airbnb.lottie.compose.LottieAnimationState
@@ -22,7 +20,7 @@ import com.hongwei.android_nba_assist.viewmodel.SplashViewModel
 
 @Composable
 fun SplashScreen(navController: NavController) {
-    val splashViewModel = hiltNavGraphViewModel<SplashViewModel>()
+    val splashViewModel = hiltViewModel<SplashViewModel>()
     splashViewModel.preload {
         navController.navigate("main") {
             popUpTo("splash") { inclusive = true }
