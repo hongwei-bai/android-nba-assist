@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -12,8 +12,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieAnimationSpec
-import com.airbnb.lottie.compose.LottieAnimationState
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.viewmodel.SplashViewModel
 
@@ -27,13 +28,8 @@ fun SplashScreen(navController: NavController) {
             launchSingleTop = true
         }
     }
-    val animationSpec = remember { LottieAnimationSpec.RawRes(R.raw.anim_splash) }
-    val state = LottieAnimationState(
-        isPlaying = true,
-        repeatCount = Integer.MAX_VALUE,
-        enableMergePaths = false
-    )
-    state.speed = 1.2f
+
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.anim_splash))
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -43,8 +39,9 @@ fun SplashScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LottieAnimation(
-                spec = animationSpec,
-                animationState = state
+                composition,
+                speed = 1.2f,
+                iterations = LottieConstants.IterateForever,
             )
             Spacer(modifier = Modifier.size(2.dp))
             Text(

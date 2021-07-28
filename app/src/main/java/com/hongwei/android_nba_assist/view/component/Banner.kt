@@ -1,7 +1,6 @@
 package com.hongwei.android_nba_assist.view.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -14,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.ImageLoadState
 import com.hongwei.android_nba_assist.R
-import com.hongwei.android_nba_assist.view.animation.LoadingImage
 
 @Composable
 fun Banner(url: String?, modifier: Modifier = Modifier) {
@@ -35,7 +33,8 @@ fun Banner(url: String?, modifier: Modifier = Modifier) {
                 modifier = modifier
                     .clip(RoundedCornerShape(bottomStart = 6.dp, bottomEnd = 6.dp))
             )
-            ImageLoadState.Loading -> LoadingImage(modifier = Modifier.size(48.dp))
+
+//            ImageLoadState.Loading -> LoadingImage(modifier = Modifier.size(48.dp))
             else -> Image(
                 painter = painterResource(id = R.drawable.banner_placeholder),
                 contentDescription = null,

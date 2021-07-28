@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.hongwei.android_nba_assist.R
 
 val NbaTypography = Typography(
-    defaultFontFamily = FontFamily(Font(R.font.play, FontWeight.Light)),
+    defaultFontFamily = FontFamily(Font(R.font.play_regular)),
 
     h4 = TextStyle(
         fontWeight = FontWeight.Medium,
