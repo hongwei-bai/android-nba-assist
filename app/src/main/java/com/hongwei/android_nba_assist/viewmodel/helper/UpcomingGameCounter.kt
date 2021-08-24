@@ -6,7 +6,10 @@ import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleCon
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_MINUTE
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_SECOND
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UpcomingGameCounter @Inject constructor() {
@@ -59,7 +62,7 @@ class UpcomingGameCounter @Inject constructor() {
                 }
 
                 override fun onFinish() {
-                    GlobalScope.launch(Dispatchers.Main) {
+                    coroutineScope.launch(Dispatchers.Main) {
                         countdownCallback.invoke("0:00:00")
                         delay(COUNTDOWN_ZERO_FREEZE_MILLIS)
                         countdownCallback.invoke("Now")

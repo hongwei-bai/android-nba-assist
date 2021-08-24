@@ -15,7 +15,11 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val nbaTeamRepository: NbaTeamRepository
 ) : ViewModel() {
+    private var onStart = true
+
     fun preload(onPreloadComplete: () -> Unit) {
+        if (!onStart) return
+        onStart = false
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
             delay(20)
             nbaTeamRepository.fetchTeamThemeFromBackend(AppSettings.myTeam)

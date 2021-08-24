@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -21,7 +22,6 @@ import com.hongwei.android_nba_assist.view.season.common.SeasonStatus
 import com.hongwei.android_nba_assist.view.season.playin.PlayInTournament
 import com.hongwei.android_nba_assist.view.season.playoff.PlayOff
 import com.hongwei.android_nba_assist.viewmodel.SeasonViewModel
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
@@ -30,6 +30,7 @@ fun Season() {
     val seasonViewModel = hiltNavGraphViewModel<SeasonViewModel>()
     val seasonStatus = seasonViewModel.seasonStatus.observeAsState().value
     val dataStatus = seasonViewModel.dataStatus.observeAsState().value
+    val coroutineScope = rememberCoroutineScope()
     if (seasonStatus != null) {
         val pages = listOf(
             SeasonScreens.WestStanding,
@@ -87,7 +88,7 @@ fun Season() {
                             },
                             selected = pagerState.currentPage == index,
                             onClick = {
-                                GlobalScope.launch {
+                                coroutineScope.launch {
                                     pagerState.scrollToPage(index)
                                 }
                             },
