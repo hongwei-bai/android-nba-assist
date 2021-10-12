@@ -2,7 +2,7 @@ package com.hongwei.android_nba_assist.hilt
 
 import android.content.Context
 import androidx.room.Room
-import com.hongwei.android_nba_assist.datasource.room.*
+import com.hongwei.android_nba_assist.data.room.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

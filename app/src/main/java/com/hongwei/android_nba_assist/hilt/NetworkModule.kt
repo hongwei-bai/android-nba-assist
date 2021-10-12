@@ -5,9 +5,9 @@ import com.hongwei.android_nba_assist.constant.AppConfigurations
 import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.HTTP_CONNECT_TIMEOUT
 import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.HTTP_READ_TIMEOUT
 import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.HTTP_WRITE_TIMEOUT
-import com.hongwei.android_nba_assist.datasource.network.service.NbaStatService
-import com.hongwei.android_nba_assist.datasource.network.interceptor.PublicAccessInterceptor
-import com.hongwei.android_nba_assist.datasource.network.service.NbaThemeService
+import com.hongwei.android_nba_assist.data.network.service.NbaStatService
+import com.hongwei.android_nba_assist.data.network.interceptor.PublicAccessInterceptor
+import com.hongwei.android_nba_assist.data.network.service.NbaThemeService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
