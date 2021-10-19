@@ -2,9 +2,9 @@ package com.hongwei.android_nba_assist.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hongwei.android_nba_assist.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.data.NbaTeamRepository
 import com.hongwei.android_nba_assist.data.local.AppSettings
-import com.hongwei.android_nba_assist.ExceptionHelper.nbaExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor(
         onStart = false
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
             delay(20)
-            nbaTeamRepository.fetchTeamThemeFromBackend(AppSettings.myTeam)
+            nbaTeamRepository.fetchTeamDetailFromBackend(AppSettings.myTeam)
             viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) {
                 onPreloadComplete.invoke()
             }

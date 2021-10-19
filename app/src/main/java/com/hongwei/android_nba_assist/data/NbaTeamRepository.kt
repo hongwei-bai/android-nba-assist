@@ -3,6 +3,7 @@ package com.hongwei.android_nba_assist.data
 import com.hongwei.android_nba_assist.constant.AppConfigurations.Debug.DEBUG_TEAM_THEME_ON_LOCAL
 import com.hongwei.android_nba_assist.data.local.LocalTeamTheme
 import com.hongwei.android_nba_assist.data.mapper.NbaTeamThemeMapper.map
+import com.hongwei.android_nba_assist.data.mapper.NbaTeamThemeMapper.mapV1
 import com.hongwei.android_nba_assist.data.network.service.NbaThemeService
 import com.hongwei.android_nba_assist.data.room.TeamThemeDao
 import com.hongwei.android_nba_assist.data.room.TeamThemeEntity
@@ -16,6 +17,23 @@ class NbaTeamRepository @Inject constructor(
     private val teamThemeDao: TeamThemeDao,
     private val localTeamTheme: LocalTeamTheme
 ) {
+
+
+    suspend fun fetchTeamDetailFromBackend(team: String) {
+        val response = nbaThemeService.getTeamDetail(team)
+        val data = response.body()
+        if (response.isSuccessful && data != null) {
+            teamThemeDao.save(data.map())
+        }
+    }
+
+    fun getTeamDetail(team: String): Flow<TeamThemeEntity> {
+        return teamThemeDao.getTeamTheme().onEach {
+            it ?: fetchTeamDetailFromBackend(team)
+        }.filterNotNull()
+    }
+
+    @Deprecated("NBA V1 api obsoleted. V2 Use fetchTeamDetail instead.")
     suspend fun fetchTeamThemeFromBackend(team: String) {
         if (DEBUG_TEAM_THEME_ON_LOCAL) {
             val localTheme = localTeamTheme.getTeamTheme(team)
@@ -24,11 +42,12 @@ class NbaTeamRepository @Inject constructor(
             val response = nbaThemeService.getTeamTheme(team, -1)
             val data = response.body()
             if (response.isSuccessful && data != null) {
-                teamThemeDao.save(data.map())
+                teamThemeDao.save(data.mapV1())
             }
         }
     }
 
+    @Deprecated("NBA V1 api obsoleted. V2 Use getTeamDetail instead.")
     fun getTeamTheme(team: String): Flow<TeamThemeEntity> {
         return teamThemeDao.getTeamTheme().onEach {
             it ?: fetchTeamThemeFromBackend(team)

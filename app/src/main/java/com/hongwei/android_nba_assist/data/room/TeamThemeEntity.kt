@@ -12,8 +12,8 @@ data class TeamThemeEntity(
     val apiVersion: Int = API_VERSION,
     @SerializedName("team")
     val team: String = "",
-    @SerializedName("data_version")
-    val dataVersion: Long = -1,
+    @SerializedName("logo_url")
+    val logoUrl: String = "",
     @SerializedName("banner_url")
     val bannerUrl: String = "",
     @SerializedName("background_url")

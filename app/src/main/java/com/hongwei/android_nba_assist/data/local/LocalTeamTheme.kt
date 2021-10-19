@@ -27,19 +27,19 @@ class LocalTeamTheme @Inject constructor() {
 
     fun getTeamTheme(team: String): TeamThemeEntity = when (team) {
         "gs" -> TeamThemeEntity(
-            team = team, dataVersion = 0, bannerUrl = bannerUrl(team),
+            team = team, bannerUrl = bannerUrl(team),
             colorLight = WarriorsColors.Light.toLong(),
             colorHome = WarriorsColors.Home.toLong(),
             colorGuest = WarriorsColors.Guest.toLong()
         )
         "lal" -> TeamThemeEntity(
-            team = team, dataVersion = 0, bannerUrl = bannerUrl(team),
+            team = team, bannerUrl = bannerUrl(team),
             colorLight = LakersColors.Light.toLong(),
             colorHome = LakersColors.Home.toLong(),
             colorGuest = LakersColors.Guest.toLong()
         )
         else -> TeamThemeEntity(
-            team = team, dataVersion = 0, bannerUrl = bannerUrl(team),
+            team = team, bannerUrl = bannerUrl(team),
             colorLight = WarriorsColors.Light.toLong(),
             colorHome = WarriorsColors.Home.toLong(),
             colorGuest = WarriorsColors.Guest.toLong()

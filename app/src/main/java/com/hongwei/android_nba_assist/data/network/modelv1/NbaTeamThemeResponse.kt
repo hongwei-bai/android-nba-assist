@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.data.network.model
+package com.hongwei.android_nba_assist.data.network.modelv1
 
 data class NbaTeamTheme(
     val dataVersion: Long,

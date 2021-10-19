@@ -37,7 +37,7 @@ class DashboardViewModel @Inject constructor(
     val myTeam: MutableLiveData<String> = MutableLiveData()
 
     val teamBackground: LiveData<String?> =
-        nbaTeamRepository.getTeamTheme(AppSettings.myTeam)
+        nbaTeamRepository.getTeamDetail(AppSettings.myTeam)
             .map { it.backgroundUrl }
             .asLiveData(viewModelScope.coroutineContext)
 

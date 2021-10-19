@@ -2,10 +2,10 @@ package com.hongwei.android_nba_assist.settings
 
 import android.content.Context
 import androidx.lifecycle.*
+import com.hongwei.android_nba_assist.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.data.NbaStatRepository
 import com.hongwei.android_nba_assist.data.NbaTeamRepository
 import com.hongwei.android_nba_assist.data.local.AppSettings
-import com.hongwei.android_nba_assist.ExceptionHelper.nbaExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
@@ -18,7 +18,7 @@ class SettingsViewModel @Inject constructor(
     private val nbaStatRepository: NbaStatRepository
 ) : ViewModel() {
     val teamBanner: LiveData<String> =
-        nbaTeamRepository.getTeamTheme(AppSettings.myTeam)
+        nbaTeamRepository.getTeamDetail(AppSettings.myTeam)
             .map { it.bannerUrl }
             .asLiveData(viewModelScope.coroutineContext)
 
@@ -53,7 +53,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun reloadAll() {
-        nbaTeamRepository.fetchTeamThemeFromBackend(AppSettings.myTeam)
+        nbaTeamRepository.fetchTeamDetailFromBackend(AppSettings.myTeam)
         nbaStatRepository.fetchTeamScheduleFromBackend(AppSettings.myTeam)
         nbaStatRepository.fetchStandingFromBackend()
         nbaStatRepository.fetchPlayOffFromBackend()
