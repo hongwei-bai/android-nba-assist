@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 @ExperimentalPagerApi
 @Composable
 fun Season() {
-    val seasonViewModel = hiltNavGraphViewModel<SeasonViewModel>()
+    val seasonViewModel = hiltViewModel<SeasonViewModel>()
     val seasonStatus = seasonViewModel.seasonStatus.observeAsState().value
     val dataStatus = seasonViewModel.dataStatus.observeAsState().value
     val coroutineScope = rememberCoroutineScope()

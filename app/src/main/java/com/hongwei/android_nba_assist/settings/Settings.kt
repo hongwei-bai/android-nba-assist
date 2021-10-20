@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.hongwei.android_nba_assist.R
 import com.hongwei.android_nba_assist.data.local.AppSettings
 import com.hongwei.android_nba_assist.ui.component.Banner
@@ -23,7 +23,7 @@ import com.hongwei.android_nba_assist.ui.component.SettingItem
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Settings() {
-    val viewModel = hiltNavGraphViewModel<SettingsViewModel>()
+    val viewModel = hiltViewModel<SettingsViewModel>()
     val displayDialog = remember { mutableStateOf(false) }
     val context = LocalContext.current
 
