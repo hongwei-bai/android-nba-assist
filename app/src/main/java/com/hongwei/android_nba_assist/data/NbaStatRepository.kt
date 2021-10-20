@@ -69,10 +69,10 @@ class NbaStatRepository @Inject constructor(
     fun getPostSeason(): Flow<PostSeasonEntity> {
         return postSeasonDao.getPostSeason().onEach {
             when {
-                it == null -> fetchPlayOffFromBackend()
+                it == null -> fetchPostSeasonFromBackend()
                 it.dataMayOutdated() -> {
                     dataStatusChannel.send(DataStatus.DataMayOutdated)
-                    fetchPlayOffFromBackend(it.dataVersion)
+                    fetchPostSeasonFromBackend(it.dataVersion)
                 }
             }
         }.filterNotNull()
@@ -104,7 +104,7 @@ class NbaStatRepository @Inject constructor(
         }
     }
 
-    suspend fun fetchPlayOffFromBackend(dataVersion: Long? = null) {
+    suspend fun fetchPostSeasonFromBackend(dataVersion: Long? = null) {
         val response = nbaStatService.getPostSeason(dataVersion ?: -1)
         val data = response.body()
         when (response.code()) {

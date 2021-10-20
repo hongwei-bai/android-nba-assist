@@ -17,7 +17,9 @@ import com.hongwei.android_nba_assist.data.league.nba.Conference
 import com.hongwei.android_nba_assist.data.league.nba.getConferenceByTeam
 import com.hongwei.android_nba_assist.data.local.AppSettings
 import com.hongwei.android_nba_assist.season.common.SeasonStatus
+import com.hongwei.android_nba_assist.ui.animation.ErrorView
 import com.hongwei.android_nba_assist.ui.animation.LoadingContent
+import com.hongwei.android_nba_assist.ui.component.DataStatus
 import com.hongwei.android_nba_assist.ui.component.DataStatusSnackBar
 import kotlinx.coroutines.launch
 
@@ -110,6 +112,9 @@ fun Season() {
             }
         }
     } else {
-        LoadingContent()
+        when (dataStatus) {
+            is DataStatus.ServiceError -> ErrorView(dataStatus.message)
+            else -> LoadingContent()
+        }
     }
 }

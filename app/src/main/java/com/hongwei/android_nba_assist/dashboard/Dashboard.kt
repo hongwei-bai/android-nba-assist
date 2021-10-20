@@ -15,14 +15,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.hongwei.android_nba_assist.ui.animation.ErrorView
 import com.hongwei.android_nba_assist.ui.animation.LoadingContent
+import com.hongwei.android_nba_assist.ui.component.DataStatus
 import com.hongwei.android_nba_assist.ui.component.DataStatusSnackBar
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun Dashboard() {
     val viewModel = hiltViewModel<DashboardViewModel>()
-
+    val dataStatus = viewModel.dataStatus.observeAsState().value
+    
     SwipeRefresh(
         state = rememberSwipeRefreshState(viewModel.isRefreshing.observeAsState().value == true),
         onRefresh = { viewModel.refresh() },
@@ -67,7 +70,10 @@ fun Dashboard() {
                     )
                 }
             } else {
-                LoadingContent()
+                when (dataStatus) {
+                    is DataStatus.ServiceError -> ErrorView(dataStatus.message)
+                    else -> LoadingContent()
+                }
             }
         }
     }
