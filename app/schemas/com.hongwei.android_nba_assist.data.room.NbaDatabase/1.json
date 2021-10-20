@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a953dcd2e48bacf7910502e13edf38bd",
+    "identityHash": "507e3216e47699e6c8b7e6593d675967",
     "entities": [
       {
         "tableName": "team_schedule",
@@ -99,18 +99,12 @@
         "foreignKeys": []
       },
       {
-        "tableName": "playoff",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `seasonOngoing` INTEGER NOT NULL, `playInOngoing` INTEGER NOT NULL, `playOffOngoing` INTEGER NOT NULL, `playIn` TEXT NOT NULL, `playOff` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
+        "tableName": "post_season",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `currentStage` TEXT NOT NULL, `westernPlayInEventRound1` TEXT NOT NULL, `westernPlayInEventRound2` TEXT, `easternPlayInEventRound1` TEXT NOT NULL, `easternPlayInEventRound2` TEXT, `westernRound1Series` TEXT NOT NULL, `easternRound1Series` TEXT NOT NULL, `westernRound2Series` TEXT NOT NULL, `easternRound2Series` TEXT NOT NULL, `westernConferenceFinal` TEXT, `easternConferenceFinal` TEXT, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
             "fieldPath": "apiVersion",
             "columnName": "apiVersion",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "timeStamp",
-            "columnName": "timeStamp",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -121,34 +115,76 @@
             "notNull": true
           },
           {
-            "fieldPath": "seasonOngoing",
-            "columnName": "seasonOngoing",
+            "fieldPath": "timeStamp",
+            "columnName": "timeStamp",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "playInOngoing",
-            "columnName": "playInOngoing",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "playOffOngoing",
-            "columnName": "playOffOngoing",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "playIn",
-            "columnName": "playIn",
+            "fieldPath": "currentStage",
+            "columnName": "currentStage",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "playOff",
-            "columnName": "playOff",
+            "fieldPath": "westernPlayInEventRound1",
+            "columnName": "westernPlayInEventRound1",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "westernPlayInEventRound2",
+            "columnName": "westernPlayInEventRound2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "easternPlayInEventRound1",
+            "columnName": "easternPlayInEventRound1",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "easternPlayInEventRound2",
+            "columnName": "easternPlayInEventRound2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "westernRound1Series",
+            "columnName": "westernRound1Series",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "easternRound1Series",
+            "columnName": "easternRound1Series",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "westernRound2Series",
+            "columnName": "westernRound2Series",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "easternRound2Series",
+            "columnName": "easternRound2Series",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "westernConferenceFinal",
+            "columnName": "westernConferenceFinal",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "easternConferenceFinal",
+            "columnName": "easternConferenceFinal",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -226,7 +262,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a953dcd2e48bacf7910502e13edf38bd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '507e3216e47699e6c8b7e6593d675967')"
     ]
   }
 }

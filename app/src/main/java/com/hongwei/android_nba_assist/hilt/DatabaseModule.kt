@@ -24,7 +24,7 @@ class DatabaseModule {
     }
 
     @Provides
-    fun providePlayOff(nbaDatabase: NbaDatabase): PlayOffDao {
+    fun providePlayOff(nbaDatabase: NbaDatabase): PostSeasonDao {
         return nbaDatabase.playOff()
     }
 

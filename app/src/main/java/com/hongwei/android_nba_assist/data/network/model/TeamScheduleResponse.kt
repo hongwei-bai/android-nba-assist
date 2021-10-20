@@ -3,7 +3,7 @@ package com.hongwei.android_nba_assist.data.network.model
 data class TeamScheduleResponse(
     val dataVersion: Long = 0,
     val team: TeamResponse,
-    val events: List<EventResponse>
+    val events: List<TeamEventResponse>
 )
 
 data class TeamResponse(
@@ -13,15 +13,15 @@ data class TeamResponse(
     val location: String
 )
 
-data class EventResponse(
+data class TeamEventResponse(
     val unixTimeStamp: Long,
     val eventType: String,
     val opponent: TeamResponse,
-    val result: ResultResponse? = null,
+    val result: TeamResultResponse? = null,
     val home: Boolean
 )
 
-data class ResultResponse(
+data class TeamResultResponse(
     val win: Boolean,
     val currentTeamScore: Int,
     val opponentTeamScore: Int

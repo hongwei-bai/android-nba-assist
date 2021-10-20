@@ -4,7 +4,7 @@ import com.hongwei.android_nba_assist.constant.AppConfigurations.ForceRefreshInt
 import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.HttpCode
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assist.data.local.AppSettings
-import com.hongwei.android_nba_assist.data.mapper.NbaPlayOffMapper.map
+import com.hongwei.android_nba_assist.data.mapper.NbaPostSeasonMapper.map
 import com.hongwei.android_nba_assist.data.mapper.NbaStandingMapper.map
 import com.hongwei.android_nba_assist.data.mapper.NbaTeamScheduleMapper.map
 import com.hongwei.android_nba_assist.data.network.service.NbaStatService
@@ -22,13 +22,13 @@ class NbaStatRepository @Inject constructor(
     private val nbaStatService: NbaStatService,
     private val teamScheduleDao: TeamScheduleDao,
     private val standingDao: StandingDao,
-    private val playOffDao: PlayOffDao
+    private val postSeasonDao: PostSeasonDao
 ) {
     private val dataStatusChannel = Channel<DataStatus>()
 
     val dataStatus = dataStatusChannel.receiveAsFlow()
 
-    fun getNextGameInfo(team: String): Flow<Event> {
+    fun getNextGameInfo(team: String): Flow<TeamEvent> {
         return teamScheduleDao.getTeamSchedule().onEach {
             it ?: fetchTeamScheduleFromBackend(team)
         }.filterNotNull().map {
@@ -38,7 +38,7 @@ class NbaStatRepository @Inject constructor(
         }.filterNotNull()
     }
 
-    fun getTeamSchedule(team: String): Flow<List<Event>> {
+    fun getTeamSchedule(team: String): Flow<List<TeamEvent>> {
         return teamScheduleDao.getTeamSchedule().onEach {
             when {
                 it == null -> fetchTeamScheduleFromBackend(team)
@@ -66,8 +66,8 @@ class NbaStatRepository @Inject constructor(
         }.filterNotNull()
     }
 
-    fun getPlayOff(): Flow<PlayOffEntity> {
-        return playOffDao.getPlayOff().onEach {
+    fun getPostSeason(): Flow<PostSeasonEntity> {
+        return postSeasonDao.getPostSeason().onEach {
             when {
                 it == null -> fetchPlayOffFromBackend()
                 it.dataMayOutdated() -> {
@@ -105,15 +105,15 @@ class NbaStatRepository @Inject constructor(
     }
 
     suspend fun fetchPlayOffFromBackend(dataVersion: Long? = null) {
-        val response = nbaStatService.getPlayOff(dataVersion ?: -1)
+        val response = nbaStatService.getPostSeason(dataVersion ?: -1)
         val data = response.body()
         when (response.code()) {
             HttpCode.HTTP_OK -> data?.let {
-                playOffDao.save(data.map())
+                postSeasonDao.save(data.map())
             }
             HttpCode.HTTP_DATA_UP_TO_DATE -> {
                 dataStatusChannel.send(DataStatus.DataIsUpToDate)
-                playOffDao.update(System.currentTimeMillis())
+                postSeasonDao.update(System.currentTimeMillis())
             }
             else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch Playoff data error, code: ${response.code()}"))
         }
@@ -129,6 +129,6 @@ class NbaStatRepository @Inject constructor(
     private fun StandingEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
             ForceRefreshInterval.FOR_STANDING_HOUR * MILLIS_PER_HOUR
 
-    private fun PlayOffEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
+    private fun PostSeasonEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
             ForceRefreshInterval.FOR_STANDING_PLAYOFF * MILLIS_PER_HOUR
 }

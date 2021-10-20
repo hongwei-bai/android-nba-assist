@@ -1,12 +1,12 @@
 package com.hongwei.android_nba_assist.data.mapper
 
 import com.hongwei.android_nba_assist.data.mapper.NbaTeamMapper.mapTeam
-import com.hongwei.android_nba_assist.data.network.model.EventResponse
+import com.hongwei.android_nba_assist.data.network.model.TeamEventResponse
 import com.hongwei.android_nba_assist.data.network.model.TeamResponse
 import com.hongwei.android_nba_assist.data.network.model.TeamScheduleResponse
-import com.hongwei.android_nba_assist.data.room.Event
-import com.hongwei.android_nba_assist.data.room.Result
 import com.hongwei.android_nba_assist.data.room.Team
+import com.hongwei.android_nba_assist.data.room.TeamEvent
+import com.hongwei.android_nba_assist.data.room.TeamResult
 import com.hongwei.android_nba_assist.data.room.TeamScheduleEntity
 
 object NbaTeamScheduleMapper {
@@ -18,7 +18,7 @@ object NbaTeamScheduleMapper {
         events = events.map { it.map(team) }
     )
 
-    private fun EventResponse.map(team: TeamResponse): Event = Event(
+    private fun TeamEventResponse.map(team: TeamResponse): TeamEvent = TeamEvent(
         unixTimeStamp = unixTimeStamp,
         eventType = eventType,
         opponent = Team(
@@ -31,7 +31,7 @@ object NbaTeamScheduleMapper {
         homeTeam = if (home) team.mapTeam() else opponent.mapTeam(),
         home = home,
         result = result?.let {
-            Result(
+            TeamResult(
                 isWin = it.win,
                 currentTeamScore = it.currentTeamScore,
                 opponentTeamScore = it.opponentTeamScore

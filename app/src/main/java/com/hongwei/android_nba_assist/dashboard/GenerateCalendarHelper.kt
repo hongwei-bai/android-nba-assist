@@ -1,6 +1,6 @@
 package com.hongwei.android_nba_assist.dashboard
 
-import com.hongwei.android_nba_assist.data.room.Event
+import com.hongwei.android_nba_assist.data.room.TeamEvent
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_DAY
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_WEEK
@@ -8,7 +8,7 @@ import java.util.*
 import java.util.Calendar.getInstance
 
 object GenerateCalendarHelper {
-    fun generateCalendarDays(events: List<Event>, scheduleWeeks: Int, weekStartFromMonday: Boolean): List<List<Calendar>> {
+    fun generateCalendarDays(events: List<TeamEvent>, scheduleWeeks: Int, weekStartFromMonday: Boolean): List<List<Calendar>> {
         val today = getInstance()
         val firstDay = if (weekStartFromMonday) {
             LocalDateTimeUtil.getMondayOfWeek(today)
@@ -31,7 +31,7 @@ object GenerateCalendarHelper {
         return calendarDays
     }
 
-    private fun getLastWeekWithEvents(firstDay: Calendar, events: List<Event>, maxNoOfWeek: Int): Int {
+    private fun getLastWeekWithEvents(firstDay: Calendar, events: List<TeamEvent>, maxNoOfWeek: Int): Int {
         for (i in 1 until maxNoOfWeek) {
             val firstDayOfThatWeek = getInstance().apply {
                 timeInMillis = firstDay.timeInMillis + MILLIS_PER_WEEK * i

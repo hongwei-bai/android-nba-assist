@@ -7,13 +7,13 @@ import java.lang.reflect.Type
 
 object NbaTypeConverters {
     @TypeConverter
-    fun fromStringToEventList(value: String?): List<Event>? {
-        val listType: Type = object : TypeToken<List<Event>?>() {}.type
+    fun fromStringToTeamEventList(value: String?): List<TeamEvent>? {
+        val listType: Type = object : TypeToken<List<TeamEvent>?>() {}.type
         return Gson().fromJson(value, listType)
     }
 
     @TypeConverter
-    fun fromEventList(list: List<Event>?): String? {
+    fun fromTeamEventList(list: List<TeamEvent>?): String? {
         val gson = Gson()
         return gson.toJson(list)
     }
@@ -43,25 +43,73 @@ object NbaTypeConverters {
     }
 
     @TypeConverter
-    fun fromStringToPlayIn(value: String?): PlayInEntity? {
-        val type: Type = object : TypeToken<PlayInEntity?>() {}.type
+    fun fromStringToPlayInEventEntity(value: String?): PlayInEventEntity? {
+        val type: Type = object : TypeToken<PlayInEventEntity?>() {}.type
         return Gson().fromJson(value, type)
     }
 
     @TypeConverter
-    fun fromPlayIn(obj: PlayInEntity?): String? {
+    fun fromPlayInEventEntity(obj: PlayInEventEntity?): String? {
         val gson = Gson()
         return gson.toJson(obj)
     }
 
     @TypeConverter
-    fun fromStringToPlayOff(value: String?): PlayOffSubEntity? {
-        val type: Type = object : TypeToken<PlayOffSubEntity?>() {}.type
+    fun fromStringToPlayInEventListEntity(value: String?): List<PlayInEventEntity?> {
+        val type: Type = object : TypeToken<List<PlayInEventEntity?>>() {}.type
         return Gson().fromJson(value, type)
     }
 
     @TypeConverter
-    fun fromPlayOff(obj: PlayOffSubEntity?): String? {
+    fun fromPlayInEventListEntity(obj: List<PlayInEventEntity?>): String? {
+        val gson = Gson()
+        return gson.toJson(obj)
+    }
+
+    @TypeConverter
+    fun fromStringToPlayOffSeriesEntity(value: String?): PlayOffSeriesEntity? {
+        val type: Type = object : TypeToken<PlayOffSeriesEntity?>() {}.type
+        return Gson().fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromPlayOffSeriesEntity(obj: PlayOffSeriesEntity?): String? {
+        val gson = Gson()
+        return gson.toJson(obj)
+    }
+
+    @TypeConverter
+    fun fromStringToPlayOffSeriesListEntity(value: String?): List<PlayOffSeriesEntity?> {
+        val type: Type = object : TypeToken<List<PlayOffSeriesEntity?>>() {}.type
+        return Gson().fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromPlayOffSeriesListEntity(obj: List<PlayOffSeriesEntity?>): String? {
+        val gson = Gson()
+        return gson.toJson(obj)
+    }
+
+    @TypeConverter
+    fun fromStringToPostSeasonTeamEntity(value: String?): PostSeasonTeamEntity? {
+        val type: Type = object : TypeToken<PostSeasonTeamEntity?>() {}.type
+        return Gson().fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromPostSeasonTeamEntity(obj: PostSeasonTeamEntity?): String? {
+        val gson = Gson()
+        return gson.toJson(obj)
+    }
+
+    @TypeConverter
+    fun fromStringToResultEntity(value: String?): Result? {
+        val type: Type = object : TypeToken<Result?>() {}.type
+        return Gson().fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromResultEntity(obj: Result?): String? {
         val gson = Gson()
         return gson.toJson(obj)
     }

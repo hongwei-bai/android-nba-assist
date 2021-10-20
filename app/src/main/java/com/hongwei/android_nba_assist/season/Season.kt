@@ -16,11 +16,9 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.hongwei.android_nba_assist.data.league.nba.Conference
 import com.hongwei.android_nba_assist.data.league.nba.getConferenceByTeam
 import com.hongwei.android_nba_assist.data.local.AppSettings
+import com.hongwei.android_nba_assist.season.common.SeasonStatus
 import com.hongwei.android_nba_assist.ui.animation.LoadingContent
 import com.hongwei.android_nba_assist.ui.component.DataStatusSnackBar
-import com.hongwei.android_nba_assist.season.common.SeasonStatus
-import com.hongwei.android_nba_assist.season.playin.PlayInTournament
-import com.hongwei.android_nba_assist.season.playoff.PlayOff
 import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
@@ -98,11 +96,11 @@ fun Season() {
                 HorizontalPager(state = pagerState) { page ->
                     when (page) {
                         0 -> Standing(seasonViewModel.westernStanding.observeAsState().value, true)
-                        1 -> PlayInTournament(seasonViewModel.westernPlayIn.observeAsState().value, true)
-                        2 -> PlayOff(seasonViewModel.westernPlayOff.observeAsState().value, true)
-                        3 -> Final(seasonViewModel.playOffGrandFinal.observeAsState().value)
-                        4 -> PlayOff(seasonViewModel.easternPlayOff.observeAsState().value, false)
-                        5 -> PlayInTournament(seasonViewModel.easternPlayIn.observeAsState().value, false)
+//                        1 -> PlayInTournament(seasonViewModel.westernPlayIn.observeAsState().value, true)
+//                        2 -> PlayOff(seasonViewModel.westernPlayOff.observeAsState().value, true)
+//                        3 -> Final(seasonViewModel.playOffGrandFinal.observeAsState().value)
+//                        4 -> PlayOff(seasonViewModel.easternPlayOff.observeAsState().value, false)
+//                        5 -> PlayInTournament(seasonViewModel.easternPlayIn.observeAsState().value, false)
                         6 -> Standing(seasonViewModel.easternStanding.observeAsState().value, false)
                         else -> {
 

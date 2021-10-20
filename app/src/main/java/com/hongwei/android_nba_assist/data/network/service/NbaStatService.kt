@@ -1,6 +1,7 @@
 package com.hongwei.android_nba_assist.data.network.service
 
-import com.hongwei.android_nba_assist.data.network.model.PlayOffResponse
+import com.hongwei.android_nba_assist.data.network.model.PostSeasonResponse
+import com.hongwei.android_nba_assist.data.network.model.ScheduleResponse
 import com.hongwei.android_nba_assist.data.network.model.StandingResponse
 import com.hongwei.android_nba_assist.data.network.model.TeamScheduleResponse
 import retrofit2.Response
@@ -19,8 +20,18 @@ interface NbaStatService {
         @Query("dataVersion") dataVersion: Long = -1
     ): Response<StandingResponse>
 
-    @GET("playOff.do")
-    suspend fun getPlayOff(
+    @GET("postSeason.do")
+    suspend fun getPostSeason(
         @Query("dataVersion") dataVersion: Long = -1
-    ): Response<PlayOffResponse>
+    ): Response<PostSeasonResponse>
+
+    @GET("seasonStatus.do")
+    suspend fun getSeasonStatus(
+        @Query("dataVersion") dataVersion: Long = -1
+    ): Response<String>
+
+    @GET("schedule.do")
+    suspend fun getSchedule(
+        @Query("dataVersion") dataVersion: Long = -1
+    ): Response<ScheduleResponse>
 }
