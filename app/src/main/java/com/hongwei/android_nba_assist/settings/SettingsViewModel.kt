@@ -18,7 +18,7 @@ class SettingsViewModel @Inject constructor(
     private val nbaStatRepository: NbaStatRepository
 ) : ViewModel() {
     val teamBanner: LiveData<String> =
-        nbaTeamRepository.getTeamDetail(AppSettings.myTeam)
+        nbaTeamRepository.getTeamDetailFlow(AppSettings.myTeam)
             .map { it.bannerUrl }
             .asLiveData(viewModelScope.coroutineContext)
 

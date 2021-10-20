@@ -17,8 +17,6 @@ class NbaTeamRepository @Inject constructor(
     private val teamThemeDao: TeamThemeDao,
     private val localTeamTheme: LocalTeamTheme
 ) {
-
-
     suspend fun fetchTeamDetailFromBackend(team: String) {
         val response = nbaThemeService.getTeamDetail(team)
         val data = response.body()
@@ -27,11 +25,10 @@ class NbaTeamRepository @Inject constructor(
         }
     }
 
-    fun getTeamDetail(team: String): Flow<TeamThemeEntity> {
-        return teamThemeDao.getTeamTheme().onEach {
+    fun getTeamDetailFlow(team: String): Flow<TeamThemeEntity> =
+        teamThemeDao.getTeamThemeFlow().onEach {
             it ?: fetchTeamDetailFromBackend(team)
         }.filterNotNull()
-    }
 
     @Deprecated("NBA V1 api obsoleted. V2 Use fetchTeamDetail instead.")
     suspend fun fetchTeamThemeFromBackend(team: String) {
@@ -49,7 +46,7 @@ class NbaTeamRepository @Inject constructor(
 
     @Deprecated("NBA V1 api obsoleted. V2 Use getTeamDetail instead.")
     fun getTeamTheme(team: String): Flow<TeamThemeEntity> {
-        return teamThemeDao.getTeamTheme().onEach {
+        return teamThemeDao.getTeamThemeFlow().onEach {
             it ?: fetchTeamThemeFromBackend(team)
         }.filterNotNull()
     }

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "722815118d3ad01ec32028115352bdb4",
+    "identityHash": "a953dcd2e48bacf7910502e13edf38bd",
     "entities": [
       {
         "tableName": "team_schedule",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `events` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `teamAbbr` TEXT NOT NULL, `team` TEXT, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `events` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
             "fieldPath": "apiVersion",
@@ -15,10 +15,16 @@
             "notNull": true
           },
           {
+            "fieldPath": "teamAbbr",
+            "columnName": "teamAbbr",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "team",
             "columnName": "team",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "timeStamp",
@@ -220,7 +226,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '722815118d3ad01ec32028115352bdb4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a953dcd2e48bacf7910502e13edf38bd')"
     ]
   }
 }

@@ -69,4 +69,9 @@ object AppConfigurations {
 
         const val DEBUG_CALENDAR = false
     }
+
+    object View {
+        const val WIN_SYMBOL = "W"
+        const val LOSE_SYMBOL = "L"
+    }
 }

@@ -17,6 +17,8 @@
 
     <string name="calendar_game_at_location">AT %1$s</string>
     <string name="calendar_result_template">%1$s%2$d-%3$d</string>
+    <string name="win_symbol">W</string>
+    <string name="lose_symbol">L</string>
 
     <string name="standing_header_win_lose">W-L</string>
     <string name="standing_header_games_back">GB</string>

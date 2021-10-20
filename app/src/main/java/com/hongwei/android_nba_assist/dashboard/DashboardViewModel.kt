@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.hongwei.android_nba_assist.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
+import com.hongwei.android_nba_assist.constant.AppConfigurations.View.LOSE_SYMBOL
+import com.hongwei.android_nba_assist.constant.AppConfigurations.View.WIN_SYMBOL
 import com.hongwei.android_nba_assist.dashboard.CountdownHelper.getUpcomingRange
 import com.hongwei.android_nba_assist.data.NbaStatRepository
 import com.hongwei.android_nba_assist.data.NbaTeamRepository
@@ -37,7 +39,7 @@ class DashboardViewModel @Inject constructor(
     val myTeam: MutableLiveData<String> = MutableLiveData()
 
     val teamBackground: LiveData<String?> =
-        nbaTeamRepository.getTeamDetail(AppSettings.myTeam)
+        nbaTeamRepository.getTeamDetailFlow(AppSettings.myTeam)
             .map { it.backgroundUrl }
             .asLiveData(viewModelScope.coroutineContext)
 
@@ -70,10 +72,11 @@ class DashboardViewModel @Inject constructor(
                             name = entity.opponent.name,
                             logo = entity.opponent.logo
                         ),
-                        location = entity.location,
+                        location = entity.homeTeam.location,
                         home = entity.home,
                         result = entity.result?.let { resultEntity ->
-                            "${resultEntity.winLossSymbol}${resultEntity.currentTeamScore}-${resultEntity.opponentTeamScore}"
+                            (if (resultEntity.isWin) WIN_SYMBOL else LOSE_SYMBOL) +
+                                    "${resultEntity.currentTeamScore}-${resultEntity.opponentTeamScore}"
                         }
                     )
                 }

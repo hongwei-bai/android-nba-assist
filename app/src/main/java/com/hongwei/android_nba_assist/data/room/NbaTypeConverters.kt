@@ -19,6 +19,18 @@ object NbaTypeConverters {
     }
 
     @TypeConverter
+    fun fromStringToTeam(value: String?): Team? {
+        val type: Type = object : TypeToken<Team?>() {}.type
+        return Gson().fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromTeam(obj: Team?): String? {
+        val gson = Gson()
+        return gson.toJson(obj)
+    }
+
+    @TypeConverter
     fun fromStringToConferenceStanding(value: String?): ConferenceStanding? {
         val type: Type = object : TypeToken<ConferenceStanding?>() {}.type
         return Gson().fromJson(value, type)

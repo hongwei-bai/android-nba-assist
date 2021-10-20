@@ -1,40 +1,38 @@
 package com.hongwei.android_nba_assist.data.mapper
 
-import com.hongwei.android_nba_assist.data.local.ConstantEndpoint.getTeamLogoUrl
+import com.hongwei.android_nba_assist.data.mapper.NbaTeamMapper.mapTeam
 import com.hongwei.android_nba_assist.data.network.model.EventResponse
+import com.hongwei.android_nba_assist.data.network.model.TeamResponse
 import com.hongwei.android_nba_assist.data.network.model.TeamScheduleResponse
-import com.hongwei.android_nba_assist.data.room.*
+import com.hongwei.android_nba_assist.data.room.Event
+import com.hongwei.android_nba_assist.data.room.Result
+import com.hongwei.android_nba_assist.data.room.Team
+import com.hongwei.android_nba_assist.data.room.TeamScheduleEntity
 
 object NbaTeamScheduleMapper {
-    fun TeamScheduleResponse.map(team: String): TeamScheduleEntity = TeamScheduleEntity(
-        team = team,
+    fun TeamScheduleResponse.map(teamAbbr: String): TeamScheduleEntity = TeamScheduleEntity(
+        teamAbbr = teamAbbr,
+        team = team.mapTeam(),
         timeStamp = System.currentTimeMillis(),
         dataVersion = dataVersion,
         events = events.map { it.map(team) }
     )
 
-    private fun EventResponse.map(team: String): Event = Event(
+    private fun EventResponse.map(team: TeamResponse): Event = Event(
         unixTimeStamp = unixTimeStamp,
+        eventType = eventType,
         opponent = Team(
             abbrev = opponent.abbrev,
             name = opponent.displayName,
-            logo = getTeamLogoUrl(opponent.abbrev)
+            logo = opponent.logo,
+            location = opponent.location
         ),
-        guestTeam = Team(
-            abbrev = if (opponent.home) opponent.abbrev else team,
-            name = if (opponent.home) opponent.displayName else null,
-            logo = getTeamLogoUrl(if (opponent.home) opponent.abbrev else team)
-        ),
-        homeTeam = Team(
-            abbrev = if (opponent.home) team else opponent.abbrev,
-            name = if (opponent.home) team else opponent.displayName,
-            logo = getTeamLogoUrl(if (opponent.home) team else opponent.abbrev)
-        ),
-        location = opponent.location,
-        home = opponent.home,
+        guestTeam = if (home) opponent.mapTeam() else team.mapTeam(),
+        homeTeam = if (home) team.mapTeam() else opponent.mapTeam(),
+        home = home,
         result = result?.let {
             Result(
-                winLossSymbol = it.winLossSymbol,
+                isWin = it.win,
                 currentTeamScore = it.currentTeamScore,
                 opponentTeamScore = it.opponentTeamScore
             )

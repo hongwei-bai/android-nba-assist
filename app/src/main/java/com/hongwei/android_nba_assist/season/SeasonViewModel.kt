@@ -1,12 +1,12 @@
 package com.hongwei.android_nba_assist.season
 
 import androidx.lifecycle.*
+import com.hongwei.android_nba_assist.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.data.NbaStatRepository
 import com.hongwei.android_nba_assist.season.common.SeasonStatus
 import com.hongwei.android_nba_assist.season.playin.PlayInStat
 import com.hongwei.android_nba_assist.season.playoff.PlayOffStat
 import com.hongwei.android_nba_assist.ui.viewmodel.PlayOffViewObjectMapper.map
-import com.hongwei.android_nba_assist.ExceptionHelper.nbaExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -61,7 +61,7 @@ class SeasonViewModel @Inject constructor(
     val westernPlayIn: LiveData<PlayInStat> =
         nbaStatRepository.getPlayOff().combine(nbaStatRepository.getStanding()) { playOff, standing ->
             PlayInStat(
-                teamsAbbr = standing.western.standings.subList(0, 10).map { it.team.abbrev.toLowerCase(Locale.US) },
+                teamsAbbr = standing.western.standings.subList(0, 10).map { it.team.abbrev.lowercase(Locale.US) },
                 winnerOf78 = playOff.playIn.western.winnerOf78,
                 loserOf78 = playOff.playIn.western.loserOf78,
                 winnerOf910 = playOff.playIn.western.winnerOf910,
@@ -73,7 +73,7 @@ class SeasonViewModel @Inject constructor(
     val easternPlayIn: LiveData<PlayInStat> =
         nbaStatRepository.getPlayOff().combine(nbaStatRepository.getStanding()) { playOff, standing ->
             PlayInStat(
-                teamsAbbr = standing.eastern.standings.subList(0, 10).map { it.team.abbrev.toLowerCase(Locale.US) },
+                teamsAbbr = standing.eastern.standings.subList(0, 10).map { it.team.abbrev.lowercase(Locale.US) },
                 winnerOf78 = playOff.playIn.eastern.winnerOf78,
                 loserOf78 = playOff.playIn.eastern.loserOf78,
                 winnerOf910 = playOff.playIn.eastern.winnerOf910,
@@ -87,9 +87,9 @@ class SeasonViewModel @Inject constructor(
             it.western.standings.map { entity ->
                 TeamStat(
                     rank = entity.rank,
-                    teamAbbr = entity.team.abbrev.toLowerCase(Locale.US),
-                    team = entity.team.name ?: entity.team.abbrev.toUpperCase(Locale.US),
-                    logoResourceName = entity.team.abbrev.toLowerCase(Locale.US),
+                    teamAbbr = entity.team.abbrev.lowercase(Locale.US),
+                    team = entity.team.name,
+                    logoResourceName = entity.team.abbrev.lowercase(Locale.US),
                     logoUrl = entity.team.logo,
                     wins = entity.wins,
                     losses = entity.losses,
@@ -105,9 +105,9 @@ class SeasonViewModel @Inject constructor(
             it.eastern.standings.map { entity ->
                 TeamStat(
                     rank = entity.rank,
-                    teamAbbr = entity.team.abbrev.toLowerCase(Locale.US),
-                    team = entity.team.name ?: entity.team.abbrev.toUpperCase(Locale.US),
-                    logoResourceName = entity.team.abbrev.toLowerCase(Locale.US),
+                    teamAbbr = entity.team.abbrev.lowercase(Locale.US),
+                    team = entity.team.name,
+                    logoResourceName = entity.team.abbrev.lowercase(Locale.US),
                     logoUrl = entity.team.logo,
                     wins = entity.wins,
                     losses = entity.losses,

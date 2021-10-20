@@ -15,6 +15,6 @@ class HomeViewModel @Inject constructor(
     nbaTeamRepository: NbaTeamRepository
 ) : ViewModel() {
     val teamTheme: LiveData<TeamThemeEntity> =
-        nbaTeamRepository.getTeamDetail(AppSettings.myTeam)
+        nbaTeamRepository.getTeamDetailFlow(AppSettings.myTeam)
             .asLiveData(viewModelScope.coroutineContext)
 }

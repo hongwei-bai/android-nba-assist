@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TeamThemeDao {
     @Query("SELECT * FROM team_theme WHERE apiVersion=$API_VERSION")
-    fun getTeamTheme(): Flow<TeamThemeEntity?>
+    fun getTeamThemeFlow(): Flow<TeamThemeEntity?>
+
+    @Query("SELECT * FROM team_theme WHERE apiVersion=$API_VERSION")
+    fun getTeamTheme(): TeamThemeEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(teamThemeEntity: TeamThemeEntity)
