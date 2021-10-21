@@ -58,25 +58,25 @@ Thanks for following the project!
 
 Team picker:
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_picker.png" width="240" height="480" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_picker.png" width="240" height="480" />
 
 GSW theme:
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_gs_splash.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_gs_schedule.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_gs_settings.png" width="240" height="480" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_gs_splash.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_gs_schedule.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_gs_news.png" width="240" height="480" />
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_gs_stand.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_gs_playin.png" width="240" height="480" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_gs_stand.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_gs_playin.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_gs_settings.png" width="240" height="480" />
 
 Lakers theme:
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_lakers_splash.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_lakers_schedule.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_lakers_settings.png" width="240" height="480" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_lakers_splash.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_lakers_schedule.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_lakers_news.png" width="240" height="480" />
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_lakers_stand.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_lakers_playoff.png" width="240" height="480" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_lakers_stand.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_lakers_playoff.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_lakers_settings.png" width="240" height="480" />
 
 Nets theme:
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_net_splash.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_net_schedule.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_net_settings.png" width="240" height="480" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_net_splash.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_net_schedule.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_net_news.png" width="240" height="480" />
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_net_stand.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/app-compose-v2/screenshots/Screenshot_net_playoff.png" width="240" height="480" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_net_stand.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_net_playoff.png" width="240" height="480" /> <img src="https://raw.githubusercontent.com/hongwei-bai/android-nba-assist/main/screenshots/Screenshot_net_settings.png" width="240" height="480" />
 
 #### Related projects
 
