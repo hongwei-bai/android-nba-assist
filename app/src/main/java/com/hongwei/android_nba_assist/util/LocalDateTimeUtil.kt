@@ -114,11 +114,11 @@ object LocalDateTimeUtil {
         return newCalendar
     }
 
-//    fun getLastMondayForSunday(calendar: Calendar = getInstance()): Calendar =
-//        when (calendar.get(DAY_OF_WEEK)) {
-//            SUNDAY -> getWeekday(getWeekAhead(1, calendar), MONDAY)
-//            else -> getMondayOfWeek(calendar)
-//        }
+    fun getLastMondayForSunday(calendar: Calendar = getInstance()): Calendar =
+        when (calendar.get(DAY_OF_WEEK)) {
+            SUNDAY -> getWeekday(getWeekAhead(1, calendar), MONDAY)
+            else -> getMondayOfWeek(calendar)
+        }
 
     fun getWeekAhead(weekNumber: Int, calendar: Calendar = getInstance()): Calendar {
         val newCalendar: Calendar = calendar.clone() as Calendar

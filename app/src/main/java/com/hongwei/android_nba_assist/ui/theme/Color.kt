@@ -8,6 +8,7 @@ val Red800 = Color(0xffd00036)
 val Red900 = Color(0xffc20029)
 
 val Green900 = Color(0xff009000)
+val Gold900 = Color(0xFFFDB927)
 
 val BlackAlpha60 = Color(0x60000000)
 val BlackAlpha80 = Color(0x80000000)

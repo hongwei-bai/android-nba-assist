@@ -11,16 +11,19 @@ fun NbaTeamTheme(
     content: @Composable () -> Unit
 ) {
     teamTheme?.run {
+        val colorHomeAdapted = ColorAdapter.adaptHomeColor(colorHome)
+        val colorGuestAdapted = ColorAdapter.adaptGuestColor(colorGuest)
+        val colorLightAdapted = colorLight
         NbaTheme(
             colors = lightColors(
-                primary = colorHome?.let { Color(it) } ?: NBALightColors.primary,
-                primaryVariant = colorHome?.let { Color(it) } ?: NBALightColors.primaryVariant,
-                onPrimary = colorLight?.let { Color(it) } ?: NBALightColors.onPrimary,
-                secondary = colorGuest?.let { Color(it) } ?: NBALightColors.secondary,
-                secondaryVariant = colorGuest?.let { Color(it) } ?: NBALightColors.secondaryVariant,
-                onSecondary = colorHome?.let { Color(it) } ?: NBALightColors.onSecondary,
-                background = colorLight?.let { Color(it) } ?: NBALightColors.background,
-                onBackground = colorHome?.let { Color(it) } ?: NBALightColors.onBackground
+                primary = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.primary,
+                primaryVariant = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.primaryVariant,
+                onPrimary = colorLightAdapted?.let { Color(it) } ?: NBALightColors.onPrimary,
+                secondary = colorGuestAdapted?.let { Color(it) } ?: NBALightColors.secondary,
+                secondaryVariant = colorGuestAdapted?.let { Color(it) } ?: NBALightColors.secondaryVariant,
+                onSecondary = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.onSecondary,
+                background = colorLightAdapted?.let { Color(it) } ?: NBALightColors.background,
+                onBackground = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.onBackground
             ),
             content = content
         )

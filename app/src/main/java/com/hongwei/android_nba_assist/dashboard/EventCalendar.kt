@@ -95,7 +95,7 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?
                                     .background(color = BlackAlpha60),
                                 calendarDay = day,
                                 event = events.firstOrNull { event ->
-                                    LocalDateTimeUtil.getDayIdentifier(event.unixTimeStamp) == day.timeInMillis
+                                    getDayIdentifier(event.unixTimeStamp) == day.timeInMillis
                                 })
                         }
                     }
@@ -177,7 +177,7 @@ fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: EventViewObjec
                 color = textColor
             )
             val isWin = result?.startsWith("W", true) == true
-            val resultColor = if (isWin) Red900 else Green900
+            val resultColor = if (isWin) ColorVictory else ColorLose
             event.result?.let {
                 Spacer(modifier = Modifier.size(2.dp))
                 Text(
