@@ -6,11 +6,13 @@ import com.hongwei.android_nba_assist.data.NbaStatRepository
 import com.hongwei.android_nba_assist.data.NbaTeamRepository
 import com.hongwei.android_nba_assist.data.league.nba.NbaSeasonStatusResponse
 import com.hongwei.android_nba_assist.season.common.SeasonStatus
+import com.hongwei.android_nba_assist.season.common.SeasonStatusMapper.mapToUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -24,16 +26,12 @@ class SeasonViewModel @Inject constructor(
 
     val dataStatus = nbaStatRepository.dataStatus.asLiveData()
 
-    val seasonStatusResponse: LiveData<SeasonStatus> =
-        nbaTeamRepository.getTeamDetailFlow().map {
-            when (NbaSeasonStatusResponse.valueOf(it.seasonStatus)) {
-                NbaSeasonStatusResponse.Season -> SeasonStatus.RegularSeason
-                NbaSeasonStatusResponse.PlayIn -> SeasonStatus.PlayInTournament
-                NbaSeasonStatusResponse.PlayOffRound1,
-                NbaSeasonStatusResponse.PlayOffRound2,
-                NbaSeasonStatusResponse.PlayOffConferenceFinal -> SeasonStatus.PlayOff
-                NbaSeasonStatusResponse.PlayOffGrandFinal -> SeasonStatus.GrandFinal
-                NbaSeasonStatusResponse.PreSeason -> SeasonStatus.PreSeason
+    val seasonStatus: LiveData<SeasonStatus> =
+        nbaTeamRepository.getTeamDetailFlow().mapNotNull {
+            if (it.seasonStatus.isNotEmpty()) {
+                NbaSeasonStatusResponse.valueOf(it.seasonStatus).mapToUiState()
+            } else {
+                null
             }
         }.asLiveData()
 

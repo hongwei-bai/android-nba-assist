@@ -54,6 +54,7 @@ class SettingsViewModel @Inject constructor(
 
     private suspend fun reloadAll() {
         nbaTeamRepository.fetchTeamDetailFromBackend(AppSettings.myTeam)
+        nbaTeamRepository.fetchSeasonStatusFromBackend()
         nbaStatRepository.fetchTeamScheduleFromBackend(AppSettings.myTeam)
         nbaStatRepository.fetchStandingFromBackend()
         nbaStatRepository.fetchPostSeasonFromBackend()

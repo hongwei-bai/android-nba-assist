@@ -9,12 +9,16 @@ import com.hongwei.android_nba_assist.ExceptionHelper.nbaExceptionHandler
 import com.hongwei.android_nba_assist.dashboard.CountdownHelper.getUpcomingRange
 import com.hongwei.android_nba_assist.data.NbaStatRepository
 import com.hongwei.android_nba_assist.data.NbaTeamRepository
+import com.hongwei.android_nba_assist.data.league.nba.NbaSeasonStatusResponse
 import com.hongwei.android_nba_assist.data.local.AppSettings
+import com.hongwei.android_nba_assist.season.common.SeasonStatus
+import com.hongwei.android_nba_assist.season.common.SeasonStatusMapper.mapToUiState
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.util.*
@@ -29,6 +33,15 @@ class DashboardViewModel @Inject constructor(
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val dataStatus = nbaStatRepository.dataStatus.asLiveData()
+
+    val seasonStatus: LiveData<SeasonStatus> =
+        nbaTeamRepository.getTeamDetailFlow().mapNotNull {
+            if (it.seasonStatus.isNotEmpty()) {
+                NbaSeasonStatusResponse.valueOf(it.seasonStatus).mapToUiState()
+            } else {
+                null
+            }
+        }.asLiveData()
 
     val gamesLeft: MutableLiveData<Int> = MutableLiveData()
 

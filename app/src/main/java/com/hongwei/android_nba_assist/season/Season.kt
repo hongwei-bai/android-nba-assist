@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Season() {
     val seasonViewModel = hiltViewModel<SeasonViewModel>()
-    val seasonStatus = seasonViewModel.seasonStatusResponse.observeAsState().value
+    val seasonStatus = seasonViewModel.seasonStatus.observeAsState().value
     val dataStatus = seasonViewModel.dataStatus.observeAsState().value
     val coroutineScope = rememberCoroutineScope()
     if (seasonStatus != null) {

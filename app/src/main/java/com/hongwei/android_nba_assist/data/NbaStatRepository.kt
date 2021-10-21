@@ -1,6 +1,5 @@
 package com.hongwei.android_nba_assist.data
 
-import android.util.Log
 import com.hongwei.android_nba_assist.AppConfigurations.ForceRefreshInterval
 import com.hongwei.android_nba_assist.AppConfigurations.Network.HttpCode
 import com.hongwei.android_nba_assist.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
@@ -85,7 +84,6 @@ class NbaStatRepository @Inject constructor(
 
     fun getTransactions(): Flow<NbaTransactionsEntity> {
         return nbaTransactionsDao.getTransactions().onEach {
-            Log.d("bbbb", "getTransactions flow onEach: $it")
             it ?: fetchTransactionsFromBackend()
         }.filterNotNull()
     }
