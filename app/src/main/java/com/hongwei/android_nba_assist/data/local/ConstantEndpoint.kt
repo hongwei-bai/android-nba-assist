@@ -4,10 +4,10 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.hongwei.android_nba_assist.R
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.DEFAULT_LOGO_EXTENSION
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.DEFAULT_LOGO_WIDTH
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.NBA_LOGO_PATH
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.PLACEHOLDER_WIDTH
+import com.hongwei.android_nba_assist.AppConfigurations.Network.DEFAULT_LOGO_EXTENSION
+import com.hongwei.android_nba_assist.AppConfigurations.Network.DEFAULT_LOGO_WIDTH
+import com.hongwei.android_nba_assist.AppConfigurations.Network.NBA_LOGO_PATH
+import com.hongwei.android_nba_assist.AppConfigurations.Network.PLACEHOLDER_WIDTH
 import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getDrawableByName
 import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getResourceIdByName
 

@@ -40,7 +40,7 @@ import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLocalTimeDisplay
 import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getResourceIdByName
 import java.util.*
 
-@ExperimentalCoilApi
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?, backgroundUrl: String?) {
     val weekHeight = 120

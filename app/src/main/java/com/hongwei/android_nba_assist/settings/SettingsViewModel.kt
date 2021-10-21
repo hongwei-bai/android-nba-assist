@@ -18,7 +18,7 @@ class SettingsViewModel @Inject constructor(
     private val nbaStatRepository: NbaStatRepository
 ) : ViewModel() {
     val teamBanner: LiveData<String> =
-        nbaTeamRepository.getTeamDetailFlow(AppSettings.myTeam)
+        nbaTeamRepository.getTeamDetailFlow()
             .map { it.bannerUrl }
             .asLiveData(viewModelScope.coroutineContext)
 
@@ -56,6 +56,6 @@ class SettingsViewModel @Inject constructor(
         nbaTeamRepository.fetchTeamDetailFromBackend(AppSettings.myTeam)
         nbaStatRepository.fetchTeamScheduleFromBackend(AppSettings.myTeam)
         nbaStatRepository.fetchStandingFromBackend()
-        nbaStatRepository.fetchPlayOffFromBackend()
+        nbaStatRepository.fetchPostSeasonFromBackend()
     }
 }

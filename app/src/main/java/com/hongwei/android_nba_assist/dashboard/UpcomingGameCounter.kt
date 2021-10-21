@@ -1,8 +1,8 @@
 package com.hongwei.android_nba_assist.dashboard
 
 import android.os.CountDownTimer
-import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.COUNTDOWN_ZERO_FREEZE_MILLIS
-import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.DISPLAY_STARTED_FROM_MINUTES
+import com.hongwei.android_nba_assist.AppConfigurations.TeamScheduleConfiguration.COUNTDOWN_ZERO_FREEZE_MILLIS
+import com.hongwei.android_nba_assist.AppConfigurations.TeamScheduleConfiguration.DISPLAY_STARTED_FROM_MINUTES
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_MINUTE
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_SECOND

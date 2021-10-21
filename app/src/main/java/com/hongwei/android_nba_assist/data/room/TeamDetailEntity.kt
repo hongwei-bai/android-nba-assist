@@ -2,11 +2,10 @@ package com.hongwei.android_nba_assist.data.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Room.API_VERSION
+import com.hongwei.android_nba_assist.AppConfigurations.Room.API_VERSION
 
-@Entity(tableName = "team_theme")
-data class TeamThemeEntity(
+@Entity(tableName = "nba_team_detail")
+data class TeamDetailEntity(
     @PrimaryKey
     val apiVersion: Int = API_VERSION,
     val team: String = "",
@@ -15,6 +14,7 @@ data class TeamThemeEntity(
     val backgroundUrl: String? = null,
     val colorLight: Long? = null,
     val colorHome: Long? = null,
-    val colorGuest: Long? = null
+    val colorGuest: Long? = null,
+    var seasonStatus: String = ""
 )
 

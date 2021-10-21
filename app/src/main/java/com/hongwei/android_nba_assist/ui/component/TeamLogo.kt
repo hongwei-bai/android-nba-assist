@@ -1,7 +1,6 @@
 package com.hongwei.android_nba_assist.ui.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -12,9 +11,9 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
-import com.hongwei.android_nba_assist.constant.AppConfigurations
+import com.hongwei.android_nba_assist.AppConfigurations
 
-@ExperimentalCoilApi
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun TeamLogo(logoUrl: String? = null, localPlaceholderResId: Int, modifier: Modifier) {
     if (AppConfigurations.LogoConfiguration.useLocalLogos || logoUrl == null) {
@@ -40,7 +39,6 @@ fun TeamLogo(logoUrl: String? = null, localPlaceholderResId: Int, modifier: Modi
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
             modifier = modifier
-                .fillMaxSize()
                 .placeholder(
                     visible = painter.state is ImagePainter.State.Loading,
                     highlight = PlaceholderHighlight.shimmer(),

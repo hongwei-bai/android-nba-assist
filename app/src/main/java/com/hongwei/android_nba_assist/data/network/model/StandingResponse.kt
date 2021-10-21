@@ -2,12 +2,8 @@ package com.hongwei.android_nba_assist.data.network.model
 
 data class StandingResponse(
     val dataVersion: Long = 0,
-    val western: ConferenceStandingResponse,
-    val eastern: ConferenceStandingResponse
-)
-
-data class ConferenceStandingResponse(
-    val teams: List<TeamStandingResponse>
+    val western: List<TeamStandingResponse>,
+    val eastern: List<TeamStandingResponse>
 )
 
 data class TeamStandingResponse(

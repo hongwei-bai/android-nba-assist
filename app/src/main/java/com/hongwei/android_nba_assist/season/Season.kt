@@ -13,10 +13,11 @@ import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.hongwei.android_nba_assist.data.league.nba.Conference
 import com.hongwei.android_nba_assist.data.league.nba.getConferenceByTeam
 import com.hongwei.android_nba_assist.data.local.AppSettings
 import com.hongwei.android_nba_assist.season.common.SeasonStatus
+import com.hongwei.android_nba_assist.season.playin.PlayInTournament
+import com.hongwei.android_nba_assist.season.playoff.PlayOff
 import com.hongwei.android_nba_assist.ui.animation.ErrorView
 import com.hongwei.android_nba_assist.ui.animation.LoadingContent
 import com.hongwei.android_nba_assist.ui.component.DataStatus
@@ -27,36 +28,28 @@ import kotlinx.coroutines.launch
 @Composable
 fun Season() {
     val seasonViewModel = hiltViewModel<SeasonViewModel>()
-    val seasonStatus = seasonViewModel.seasonStatus.observeAsState().value
+    val seasonStatus = seasonViewModel.seasonStatusResponse.observeAsState().value
     val dataStatus = seasonViewModel.dataStatus.observeAsState().value
     val coroutineScope = rememberCoroutineScope()
     if (seasonStatus != null) {
-        val pages = listOf(
-            SeasonScreens.WestStanding,
-            SeasonScreens.WestPlayIn,
-            SeasonScreens.WestPlayOff,
-            SeasonScreens.Final,
-            SeasonScreens.EastPlayOff,
-            SeasonScreens.EastPlayIn,
-            SeasonScreens.EastStanding
-        )
-        val tabForActiveStage = when (getConferenceByTeam(AppSettings.myTeam)) {
-            Conference.Western -> when (seasonStatus) {
-                SeasonStatus.PlayInTournament -> 1
-                SeasonStatus.PlayOff -> 2
-                SeasonStatus.GrandFinal -> 3
-                else -> 0
-            }
-            Conference.Eastern -> when (seasonStatus) {
-                SeasonStatus.PlayInTournament -> 5
-                SeasonStatus.PlayOff -> 4
-                SeasonStatus.GrandFinal -> 3
-                else -> 6
-            }
+        val pages = when (seasonStatus) {
+            SeasonStatus.PreSeason,
+            SeasonStatus.RegularSeason -> listOf(SeasonScreens.WestStanding, SeasonScreens.EastStanding)
+            else -> listOf(
+                SeasonScreens.WestStanding,
+                SeasonScreens.WestPlayIn,
+                SeasonScreens.WestPlayOff,
+                SeasonScreens.Final,
+                SeasonScreens.EastPlayOff,
+                SeasonScreens.EastPlayIn,
+                SeasonScreens.EastStanding
+            )
         }
+        val tabForActiveStage = SeasonScreens.fromSeasonStatus(seasonStatus, getConferenceByTeam(AppSettings.myTeam))
+        val tabPosition = pages.indexOf(tabForActiveStage)
         val pagerState = rememberPagerState(
             pageCount = pages.size,
-            initialPage = tabForActiveStage
+            initialPage = tabPosition
         )
 
         SwipeRefresh(
@@ -80,7 +73,7 @@ fun Season() {
                             icon = {
                                 Icon(
                                     imageVector = stage.icon,
-                                    tint = if (tabForActiveStage == index) MaterialTheme.colors.secondary
+                                    tint = if (tabPosition == index) MaterialTheme.colors.secondary
                                     else MaterialTheme.colors.onPrimary,
                                     contentDescription = null
                                 )
@@ -96,17 +89,14 @@ fun Season() {
                 }
 
                 HorizontalPager(state = pagerState) { page ->
-                    when (page) {
-                        0 -> Standing(seasonViewModel.westernStanding.observeAsState().value, true)
-//                        1 -> PlayInTournament(seasonViewModel.westernPlayIn.observeAsState().value, true)
-//                        2 -> PlayOff(seasonViewModel.westernPlayOff.observeAsState().value, true)
-//                        3 -> Final(seasonViewModel.playOffGrandFinal.observeAsState().value)
-//                        4 -> PlayOff(seasonViewModel.easternPlayOff.observeAsState().value, false)
-//                        5 -> PlayInTournament(seasonViewModel.easternPlayIn.observeAsState().value, false)
-                        6 -> Standing(seasonViewModel.easternStanding.observeAsState().value, false)
-                        else -> {
-
-                        }
+                    when (pages[page]) {
+                        SeasonScreens.WestStanding -> Standing(seasonViewModel.westernStanding.observeAsState().value, true)
+                        SeasonScreens.WestPlayIn -> PlayInTournament(null, true)
+                        SeasonScreens.WestPlayOff -> PlayOff(null, true)
+                        SeasonScreens.Final -> Final(null)
+                        SeasonScreens.EastPlayOff -> PlayOff(null, false)
+                        SeasonScreens.EastPlayIn -> PlayInTournament(null, false)
+                        SeasonScreens.EastStanding -> Standing(seasonViewModel.easternStanding.observeAsState().value, false)
                     }
                 }
             }

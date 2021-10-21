@@ -29,8 +29,13 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideTeamThemeDao(nbaDatabase: NbaDatabase): TeamThemeDao {
+    fun provideTeamThemeDao(nbaDatabase: NbaDatabase): TeamDetailDao {
         return nbaDatabase.teamThemeDao()
+    }
+
+    @Provides
+    fun provideTransactionsDao(nbaDatabase: NbaDatabase): NbaTransactionsDao {
+        return nbaDatabase.transactionsDao()
     }
 
     @Provides

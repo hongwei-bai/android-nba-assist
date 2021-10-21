@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.constant
+package com.hongwei.android_nba_assist
 
 object AppConfigurations {
     object Network {

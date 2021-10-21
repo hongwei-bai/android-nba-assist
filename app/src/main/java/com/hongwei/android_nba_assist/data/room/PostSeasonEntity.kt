@@ -2,9 +2,9 @@ package com.hongwei.android_nba_assist.data.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Room.API_VERSION
+import com.hongwei.android_nba_assist.AppConfigurations.Room.API_VERSION
 
-@Entity(tableName = "post_season")
+@Entity(tableName = "nba_post_season")
 data class PostSeasonEntity(
     @PrimaryKey
     var apiVersion: Int = API_VERSION,

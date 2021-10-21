@@ -12,8 +12,8 @@ object NbaStandingMapper {
     fun StandingResponse.map(): StandingEntity = StandingEntity(
         timeStamp = System.currentTimeMillis(),
         dataVersion = this.dataVersion,
-        western = ConferenceStanding(Conference.Western.name, western.teams.map { it.map() }),
-        eastern = ConferenceStanding(Conference.Eastern.name, eastern.teams.map { it.map() })
+        western = ConferenceStanding(Conference.Western.name, western.map { it.map() }),
+        eastern = ConferenceStanding(Conference.Eastern.name, eastern.map { it.map() })
     )
 
     private fun TeamStandingResponse.map(): TeamStanding = TeamStanding(

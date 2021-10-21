@@ -2,10 +2,10 @@ package com.hongwei.android_nba_assist.data.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Room.API_VERSION
+import com.hongwei.android_nba_assist.AppConfigurations.Room.API_VERSION
 import java.util.Collections.emptyList
 
-@Entity(tableName = "team_schedule")
+@Entity(tableName = "nba_team_schedule")
 data class TeamScheduleEntity(
     @PrimaryKey
     val apiVersion: Int = API_VERSION,

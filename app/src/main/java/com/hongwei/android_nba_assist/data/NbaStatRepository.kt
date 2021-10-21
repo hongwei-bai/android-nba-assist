@@ -1,20 +1,24 @@
 package com.hongwei.android_nba_assist.data
 
-import com.hongwei.android_nba_assist.constant.AppConfigurations.ForceRefreshInterval
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.HttpCode
-import com.hongwei.android_nba_assist.constant.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
+import android.util.Log
+import com.hongwei.android_nba_assist.AppConfigurations.ForceRefreshInterval
+import com.hongwei.android_nba_assist.AppConfigurations.Network.HttpCode
+import com.hongwei.android_nba_assist.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assist.data.local.AppSettings
 import com.hongwei.android_nba_assist.data.mapper.NbaPostSeasonMapper.map
 import com.hongwei.android_nba_assist.data.mapper.NbaStandingMapper.map
 import com.hongwei.android_nba_assist.data.mapper.NbaTeamScheduleMapper.map
+import com.hongwei.android_nba_assist.data.mapper.NbaTransactionsMapper.map
 import com.hongwei.android_nba_assist.data.network.service.NbaStatService
 import com.hongwei.android_nba_assist.data.room.*
 import com.hongwei.android_nba_assist.ui.component.DataStatus
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getFirstDayOfWeek
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -22,7 +26,8 @@ class NbaStatRepository @Inject constructor(
     private val nbaStatService: NbaStatService,
     private val teamScheduleDao: TeamScheduleDao,
     private val standingDao: StandingDao,
-    private val postSeasonDao: PostSeasonDao
+    private val postSeasonDao: PostSeasonDao,
+    private val nbaTransactionsDao: NbaTransactionsDao
 ) {
     private val dataStatusChannel = Channel<DataStatus>()
 
@@ -78,44 +83,73 @@ class NbaStatRepository @Inject constructor(
         }.filterNotNull()
     }
 
+    fun getTransactions(): Flow<NbaTransactionsEntity> {
+        return nbaTransactionsDao.getTransactions().onEach {
+            Log.d("bbbb", "getTransactions flow onEach: $it")
+            it ?: fetchTransactionsFromBackend()
+        }.filterNotNull()
+    }
+
     suspend fun fetchTeamScheduleFromBackend(team: String, dataVersion: Long? = null) {
-        val response = nbaStatService.getTeamSchedule(team, dataVersion ?: -1)
-        val data = response.body()
-        when (response.code()) {
-            HttpCode.HTTP_OK -> data?.let { teamScheduleDao.save(data.map(team)) }
-            HttpCode.HTTP_DATA_UP_TO_DATE -> {
-                dataStatusChannel.send(DataStatus.DataIsUpToDate)
-                teamScheduleDao.update(System.currentTimeMillis())
+        withContext(Dispatchers.IO) {
+            val response = nbaStatService.getTeamSchedule(team, dataVersion ?: -1)
+            val data = response.body()
+            when (response.code()) {
+                HttpCode.HTTP_OK -> data?.let { teamScheduleDao.save(data.map(team)) }
+                HttpCode.HTTP_DATA_UP_TO_DATE -> {
+                    dataStatusChannel.send(DataStatus.DataIsUpToDate)
+                    teamScheduleDao.update(System.currentTimeMillis())
+                }
+                else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch schedules data error, code: ${response.code()}"))
             }
-            else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch schedules data error, code: ${response.code()}"))
         }
     }
 
     suspend fun fetchStandingFromBackend(dataVersion: Long? = null) {
-        val response = nbaStatService.getStanding(dataVersion ?: -1)
-        val data = response.body()
-        when (response.code()) {
-            HttpCode.HTTP_OK -> data?.let { standingDao.save(data.map()) }
-            HttpCode.HTTP_DATA_UP_TO_DATE -> {
-                dataStatusChannel.send(DataStatus.DataIsUpToDate)
-                standingDao.update(System.currentTimeMillis())
+        withContext(Dispatchers.IO) {
+            val response = nbaStatService.getStanding(dataVersion ?: -1)
+            val data = response.body()
+            when (response.code()) {
+                HttpCode.HTTP_OK -> data?.let { standingDao.save(data.map()) }
+                HttpCode.HTTP_DATA_UP_TO_DATE -> {
+                    dataStatusChannel.send(DataStatus.DataIsUpToDate)
+                    standingDao.update(System.currentTimeMillis())
+                }
+                else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch standings data error, code: ${response.code()}"))
             }
-            else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch standings data error, code: ${response.code()}"))
         }
     }
 
     suspend fun fetchPostSeasonFromBackend(dataVersion: Long? = null) {
-        val response = nbaStatService.getPostSeason(dataVersion ?: -1)
-        val data = response.body()
-        when (response.code()) {
-            HttpCode.HTTP_OK -> data?.let {
-                postSeasonDao.save(data.map())
+        withContext(Dispatchers.IO) {
+            val response = nbaStatService.getPostSeason(dataVersion ?: -1)
+            val data = response.body()
+            when (response.code()) {
+                HttpCode.HTTP_OK -> data?.let {
+                    postSeasonDao.save(data.map())
+                }
+                HttpCode.HTTP_DATA_UP_TO_DATE -> {
+                    dataStatusChannel.send(DataStatus.DataIsUpToDate)
+                    postSeasonDao.update(System.currentTimeMillis())
+                }
+                else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch Playoff data error, code: ${response.code()}"))
             }
-            HttpCode.HTTP_DATA_UP_TO_DATE -> {
-                dataStatusChannel.send(DataStatus.DataIsUpToDate)
-                postSeasonDao.update(System.currentTimeMillis())
+        }
+    }
+
+    suspend fun fetchTransactionsFromBackend(dataVersion: Long? = null) {
+        withContext(Dispatchers.IO) {
+            val response = nbaStatService.getTransactions(dataVersion ?: -1)
+            val data = response.body()
+            when (response.code()) {
+                HttpCode.HTTP_OK -> data?.let {
+                    nbaTransactionsDao.save(data.map())
+                }
+                HttpCode.HTTP_DATA_UP_TO_DATE -> {
+                    dataStatusChannel.send(DataStatus.DataIsUpToDate)
+                }
+                else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch transactions data error, code: ${response.code()}"))
             }
-            else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch Playoff data error, code: ${response.code()}"))
         }
     }
 

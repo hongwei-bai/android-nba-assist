@@ -2,8 +2,8 @@ package com.hongwei.android_nba_assist.data.network.interceptor
 
 import android.content.Context
 import com.hongwei.android_nba_assist.R
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.AUTHORIZATION_BEARER
-import com.hongwei.android_nba_assist.constant.AppConfigurations.Network.AUTHORIZATION_HEADER
+import com.hongwei.android_nba_assist.AppConfigurations.Network.AUTHORIZATION_BEARER
+import com.hongwei.android_nba_assist.AppConfigurations.Network.AUTHORIZATION_HEADER
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

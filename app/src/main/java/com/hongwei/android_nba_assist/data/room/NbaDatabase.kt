@@ -4,7 +4,15 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [TeamScheduleEntity::class, StandingEntity::class, PostSeasonEntity::class, TeamThemeEntity::class], version = 1)
+@Database(
+    entities = [
+        TeamScheduleEntity::class,
+        StandingEntity::class,
+        PostSeasonEntity::class,
+        TeamDetailEntity::class,
+        NbaTransactionsEntity::class
+    ], version = 1
+)
 @TypeConverters(NbaTypeConverters::class)
 abstract class NbaDatabase : RoomDatabase() {
 
@@ -14,5 +22,7 @@ abstract class NbaDatabase : RoomDatabase() {
 
     abstract fun playOff(): PostSeasonDao
 
-    abstract fun teamThemeDao(): TeamThemeDao
+    abstract fun teamThemeDao(): TeamDetailDao
+
+    abstract fun transactionsDao(): NbaTransactionsDao
 }

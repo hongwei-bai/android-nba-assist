@@ -1,6 +1,6 @@
 package com.hongwei.android_nba_assist.data.league.nba
 
-enum class NbaSeasonStatus {
+enum class NbaSeasonStatusResponse {
     PreSeason,
     Season,
     PlayIn,

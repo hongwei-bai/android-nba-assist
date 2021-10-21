@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,7 +22,8 @@ import com.hongwei.android_nba_assist.R
 @Composable
 fun SplashScreen(navController: NavController) {
     val splashViewModel = hiltViewModel<SplashViewModel>()
-    splashViewModel.preload {
+    val preFetchCompleted = splashViewModel.preFetchCompleted.observeAsState().value
+    if (preFetchCompleted == true) {
         navController.navigate("main") {
             popUpTo("splash") { inclusive = true }
             launchSingleTop = true

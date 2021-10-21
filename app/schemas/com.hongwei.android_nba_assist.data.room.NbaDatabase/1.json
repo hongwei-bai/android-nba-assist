@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "507e3216e47699e6c8b7e6593d675967",
+    "identityHash": "e14f434da351fa941dcd23230910a98c",
     "entities": [
       {
-        "tableName": "team_schedule",
+        "tableName": "nba_team_schedule",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `teamAbbr` TEXT NOT NULL, `team` TEXT, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `events` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
@@ -55,7 +55,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "standing",
+        "tableName": "nba_standing",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `western` TEXT NOT NULL, `eastern` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
@@ -99,7 +99,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "post_season",
+        "tableName": "nba_post_season",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `currentStage` TEXT NOT NULL, `westernPlayInEventRound1` TEXT NOT NULL, `westernPlayInEventRound2` TEXT, `easternPlayInEventRound1` TEXT NOT NULL, `easternPlayInEventRound2` TEXT, `westernRound1Series` TEXT NOT NULL, `easternRound1Series` TEXT NOT NULL, `westernRound2Series` TEXT NOT NULL, `easternRound2Series` TEXT NOT NULL, `westernConferenceFinal` TEXT, `easternConferenceFinal` TEXT, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
@@ -197,8 +197,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "team_theme",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `logoUrl` TEXT NOT NULL, `bannerUrl` TEXT NOT NULL, `backgroundUrl` TEXT, `colorLight` INTEGER, `colorHome` INTEGER, `colorGuest` INTEGER, PRIMARY KEY(`apiVersion`))",
+        "tableName": "nba_team_detail",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `team` TEXT NOT NULL, `logoUrl` TEXT NOT NULL, `bannerUrl` TEXT NOT NULL, `backgroundUrl` TEXT, `colorLight` INTEGER, `colorHome` INTEGER, `colorGuest` INTEGER, `seasonStatus` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
         "fields": [
           {
             "fieldPath": "apiVersion",
@@ -247,6 +247,44 @@
             "columnName": "colorGuest",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "seasonStatus",
+            "columnName": "seasonStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "apiVersion"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "transactions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`apiVersion` INTEGER NOT NULL, `dataVersion` INTEGER NOT NULL, `transactions` TEXT NOT NULL, PRIMARY KEY(`apiVersion`))",
+        "fields": [
+          {
+            "fieldPath": "apiVersion",
+            "columnName": "apiVersion",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dataVersion",
+            "columnName": "dataVersion",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "transactions",
+            "columnName": "transactions",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -262,7 +300,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '507e3216e47699e6c8b7e6593d675967')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e14f434da351fa941dcd23230910a98c')"
     ]
   }
 }

@@ -7,6 +7,18 @@ import java.lang.reflect.Type
 
 object NbaTypeConverters {
     @TypeConverter
+    fun fromStringToNbaTransactionList(value: String?): List<NbaTransaction>? {
+        val listType: Type = object : TypeToken<List<NbaTransaction>?>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromNbaTransactionList(list: List<NbaTransaction>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+
+    @TypeConverter
     fun fromStringToTeamEventList(value: String?): List<TeamEvent>? {
         val listType: Type = object : TypeToken<List<TeamEvent>?>() {}.type
         return Gson().fromJson(value, listType)
