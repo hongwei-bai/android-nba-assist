@@ -57,7 +57,7 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?
                 Image(
                     painter = statefulPainter,
                     contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height((calendarDays.size * weekHeight).dp)
@@ -69,7 +69,7 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?
             } ?: Image(
                 painter = painterResource(id = R.drawable.bg_placeholder),
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height((calendarDays.size * weekHeight).dp)
