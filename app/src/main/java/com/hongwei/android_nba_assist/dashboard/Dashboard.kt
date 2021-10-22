@@ -75,6 +75,7 @@ fun Dashboard() {
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
+                    Spacer(modifier = Modifier.size(48.dp))
                 }
             } else {
                 when (dataStatus) {

@@ -153,6 +153,13 @@ object LocalDateTimeUtil {
         newCalendar.set(MINUTE, 0)
         newCalendar.set(SECOND, 0)
         newCalendar.set(MILLISECOND, 0)
+        if (weekday == SUNDAY && calendar.get(DAY_OF_WEEK) != SUNDAY) {
+            if (newCalendar.timeInMillis > calendar.timeInMillis) {
+                return newCalendar.apply {
+                    timeInMillis -= MILLIS_PER_WEEK
+                }
+            }
+        }
         return newCalendar
     }
 
