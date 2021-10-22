@@ -30,7 +30,7 @@ object ColorAdapter {
             "bbbb", "colorGuest, r/g/b: ${colorGuestRgb.red.toHexString()}/" +
                     "${colorGuestRgb.green.toHexString()}/${colorGuestRgb.blue.toHexString()}"
         )
-        if (colorGuestRgb.red > 0xE0 && colorGuestRgb.green > 0xE0 && colorGuestRgb.blue > 0xE0) {
+        if (colorGuestRgb.red > 0xE0 && colorGuestRgb.green > 0xE0 && colorGuestRgb.blue > 0xD0) {
             colorGuestRgb.red -= 0x40
             colorGuestRgb.green -= 0x40
             colorGuestRgb.blue -= 0x40
