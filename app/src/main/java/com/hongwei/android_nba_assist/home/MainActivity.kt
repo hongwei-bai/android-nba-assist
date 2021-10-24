@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
@@ -14,6 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.hongwei.android_nba_assist.data.NbaTeamRepository
+import com.hongwei.android_nba_assist.demo.DemoPageWithOneButton
+import com.hongwei.android_nba_assist.demo.DemoViewModel
 import com.hongwei.android_nba_assist.ui.theme.NbaTeamTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,7 +33,8 @@ class MainActivity : AppCompatActivity() {
             NbaTeamTheme(viewModel.teamTheme.observeAsState().value) {
                 SystemUiController()
 
-                NavComposeApp()
+                DemoPageWithOneButton()
+//                NavComposeApp()
             }
         }
     }
@@ -40,15 +42,17 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun SystemUiController() {
+    val demoViewModel = hiltViewModel<DemoViewModel>()
+
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = false //MaterialTheme.colors.isLight
-    val systemBarColor = MaterialTheme.colors.primary
+    val systemBarColor = demoViewModel.color.observeAsState().value//MaterialTheme.colors.primary
 
     SideEffect {
         // Update all of the system bar colors to be transparent, and use
         // dark icons if we're in light theme
         systemUiController.setSystemBarsColor(
-            color = systemBarColor,
+            color = systemBarColor!!,
             darkIcons = useDarkIcons
         )
 
