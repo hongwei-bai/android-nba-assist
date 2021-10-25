@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Watch NBA</string>
+    <string name="app_name">Watch Sports Assist</string>
     <string name="splash_loading_text">Hold tight&#8230;</string>
     <string name="games_left">Games Left</string>
     <string name="no_games_left">No Games Left, Season ends.</string>
