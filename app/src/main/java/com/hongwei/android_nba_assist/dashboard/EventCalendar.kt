@@ -6,7 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -17,11 +17,15 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight.Companion.ExtraBold
 import androidx.compose.ui.text.font.FontWeight.Companion.Medium
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
@@ -36,16 +40,22 @@ import com.hongwei.android_nba_assist.ui.theme.*
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.CALENDAR_GAME_DATE_FORMAT
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getDayIdentifier
-import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getLocalTimeDisplay
 import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getResourceIdByName
 import java.util.*
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?, backgroundUrl: String?) {
-    val weekHeight = 120
+fun Calendar(
+    calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?, backgroundUrl: String?,
+    screenSize: IntSize
+) {
+    var cellTextHeight by remember { mutableStateOf(0) }
+
     if (calendarDays != null && events != null) {
-        Box {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
             backgroundUrl?.let {
                 val painter = rememberImagePainter(
                     data = backgroundUrl,
@@ -60,7 +70,7 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height((calendarDays.size * weekHeight).dp)
+                        .height(calendarCellHeight(screenSize, cellTextHeight) * calendarDays.size)
                         .placeholder(
                             visible = painter.state is ImagePainter.State.Loading,
                             highlight = PlaceholderHighlight.shimmer(),
@@ -72,7 +82,7 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height((calendarDays.size * weekHeight).dp)
+                    .height(calendarCellHeight(screenSize, cellTextHeight) * calendarDays.size)
             )
             Column(
                 modifier = Modifier.background(color = MaterialTheme.colors.primary.copy(alpha = 0.33f))
@@ -83,7 +93,7 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(weekHeight.dp)
+                            .height(calendarCellHeight(screenSize, cellTextHeight))
                             .background(color = BlackAlpha60)
                     ) {
                         it.forEach { day ->
@@ -96,7 +106,13 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?
                                 calendarDay = day,
                                 event = events.firstOrNull { event ->
                                     getDayIdentifier(event.unixTimeStamp) == day.timeInMillis
-                                })
+                                },
+                                onTextLayout = {
+                                    if (cellTextHeight == 0) {
+                                        cellTextHeight = it.size.height
+                                    }
+                                }
+                            )
                         }
                     }
                 }
@@ -106,7 +122,10 @@ fun Calendar(calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?
 }
 
 @Composable
-fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: EventViewObject?) {
+fun CalendarDay(
+    modifier: Modifier, calendarDay: Calendar, event: EventViewObject?,
+    onTextLayout: (TextLayoutResult) -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -168,17 +187,10 @@ fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: EventViewObjec
                 textAlign = TextAlign.Center,
                 color = textColor
             )
-            Text(
-                text = getLocalTimeDisplay(event.unixTimeStamp),
-                style = MaterialTheme.typography.caption,
-                fontSize = 8.sp,
-                fontWeight = ExtraBold,
-                textAlign = TextAlign.Center,
-                color = textColor
-            )
-            val isWin = result?.startsWith("W", true) == true
-            val resultColor = if (isWin) ColorVictory else ColorLose
+
             event.result?.let {
+                val isWin = result?.startsWith("W", true) == true
+                val resultColor = if (isWin) ColorVictory else ColorLose
                 Spacer(modifier = Modifier.size(2.dp))
                 Text(
                     text = it,
@@ -188,7 +200,15 @@ fun CalendarDay(modifier: Modifier, calendarDay: Calendar, event: EventViewObjec
                     textAlign = TextAlign.Center,
                     color = resultColor
                 )
-            }
+            } ?: Text(
+                text = LocalDateTimeUtil.getLocalTimeDisplay(event.unixTimeStamp),
+                style = MaterialTheme.typography.caption,
+                fontSize = 8.sp,
+                fontWeight = ExtraBold,
+                textAlign = TextAlign.Center,
+                color = textColor,
+                onTextLayout = { onTextLayout.invoke(it) }
+            )
         }
     }
 }
@@ -248,6 +268,19 @@ fun Floor(home: Boolean, modifier: Modifier, opponent: OpponentViewObject) {
         }
     }
 }
+
+@Composable
+fun calendarCellHeight(screenSize: IntSize, measuredTextHeight: Int): Dp =
+    with(LocalDensity.current) {
+        val cellWidth = screenSize.width / 7
+        val textHeightCoefficient = if (screenSize.height > screenSize.width)
+            6.5f else 4.5f
+        if (measuredTextHeight > 0) {
+            cellWidth.toDp() + (measuredTextHeight * textHeightCoefficient).toDp()
+        } else {
+            cellWidth.toDp() + 60.dp
+        }
+    }
 
 data class EventViewObject(
     val unixTimeStamp: Long,

@@ -3,6 +3,7 @@ package com.hongwei.android_nba_assist.season
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -28,7 +29,7 @@ fun Final(playOffGrandFinalViewObject: PlayOffGrandFinalViewObject?) {
                     .padding(vertical = 6.dp)
                     .fillMaxSize()
                     .background(color = BlackAlphaA0)
-                    .verticalScroll(ScrollState(0))
+                    .verticalScroll(rememberScrollState())
             ) {
                 GrandFinalHeader()
                 Spacer(modifier = Modifier.size(48.dp))

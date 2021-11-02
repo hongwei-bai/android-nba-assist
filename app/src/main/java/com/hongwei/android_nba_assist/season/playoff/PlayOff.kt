@@ -1,10 +1,7 @@
 package com.hongwei.android_nba_assist.season.playoff
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +35,7 @@ fun PlayOff(stat: PlayOffStat?, isLTR: Boolean) {
                     .padding(vertical = 6.dp)
                     .fillMaxSize()
                     .background(color = BlackAlphaA0)
-                    .verticalScroll(ScrollState(0))
+                    .verticalScroll(rememberScrollState())
             ) {
                 PlayOffHeader(isLTR)
                 Row(

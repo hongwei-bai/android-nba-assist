@@ -1,15 +1,17 @@
 package com.hongwei.android_nba_assist.dashboard
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -24,6 +26,7 @@ fun Dashboard() {
     val viewModel = hiltViewModel<DashboardViewModel>()
     val dataStatus = viewModel.dataStatus.observeAsState().value
     val seasonStatus = viewModel.seasonStatus.observeAsState().value
+    var screenSize by remember { mutableStateOf(IntSize.Zero) }
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(viewModel.isRefreshing.observeAsState().value == true),
@@ -35,7 +38,9 @@ fun Dashboard() {
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .onSizeChanged { screenSize = it }
         ) {
             DataStatusSnackBar(viewModel.dataStatus.observeAsState().value)
             if (calendarDays != null
@@ -45,7 +50,7 @@ fun Dashboard() {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .verticalScroll(ScrollState(0))
+                        .verticalScroll(rememberScrollState())
                 ) {
                     GamesLeftView(gamesLeft)
                     Spacer(modifier = Modifier.size(20.dp))
@@ -65,7 +70,8 @@ fun Dashboard() {
                     Calendar(
                         calendarDays = calendarDays,
                         events = upcomingGames,
-                        backgroundUrl = viewModel.teamBackground.observeAsState().value
+                        backgroundUrl = viewModel.teamBackground.observeAsState().value,
+                        screenSize = screenSize
                     )
 
                     Spacer(modifier = Modifier.size(32.dp))

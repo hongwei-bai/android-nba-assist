@@ -1,8 +1,8 @@
 package com.hongwei.android_nba_assist.season
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
@@ -19,13 +19,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.hongwei.android_nba_assist.R
-import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getResourceIdByName
 import com.hongwei.android_nba_assist.ui.animation.LoadingContent
 import com.hongwei.android_nba_assist.ui.component.TeamLogo
 import com.hongwei.android_nba_assist.ui.theme.BlackAlphaA0
 import com.hongwei.android_nba_assist.ui.theme.Grey50
 import com.hongwei.android_nba_assist.ui.theme.Grey60
 import com.hongwei.android_nba_assist.ui.theme.Red900
+import com.hongwei.android_nba_assist.util.ResourceByNameUtil.getResourceIdByName
 
 @Composable
 fun Standing(standing: List<TeamStat>?, isLTR: Boolean) {
@@ -49,7 +49,7 @@ fun Standing(standing: List<TeamStat>?, isLTR: Boolean) {
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .background(color = BlackAlphaA0)
-                    .verticalScroll(ScrollState(0))
+                    .verticalScroll(rememberScrollState())
             ) {
                 StandingHeader()
                 standing.forEach {

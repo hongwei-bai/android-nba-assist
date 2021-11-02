@@ -31,7 +31,7 @@ fun Settings() {
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colors.background)
-            .verticalScroll(ScrollState(0))
+            .verticalScroll(rememberScrollState())
     ) {
         Banner(
             url = viewModel.teamBanner.observeAsState().value,
