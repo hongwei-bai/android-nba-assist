@@ -35,9 +35,9 @@ android {
     defaultConfig {
         applicationId "com.hongwei.android_nba_assist"
         minSdkVersion 24
-        targetSdkVersion 30
-        versionCode 10002
-        versionName "1.0.2"
+        targetSdkVersion 31
+        versionCode 10003
+        versionName "1.0.3"
         resValue "string", "public_access_token", properties.getProperty("publicAccess.token", "")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
