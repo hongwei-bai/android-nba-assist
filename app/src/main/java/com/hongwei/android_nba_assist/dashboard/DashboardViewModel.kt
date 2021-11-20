@@ -85,7 +85,7 @@ class DashboardViewModel @Inject constructor(
                             name = entity.opponent.name,
                             logo = entity.opponent.logo
                         ),
-                        location = entity.homeTeam.location,
+                        opponentLocation = if (entity.home) entity.guestTeam.location else entity.homeTeam.location,
                         home = entity.home,
                         result = entity.result?.let { resultEntity ->
                             (if (resultEntity.isWin) WIN_SYMBOL else LOSE_SYMBOL) +

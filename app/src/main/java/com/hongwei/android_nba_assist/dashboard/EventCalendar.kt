@@ -179,8 +179,8 @@ fun CalendarDay(
         event?.run {
             Floor(event.home, modifier = logoModifier.padding(bottom = 4.dp), event.opponent)
             Text(
-                text = if (event.home) event.location.uppercase(Locale.US)
-                else stringResource(id = R.string.calendar_game_at_location, event.location.uppercase(Locale.US)),
+                text = if (event.home) event.opponentLocation.uppercase(Locale.US)
+                else stringResource(id = R.string.calendar_game_at_location, event.opponentLocation.uppercase(Locale.US)),
                 style = MaterialTheme.typography.caption,
                 fontSize = 8.sp,
                 fontWeight = ExtraBold,
@@ -285,7 +285,7 @@ fun calendarCellHeight(screenSize: IntSize, measuredTextHeight: Int): Dp =
 data class EventViewObject(
     val unixTimeStamp: Long,
     val opponent: OpponentViewObject,
-    val location: String,
+    val opponentLocation: String,
     val home: Boolean,
     val result: String? = null
 )
