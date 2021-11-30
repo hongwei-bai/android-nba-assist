@@ -85,3 +85,5 @@ lint/tmp/
 # lint/reports/
 
 .DS_Store
+app/schemas/
+app/release/

@@ -41,7 +41,7 @@ class NbaDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): NbaDatabase {
+    fun provideNbaDatabase(@ApplicationContext appContext: Context): NbaDatabase {
         return Room.databaseBuilder(
             appContext,
             NbaDatabase::class.java,

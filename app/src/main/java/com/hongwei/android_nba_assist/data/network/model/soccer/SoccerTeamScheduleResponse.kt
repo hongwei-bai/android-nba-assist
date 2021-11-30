@@ -13,7 +13,7 @@ data class SoccerTeamScheduleResponse(
 
 data class SoccerTeamEventResponse(
     val opponent: SoccerTeamResponse,
-    val unixTimeStamp: Long?,
+    val unixTimeStamp: Long,
     val homeAway: String,
     val completed: Boolean,
     val league: String,
@@ -40,11 +40,3 @@ data class SoccerTeamVenueResponse(
     val city: String?,
     val country: String?
 )
-
-enum class SoccerHomeEnumResponse {
-    Home, Away, Neutral
-}
-
-enum class SoccerResultEnumResponse {
-    FT, Tie, OT, Penalty, FirstLeg, Aggregate, AggregateAwayGoals
-}

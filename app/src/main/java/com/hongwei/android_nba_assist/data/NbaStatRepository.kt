@@ -1,8 +1,6 @@
 package com.hongwei.android_nba_assist.data
 
-import com.hongwei.android_nba_assist.AppConfigurations.ForceRefreshInterval
 import com.hongwei.android_nba_assist.AppConfigurations.Network.HttpCode
-import com.hongwei.android_nba_assist.AppConfigurations.TeamScheduleConfiguration.IGNORE_TODAY_S_GAME_FROM_HOURS
 import com.hongwei.android_nba_assist.data.local.AppSettings
 import com.hongwei.android_nba_assist.data.mapper.NbaPostSeasonMapper.map
 import com.hongwei.android_nba_assist.data.mapper.NbaStandingMapper.map
@@ -10,15 +8,14 @@ import com.hongwei.android_nba_assist.data.mapper.NbaTeamScheduleMapper.map
 import com.hongwei.android_nba_assist.data.mapper.NbaTransactionsMapper.map
 import com.hongwei.android_nba_assist.data.network.service.NbaStatService
 import com.hongwei.android_nba_assist.data.room.nba.*
+import com.hongwei.android_nba_assist.data.util.DataValidationUtil.after
+import com.hongwei.android_nba_assist.data.util.DataValidationUtil.dataMayOutdated
 import com.hongwei.android_nba_assist.ui.component.DataStatus
-import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
-import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getFirstDayOfWeek
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
-import java.util.*
 import javax.inject.Inject
 
 class NbaStatRepository @Inject constructor(
@@ -46,7 +43,7 @@ class NbaStatRepository @Inject constructor(
         return teamScheduleDao.getTeamSchedule().onEach {
             when {
                 it == null -> fetchTeamScheduleFromBackend(team)
-                it.dataMayOutdated() -> {
+                dataMayOutdated(it.timeStamp) -> {
                     dataStatusChannel.send(DataStatus.DataMayOutdated)
                     fetchTeamScheduleFromBackend(team, it.dataVersion)
                 }
@@ -62,7 +59,7 @@ class NbaStatRepository @Inject constructor(
         return standingDao.getStanding().onEach {
             when {
                 it == null -> fetchStandingFromBackend()
-                it.dataMayOutdated() -> {
+                dataMayOutdated(it.timeStamp) -> {
                     dataStatusChannel.send(DataStatus.DataMayOutdated)
                     fetchStandingFromBackend(it.dataVersion)
                 }
@@ -74,7 +71,7 @@ class NbaStatRepository @Inject constructor(
         return postSeasonDao.getPostSeason().onEach {
             when {
                 it == null -> fetchPostSeasonFromBackend()
-                it.dataMayOutdated() -> {
+                dataMayOutdated(it.timeStamp) -> {
                     dataStatusChannel.send(DataStatus.DataMayOutdated)
                     fetchPostSeasonFromBackend(it.dataVersion)
                 }
@@ -150,17 +147,4 @@ class NbaStatRepository @Inject constructor(
             }
         }
     }
-
-    private fun after(unixTimeStamp: Long): Boolean = Calendar.getInstance().apply {
-        timeInMillis = unixTimeStamp
-    }.after(getAheadOfHours(IGNORE_TODAY_S_GAME_FROM_HOURS))
-
-    private fun TeamScheduleEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
-            ForceRefreshInterval.FOR_SCHEDULE_HOUR * MILLIS_PER_HOUR
-
-    private fun StandingEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
-            ForceRefreshInterval.FOR_STANDING_HOUR * MILLIS_PER_HOUR
-
-    private fun PostSeasonEntity.dataMayOutdated(): Boolean = System.currentTimeMillis() - this.timeStamp >
-            ForceRefreshInterval.FOR_STANDING_PLAYOFF * MILLIS_PER_HOUR
 }
