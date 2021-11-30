@@ -9,7 +9,7 @@ import com.hongwei.android_nba_assist.data.mapper.NbaStandingMapper.map
 import com.hongwei.android_nba_assist.data.mapper.NbaTeamScheduleMapper.map
 import com.hongwei.android_nba_assist.data.mapper.NbaTransactionsMapper.map
 import com.hongwei.android_nba_assist.data.network.service.NbaStatService
-import com.hongwei.android_nba_assist.data.room.*
+import com.hongwei.android_nba_assist.data.room.nba.*
 import com.hongwei.android_nba_assist.ui.component.DataStatus
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_HOUR
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.getAheadOfHours

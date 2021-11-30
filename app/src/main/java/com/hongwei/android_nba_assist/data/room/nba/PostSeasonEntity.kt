@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.data.room
+package com.hongwei.android_nba_assist.data.room.nba
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

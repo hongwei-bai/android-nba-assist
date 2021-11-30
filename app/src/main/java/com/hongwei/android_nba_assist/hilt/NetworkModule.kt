@@ -8,6 +8,7 @@ import com.hongwei.android_nba_assist.AppConfigurations.Network.HTTP_WRITE_TIMEO
 import com.hongwei.android_nba_assist.data.network.interceptor.PublicAccessInterceptor
 import com.hongwei.android_nba_assist.data.network.service.NbaStatService
 import com.hongwei.android_nba_assist.data.network.service.NbaThemeService
+import com.hongwei.android_nba_assist.data.network.service.SoccerStatService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -67,5 +68,16 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
             .create(NbaThemeService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSoccerStatService(okHttpClient: OkHttpClient, moshi: Moshi): SoccerStatService {
+        return Retrofit.Builder()
+            .baseUrl(AppConfigurations.Network.SOCCER_STAT_ENDPOINT)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(okHttpClient)
+            .build()
+            .create(SoccerStatService::class.java)
     }
 }

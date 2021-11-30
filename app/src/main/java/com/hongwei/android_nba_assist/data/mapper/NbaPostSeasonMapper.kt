@@ -1,7 +1,7 @@
 package com.hongwei.android_nba_assist.data.mapper
 
-import com.hongwei.android_nba_assist.data.network.model.*
-import com.hongwei.android_nba_assist.data.room.*
+import com.hongwei.android_nba_assist.data.network.model.nba.*
+import com.hongwei.android_nba_assist.data.room.nba.*
 
 object NbaPostSeasonMapper {
     fun PostSeasonResponse.map(): PostSeasonEntity = PostSeasonEntity(

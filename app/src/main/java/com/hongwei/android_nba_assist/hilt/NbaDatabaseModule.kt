@@ -2,7 +2,8 @@ package com.hongwei.android_nba_assist.hilt
 
 import android.content.Context
 import androidx.room.Room
-import com.hongwei.android_nba_assist.data.room.*
+import com.hongwei.android_nba_assist.data.room.NbaDatabase
+import com.hongwei.android_nba_assist.data.room.nba.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +13,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class DatabaseModule {
+class NbaDatabaseModule {
     @Provides
     fun provideTeamScheduleDao(nbaDatabase: NbaDatabase): TeamScheduleDao {
         return nbaDatabase.teamScheduleDao()

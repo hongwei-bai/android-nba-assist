@@ -45,7 +45,7 @@ fun Season() {
                 SeasonScreens.EastStanding
             )
         }
-        val tabForActiveStage = SeasonScreens.fromSeasonStatus(seasonStatus, getConferenceByTeam(AppSettings.myTeam))
+        val tabForActiveStage = SeasonScreens.fromSeasonStatus(seasonStatus, getConferenceByTeam(AppSettings.myNbaTeam))
         val tabPosition = pages.indexOf(tabForActiveStage)
         val pagerState = rememberPagerState(
             pageCount = pages.size,

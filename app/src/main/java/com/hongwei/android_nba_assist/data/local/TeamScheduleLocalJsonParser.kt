@@ -2,7 +2,7 @@ package com.hongwei.android_nba_assist.data.local
 
 import android.content.Context
 import com.hongwei.android_nba_assist.AppConfigurations.Mock.TEAM_SCHEDULE_JSON
-import com.hongwei.android_nba_assist.data.network.model.TeamScheduleResponse
+import com.hongwei.android_nba_assist.data.network.model.nba.TeamScheduleResponse
 import com.hongwei.android_nba_assist.util.LocalStorageUtils.getAssetJsonFile
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi

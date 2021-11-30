@@ -1,9 +1,9 @@
 package com.hongwei.android_nba_assist.data.mapper
 
-import com.hongwei.android_nba_assist.data.network.model.NbaTransactionsResponse
-import com.hongwei.android_nba_assist.data.network.model.TransactionResponse
-import com.hongwei.android_nba_assist.data.room.NbaTransaction
-import com.hongwei.android_nba_assist.data.room.NbaTransactionsEntity
+import com.hongwei.android_nba_assist.data.network.model.nba.NbaTransactionsResponse
+import com.hongwei.android_nba_assist.data.network.model.nba.TransactionResponse
+import com.hongwei.android_nba_assist.data.room.nba.NbaTransaction
+import com.hongwei.android_nba_assist.data.room.nba.NbaTransactionsEntity
 
 object NbaTransactionsMapper {
     fun NbaTransactionsResponse.map(): NbaTransactionsEntity = NbaTransactionsEntity(

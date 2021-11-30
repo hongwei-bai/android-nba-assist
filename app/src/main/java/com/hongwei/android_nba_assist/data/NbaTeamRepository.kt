@@ -4,8 +4,8 @@ import com.hongwei.android_nba_assist.data.local.AppSettings
 import com.hongwei.android_nba_assist.data.mapper.NbaTeamDetailMapper.map
 import com.hongwei.android_nba_assist.data.network.service.NbaStatService
 import com.hongwei.android_nba_assist.data.network.service.NbaThemeService
-import com.hongwei.android_nba_assist.data.room.TeamDetailDao
-import com.hongwei.android_nba_assist.data.room.TeamDetailEntity
+import com.hongwei.android_nba_assist.data.room.nba.TeamDetailDao
+import com.hongwei.android_nba_assist.data.room.nba.TeamDetailEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
@@ -45,7 +45,7 @@ class NbaTeamRepository @Inject constructor(
         teamDetailDao.getTeamThemeFlow().onEach { teamDetailEntity ->
             if (teamDetailEntity == null) {
                 withContext(Dispatchers.IO) {
-                    fetchTeamDetailFromBackend(AppSettings.myTeam)
+                    fetchTeamDetailFromBackend(AppSettings.myNbaTeam)
                     fetchSeasonStatusFromBackend()
                 }
             }

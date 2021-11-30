@@ -19,7 +19,7 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
-            nbaTeamRepository.fetchTeamDetailFromBackend(AppSettings.myTeam)
+            nbaTeamRepository.fetchTeamDetailFromBackend(AppSettings.myNbaTeam)
             nbaTeamRepository.fetchSeasonStatusFromBackend()
             preFetchCompleted.postValue(true)
         }

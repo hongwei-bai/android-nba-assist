@@ -33,7 +33,7 @@ class SettingsViewModel @Inject constructor(
 
     fun switchTeam(context: Context, team: String) {
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
-            AppSettings.setTeam(context, team)
+            AppSettings.setNbaTeam(context, team)
             reloadAll()
         }
     }
@@ -53,9 +53,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun reloadAll() {
-        nbaTeamRepository.fetchTeamDetailFromBackend(AppSettings.myTeam)
+        nbaTeamRepository.fetchTeamDetailFromBackend(AppSettings.myNbaTeam)
         nbaTeamRepository.fetchSeasonStatusFromBackend()
-        nbaStatRepository.fetchTeamScheduleFromBackend(AppSettings.myTeam)
+        nbaStatRepository.fetchTeamScheduleFromBackend(AppSettings.myNbaTeam)
         nbaStatRepository.fetchStandingFromBackend()
         nbaStatRepository.fetchPostSeasonFromBackend()
     }

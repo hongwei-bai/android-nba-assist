@@ -5,7 +5,9 @@ import android.content.Context.MODE_PRIVATE
 import kotlin.properties.Delegates
 
 object AppSettings {
-    private lateinit var _myTeam: String
+    private lateinit var _myNbaTeam: String
+
+    private lateinit var _myEuroSoccerTeam: String
 
     private var _scheduleWeeks by Delegates.notNull<Int>()
 
@@ -15,8 +17,11 @@ object AppSettings {
 
     private var savedValueStartsFromMonday by Delegates.notNull<Boolean>()
 
-    val myTeam: String
-        get() = _myTeam
+    val myNbaTeam: String
+        get() = _myNbaTeam
+
+    val myEuroSoccerTeam: String
+        get() = _myEuroSoccerTeam
 
     val scheduleWeeks: Int
         get() = _scheduleWeeks
@@ -25,8 +30,10 @@ object AppSettings {
         get() = _startsFromMonday
 
     fun initialize(context: Context) {
-        _myTeam = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
-            .getString("MyTeam", "gs") ?: "gs"
+        _myNbaTeam = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
+            .getString(MY_NBA_TEAM_KEY, "gs") ?: "gs"
+        _myEuroSoccerTeam = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
+            .getString(MY_EURO_SOCCER_TEAM_KEY, "mil") ?: "mil"
         _scheduleWeeks = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
             .getInt("scheduleWeeks", 2)
         _startsFromMonday = context.getSharedPreferences("AppSettings", MODE_PRIVATE)
@@ -39,11 +46,19 @@ object AppSettings {
 
     fun hasWeekStartFromMondaySettingChanged(): Boolean = _startsFromMonday != savedValueStartsFromMonday
 
-    fun setTeam(context: Context, team: String) {
-        _myTeam = team
+    fun setNbaTeam(context: Context, team: String) {
+        _myNbaTeam = team
         context.getSharedPreferences("AppSettings", MODE_PRIVATE)
             .edit()
-            .putString("MyTeam", team)
+            .putString(MY_NBA_TEAM_KEY, team)
+            .apply()
+    }
+
+    fun setEuroSoccerTeam(context: Context, team: String) {
+        _myEuroSoccerTeam = team
+        context.getSharedPreferences("AppSettings", MODE_PRIVATE)
+            .edit()
+            .putString(MY_EURO_SOCCER_TEAM_KEY, team)
             .apply()
     }
 
@@ -62,4 +77,8 @@ object AppSettings {
             .putBoolean("weekStartsFromMonday", startFromMonday)
             .apply()
     }
+
+    private const val MY_NBA_TEAM_KEY = "MyNbaTeam"
+
+    private const val MY_EURO_SOCCER_TEAM_KEY = "MyEuroSoccerTeam"
 }

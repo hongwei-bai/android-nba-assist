@@ -49,7 +49,7 @@ class DashboardViewModel @Inject constructor(
 
     val countdownString: MutableLiveData<String> = MutableLiveData()
 
-    val myTeam: MutableLiveData<String> = MutableLiveData()
+    val myNbaTeam: MutableLiveData<String> = MutableLiveData()
 
     val teamBackground: LiveData<String?> =
         nbaTeamRepository.getTeamDetailFlow()
@@ -57,7 +57,7 @@ class DashboardViewModel @Inject constructor(
             .asLiveData(viewModelScope.coroutineContext)
 
     val nextGameInfo: LiveData<EventDetailViewObject> =
-        nbaStatRepository.getNextGameInfo(AppSettings.myTeam)
+        nbaStatRepository.getNextGameInfo(AppSettings.myNbaTeam)
             .map {
                 EventDetailViewObject(
                     unixTimeStamp = it.unixTimeStamp,
@@ -75,7 +75,7 @@ class DashboardViewModel @Inject constructor(
             }.asLiveData(viewModelScope.coroutineContext)
 
     val upcomingGames: LiveData<List<EventViewObject>> =
-        nbaStatRepository.getTeamSchedule(AppSettings.myTeam)
+        nbaStatRepository.getTeamSchedule(AppSettings.myNbaTeam)
             .map {
                 it.map { entity ->
                     EventViewObject(
@@ -99,7 +99,7 @@ class DashboardViewModel @Inject constructor(
     val calendarDays: MutableLiveData<List<List<Calendar>>> = MutableLiveData()
 
     init {
-        myTeam.value = AppSettings.myTeam
+        myNbaTeam.value = AppSettings.myNbaTeam
         upcomingGameCounter.countdownCallback = { countdownString.postValue(it) }
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) { subscribeScheduleFlow() }
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) { subscribeNextGameFlow() }
@@ -108,13 +108,13 @@ class DashboardViewModel @Inject constructor(
     fun refresh() {
         isRefreshing.value = true
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
-            nbaStatRepository.fetchTeamScheduleFromBackend(AppSettings.myTeam)
+            nbaStatRepository.fetchTeamScheduleFromBackend(AppSettings.myNbaTeam)
             isRefreshing.postValue(false)
         }
     }
 
     private suspend fun subscribeScheduleFlow() {
-        nbaStatRepository.getTeamSchedule(AppSettings.myTeam).onEach {
+        nbaStatRepository.getTeamSchedule(AppSettings.myNbaTeam).onEach {
             gamesLeft.postValue(it.filter { event -> after(event.unixTimeStamp) }.size)
             calendarDays.postValue(
                 GenerateCalendarHelper
@@ -124,7 +124,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     private suspend fun subscribeNextGameFlow() {
-        nbaStatRepository.getNextGameInfo(AppSettings.myTeam)
+        nbaStatRepository.getNextGameInfo(AppSettings.myNbaTeam)
             .onEach {
                 val eventTime = it.unixTimeStamp
                 upcomingGameTime.postValue(eventTime)

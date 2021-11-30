@@ -62,7 +62,7 @@ fun Dashboard() {
                     Spacer(modifier = Modifier.size(30.dp))
 
                     UpcomingGameInfo(
-                        myTeam = viewModel.myTeam.observeAsState().value,
+                        myTeam = viewModel.myNbaTeam.observeAsState().value,
                         event = viewModel.nextGameInfo.observeAsState().value
                     )
                     Spacer(modifier = Modifier.size(10.dp))

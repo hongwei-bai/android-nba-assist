@@ -1,12 +1,12 @@
 package com.hongwei.android_nba_assist.data.mapper
 
 import com.hongwei.android_nba_assist.data.league.nba.Conference
-import com.hongwei.android_nba_assist.data.network.model.StandingResponse
-import com.hongwei.android_nba_assist.data.network.model.TeamStandingResponse
-import com.hongwei.android_nba_assist.data.room.ConferenceStanding
-import com.hongwei.android_nba_assist.data.room.StandingEntity
-import com.hongwei.android_nba_assist.data.room.Team
-import com.hongwei.android_nba_assist.data.room.TeamStanding
+import com.hongwei.android_nba_assist.data.network.model.nba.StandingResponse
+import com.hongwei.android_nba_assist.data.network.model.nba.TeamStandingResponse
+import com.hongwei.android_nba_assist.data.room.nba.ConferenceStanding
+import com.hongwei.android_nba_assist.data.room.nba.StandingEntity
+import com.hongwei.android_nba_assist.data.room.nba.Team
+import com.hongwei.android_nba_assist.data.room.nba.TeamStanding
 
 object NbaStandingMapper {
     fun StandingResponse.map(): StandingEntity = StandingEntity(

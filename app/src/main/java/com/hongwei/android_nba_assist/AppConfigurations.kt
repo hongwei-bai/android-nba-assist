@@ -8,6 +8,7 @@ object AppConfigurations {
 
         const val HONGWEI_SERVICE_DOMAIN = "https://hongwei-test1.top"
         const val NBA_STAT_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-sports/nba/"
+        const val SOCCER_STAT_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-sports/soccer/"
 //        const val NBA_STAT_ENDPOINT = "http://10.0.2.2:8081/nba/"
 //        const val NBA_STAT_ENDPOINT = "http://10.0.2.2:8080/application-service-sports/nba/"
 

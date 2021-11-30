@@ -1,6 +1,6 @@
 package com.hongwei.android_nba_assist.dashboard
 
-import com.hongwei.android_nba_assist.data.room.TeamEvent
+import com.hongwei.android_nba_assist.data.room.nba.TeamEvent
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_DAY
 import com.hongwei.android_nba_assist.util.LocalDateTimeUtil.MILLIS_PER_WEEK

@@ -3,6 +3,7 @@ package com.hongwei.android_nba_assist.data.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.hongwei.android_nba_assist.data.room.nba.*
 
 @Database(
     entities = [

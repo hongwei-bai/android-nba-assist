@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.hongwei.android_nba_assist.data.NbaTeamRepository
-import com.hongwei.android_nba_assist.data.room.TeamDetailEntity
+import com.hongwei.android_nba_assist.data.room.nba.TeamDetailEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

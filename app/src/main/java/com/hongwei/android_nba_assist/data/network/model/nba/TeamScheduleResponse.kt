@@ -1,4 +1,4 @@
-package com.hongwei.android_nba_assist.data.network.model
+package com.hongwei.android_nba_assist.data.network.model.nba
 
 data class TeamScheduleResponse(
     val dataVersion: Long = 0,
