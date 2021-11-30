@@ -1,0 +1,20 @@
+package com.hami.sports_assist.data.network.model.nba
+
+data class ScheduleResponse(
+    val dataVersion: Long = 0,
+    val events: List<EventResponse>
+)
+
+data class EventResponse(
+    val unixTimeStamp: Long,
+    val eventType: String,
+    val homeTeam: TeamResponse,
+    val guestTeam: TeamResponse,
+    val result: ResultResponse? = null
+)
+
+data class ResultResponse(
+    val isHomeTeamWin: Boolean,
+    val homeTeamScore: Int,
+    val guestTeamScore: Int
+)

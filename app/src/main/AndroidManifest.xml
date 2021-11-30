@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hongwei.android_nba_assist">
+    package="com.hami.sports_assist">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.hongwei.android_nba_assist.NbaAssistApplication"
+        android:name="com.hami.sports_assist.SportsAssistApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,9 +13,9 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.hongwei.android_nba_assist.home.MainActivity"
+            android:name="com.hami.sports_assist.home.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Nba">
+            android:theme="@style/Theme.Sports">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_id_splash"
-        android:name="com.hongwei.android_nba_assist.compat.view.SplashFragment"
+        android:name="com.hami.sports_assist.compat.view.SplashFragment"
         android:label=""
         tools:layout="@layout/fragment_splash">
         <action
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/fragment_id_main_host"
-        android:name="com.hongwei.android_nba_assist.compat.view.MainHostFragment"
+        android:name="com.hami.sports_assist.compat.view.MainHostFragment"
         android:label=""
         tools:layout="@layout/fragment_main_host"/>
 
