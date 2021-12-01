@@ -6,6 +6,7 @@ import com.hami.sports_assist.data.mapper.SoccerTeamScheduleMapper.map
 import com.hami.sports_assist.data.network.service.SoccerStatService
 import com.hami.sports_assist.data.room.soccer.SoccerTeamEvent
 import com.hami.sports_assist.data.room.soccer.SoccerTeamScheduleDao
+import com.hami.sports_assist.data.util.DataValidationUtil
 import com.hami.sports_assist.data.util.DataValidationUtil.dataMayOutdated
 import com.hami.sports_assist.ui.component.DataStatus
 import com.hami.sports_assist.util.LocalDateTimeUtil
@@ -21,7 +22,17 @@ class SoccerStatRepository @Inject constructor(
 ) {
     private val dataStatusChannel = Channel<DataStatus>()
 
-    val dataStatus = dataStatusChannel.receiveAsFlow()
+    val dataStatus: Flow<DataStatus> = dataStatusChannel.receiveAsFlow()
+
+    fun getNextGameInfo(team: String): Flow<SoccerTeamEvent> {
+        return soccerTeamScheduleDao.getSoccerTeamSchedule().onEach {
+            it ?: fetchSoccerTeamScheduleFromBackend(team)
+        }.filterNotNull().map {
+            it.events.firstOrNull { event ->
+                DataValidationUtil.after(event.unixTimeStamp)
+            }
+        }.filterNotNull()
+    }
 
     fun getTeamSchedule(team: String): Flow<List<SoccerTeamEvent>> {
         return soccerTeamScheduleDao.getSoccerTeamSchedule().onEach {

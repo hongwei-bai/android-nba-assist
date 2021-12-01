@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "android-nba-assistant"
+rootProject.name = "hami-sports-assistant"

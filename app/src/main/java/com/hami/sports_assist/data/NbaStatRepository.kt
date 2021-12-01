@@ -27,7 +27,7 @@ class NbaStatRepository @Inject constructor(
 ) {
     private val dataStatusChannel = Channel<DataStatus>()
 
-    val dataStatus = dataStatusChannel.receiveAsFlow()
+    val dataStatus: Flow<DataStatus> = dataStatusChannel.receiveAsFlow()
 
     fun getNextGameInfo(team: String): Flow<TeamEvent> {
         return teamScheduleDao.getTeamSchedule().onEach {

@@ -34,7 +34,7 @@ object AppConfigurations {
     }
 
     object LogoConfiguration {
-        const val useLocalLogos: Boolean = true
+        const val useLocalLogos: Boolean = false
     }
 
     object TeamScheduleConfiguration {

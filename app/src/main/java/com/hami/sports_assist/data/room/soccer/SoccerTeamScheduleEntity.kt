@@ -22,11 +22,13 @@ data class SoccerTeamScheduleEntity(
 
 data class SoccerTeamEvent(
     val opponent: SoccerTeam,
+    val homeTeam: SoccerTeam,
+    val guestTeam: SoccerTeam,
     val unixTimeStamp: Long,
-    val homeAway: String,
+    val homeAwayEnum: SoccerHomeEnum,
     val completed: Boolean,
     val league: String,
-    val result: String? = null,
+    val result: SoccerResultEnum? = null,
     val score: String?,
     val otScore: String? = null,
     val penaltyScore: String? = null,

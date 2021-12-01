@@ -1,4 +1,4 @@
-# android-nba-assistant
+# Hami-sports-assistant.android
 
 [![Build Status](https://hongwei-test1.top:8444/buildStatus/icon?job=android-nba-assist)](https://hongwei-test1.top:8444/job/android-nba-assist/)
 
