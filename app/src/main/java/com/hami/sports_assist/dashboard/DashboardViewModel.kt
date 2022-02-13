@@ -69,7 +69,7 @@ class DashboardViewModel @Inject constructor(
                 soccerStatRepository.getNextGameInfo(AppSettings.myEuroSoccerTeam)
                     .map { it.mapToDetailViewObject() }
             ) { nextNbaEvent, nextSoccerEvent ->
-                if (nextNbaEvent.unixTimeStamp > nextSoccerEvent.unixTimeStamp) {
+                if (nextNbaEvent.unixTimeStamp < nextSoccerEvent.unixTimeStamp) {
                     nextNbaEvent
                 } else {
                     nextSoccerEvent

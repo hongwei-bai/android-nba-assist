@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -40,7 +39,6 @@ import com.hami.sports_assist.ui.theme.*
 import com.hami.sports_assist.util.LocalDateTimeUtil
 import com.hami.sports_assist.util.LocalDateTimeUtil.CALENDAR_GAME_DATE_FORMAT
 import com.hami.sports_assist.util.LocalDateTimeUtil.getDayIdentifier
-import com.hami.sports_assist.util.ResourceByNameUtil.getResourceIdByName
 import java.util.*
 
 @OptIn(ExperimentalCoilApi::class)
@@ -244,12 +242,8 @@ fun Floor(home: Boolean, modifier: Modifier, opponent: OpponentViewObject) {
                 Box(modifier = Modifier.background(bottomBrush)) {
                     TeamLogo(
                         logoUrl = opponent.logo,
-                        localPlaceholderResId = getResourceIdByName(
-                            LocalContext.current,
-                            opponent.abbrev
-                        ),
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .wrapContentWidth()
                     )
                 }
             }
@@ -258,12 +252,8 @@ fun Floor(home: Boolean, modifier: Modifier, opponent: OpponentViewObject) {
         Box(modifier = modifier) {
             TeamLogo(
                 logoUrl = opponent.logo,
-                localPlaceholderResId = getResourceIdByName(
-                    LocalContext.current,
-                    opponent.abbrev
-                ),
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .wrapContentWidth()
             )
         }
     }

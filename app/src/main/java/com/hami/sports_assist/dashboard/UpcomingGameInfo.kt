@@ -11,14 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hami.sports_assist.R
+import com.hami.sports_assist.ui.component.TeamLogo
 import com.hami.sports_assist.util.LocalDateTimeUtil.getLocalDateDisplay
 import com.hami.sports_assist.util.LocalDateTimeUtil.getLocalTimeDisplay
-import com.hami.sports_assist.util.ResourceByNameUtil.getResourceIdByName
-import com.hami.sports_assist.ui.component.TeamLogo
 
 @Composable
 fun UpcomingGameInfo(myTeam: String?, event: EventDetailViewObject?) {
@@ -50,7 +48,6 @@ fun UpcomingGameInfo(myTeam: String?, event: EventDetailViewObject?) {
             ) {
                 TeamLogo(
                     logoUrl = event.guestTeam.logo,
-                    localPlaceholderResId = getResourceIdByName(LocalContext.current, event.guestTeam.abbrev),
                     modifier = Modifier.size(110.dp)
                 )
                 Column(
@@ -74,7 +71,6 @@ fun UpcomingGameInfo(myTeam: String?, event: EventDetailViewObject?) {
                 }
                 TeamLogo(
                     logoUrl = event.homeTeam.logo,
-                    localPlaceholderResId = getResourceIdByName(LocalContext.current, event.homeTeam.abbrev),
                     modifier = Modifier.size(110.dp)
                 )
             }

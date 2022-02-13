@@ -124,7 +124,6 @@ private fun Team(teamStat: TeamStat) {
             )
             TeamLogo(
                 logoUrl = teamStat.logoUrl,
-                localPlaceholderResId = getResourceIdByName(LocalContext.current, teamStat.logoResourceName),
                 modifier = Modifier
                     .padding(start = 4.dp, end = 4.dp)
                     .size(40.dp)

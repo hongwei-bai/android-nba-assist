@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,7 +21,6 @@ import com.hami.sports_assist.ui.component.DataStatus
 import com.hami.sports_assist.ui.component.DataStatusSnackBar
 import com.hami.sports_assist.ui.component.TeamLogo
 import com.hami.sports_assist.util.LocalDateTimeUtil
-import com.hami.sports_assist.util.ResourceByNameUtil
 
 @Preview
 @Composable
@@ -46,10 +44,6 @@ fun News() {
                         ) {
                             TeamLogo(
                                 logoUrl = transaction.teamLogo,
-                                localPlaceholderResId = ResourceByNameUtil.getResourceIdByName(
-                                    LocalContext.current,
-                                    transaction.teamAbbr.lowercase()
-                                ),
                                 modifier = Modifier.size(40.dp)
                             )
                             Spacer(modifier = Modifier.size(8.dp))
