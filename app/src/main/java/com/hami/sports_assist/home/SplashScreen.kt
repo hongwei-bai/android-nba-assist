@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -18,15 +19,14 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.hami.sports_assist.R
 
-
 @Composable
 fun SplashScreen(navController: NavController) {
     val splashViewModel = hiltViewModel<SplashViewModel>()
     val preFetchCompleted = splashViewModel.preFetchCompleted.observeAsState().value
     if (preFetchCompleted == true) {
-        navController.navigate("main") {
-            popUpTo("splash") { inclusive = true }
-            launchSingleTop = true
+        LaunchedEffect(key1 = true) {
+            navController.popBackStack()
+            navController.navigate("main")
         }
     }
 

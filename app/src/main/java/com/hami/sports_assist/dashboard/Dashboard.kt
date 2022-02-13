@@ -20,7 +20,9 @@ import com.hami.sports_assist.ui.animation.ErrorView
 import com.hami.sports_assist.ui.animation.LoadingContent
 import com.hami.sports_assist.ui.component.DataStatus
 import com.hami.sports_assist.ui.component.DataStatusSnackBar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun Dashboard() {
     val viewModel = hiltViewModel<DashboardViewModel>()

@@ -48,7 +48,6 @@ fun Season() {
         val tabForActiveStage = SeasonScreens.fromSeasonStatus(seasonStatus, getConferenceByTeam(AppSettings.myNbaTeam))
         val tabPosition = pages.indexOf(tabForActiveStage)
         val pagerState = rememberPagerState(
-            pageCount = pages.size,
             initialPage = tabPosition
         )
 
@@ -88,7 +87,7 @@ fun Season() {
                     }
                 }
 
-                HorizontalPager(state = pagerState) { page ->
+                HorizontalPager(count = pages.size, state = pagerState) { page ->
                     when (pages[page]) {
                         SeasonScreens.WestStanding -> Standing(seasonViewModel.westernStanding.observeAsState().value, true)
                         SeasonScreens.WestPlayIn -> PlayInTournament(null, true)

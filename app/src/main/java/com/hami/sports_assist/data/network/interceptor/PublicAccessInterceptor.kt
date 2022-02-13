@@ -1,16 +1,15 @@
 package com.hami.sports_assist.data.network.interceptor
 
-import android.content.Context
-import com.hami.sports_assist.R
 import com.hami.sports_assist.AppConfigurations.Network.AUTHORIZATION_BEARER
 import com.hami.sports_assist.AppConfigurations.Network.AUTHORIZATION_HEADER
+import com.hami.sports_assist.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-class PublicAccessInterceptor(private val context: Context) : Interceptor {
+class PublicAccessInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val jwt = context.getString(R.string.public_access_token);
+        val jwt = BuildConfig.publicAccessToken
         val request: Request = chain.request()
         val newRequest = request.newBuilder()
             .addHeader(AUTHORIZATION_HEADER, "$AUTHORIZATION_BEARER $jwt")
