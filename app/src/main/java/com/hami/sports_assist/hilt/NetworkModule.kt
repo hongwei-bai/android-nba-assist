@@ -1,6 +1,5 @@
 package com.hami.sports_assist.hilt
 
-import android.content.Context
 import com.hami.sports_assist.AppConfigurations
 import com.hami.sports_assist.AppConfigurations.Network.HTTP_CONNECT_TIMEOUT
 import com.hami.sports_assist.AppConfigurations.Network.HTTP_READ_TIMEOUT
@@ -14,7 +13,6 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,8 +32,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providePublicAccessInterceptor(@ApplicationContext appContext: Context): PublicAccessInterceptor =
-        PublicAccessInterceptor(appContext)
+    fun providePublicAccessInterceptor(): PublicAccessInterceptor = PublicAccessInterceptor()
 
     @Provides
     @Singleton

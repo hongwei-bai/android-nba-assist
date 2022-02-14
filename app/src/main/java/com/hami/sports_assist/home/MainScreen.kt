@@ -5,7 +5,6 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -25,8 +24,6 @@ import com.hami.sports_assist.season.Season
 import com.hami.sports_assist.settings.Settings
 import com.hami.sports_assist.ui.navigation.BottomNavBar
 
-private const val SLIDE_IN_OFFSET = 1000
-
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen() {
@@ -43,57 +40,37 @@ fun MainScreen() {
 }
 
 
-@ExperimentalAnimationApi
-@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
 @Composable
 fun MainNavCompose(navController: NavHostController, size: IntSize) {
     val springSpec = spring<IntOffset>(dampingRatio = Spring.DampingRatioMediumBouncy)
 
-    AnimatedNavHost(
-        navController = navController,
-        startDestination = "dashboard",
-    ) {
+    AnimatedNavHost(navController = navController, startDestination = "dashboard") {
         composable(
             route = "dashboard",
-            enterTransition = { _, _ ->
-                slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec)
-            },
-            exitTransition = { _, _ ->
-                slideOutHorizontally(targetOffsetX = { -size.width }, animationSpec = springSpec)
-            },
+            enterTransition = { slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -size.width }, animationSpec = springSpec) }
         ) {
             Dashboard()
         }
         composable(
             route = "season",
-            enterTransition = { _, _ ->
-                slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec)
-            },
-            exitTransition = { _, _ ->
-                slideOutHorizontally(targetOffsetX = { -size.width }, animationSpec = springSpec)
-            },
+            enterTransition = { slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -size.width }, animationSpec = springSpec) }
         ) {
             Season()
         }
         composable(
             route = "news",
-            enterTransition = { _, _ ->
-                slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec)
-            },
-            exitTransition = { _, _ ->
-                slideOutHorizontally(targetOffsetX = { -size.width }, animationSpec = springSpec)
-            },
+            enterTransition = { slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -size.width }, animationSpec = springSpec) }
         ) {
             News()
         }
         composable(
             route = "settings",
-            enterTransition = { _, _ ->
-                slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec)
-            },
-            exitTransition = { _, _ ->
-                slideOutHorizontally(targetOffsetX = { -size.width }, animationSpec = springSpec)
-            },
+            enterTransition = { slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -size.width }, animationSpec = springSpec) }
         ) {
             Settings()
         }
