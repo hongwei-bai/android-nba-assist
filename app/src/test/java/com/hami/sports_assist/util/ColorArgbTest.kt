@@ -8,7 +8,7 @@ class ColorArgbTest {
     fun `convert to ARGB then convert back to long should be the same`() {
         val colorLong = 0xFFFA0028
         val colorARGB = ColorArgb.fromLong(colorLong)
-        val actualResult = colorARGB.toLong()
+        val actualResult = colorARGB?.toLong()
         Assert.assertEquals(colorLong, actualResult)
     }
 }
