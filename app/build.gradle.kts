@@ -12,11 +12,10 @@ android {
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildToolsVersion
 
-    gradleLocalProperties(rootDir).getProperty("publicAccess.token")?.let { publicAccessToken ->
-        buildTypes {
-            getByName("debug") { buildConfigField("String", "publicAccessToken", publicAccessToken) }
-            getByName("release") { buildConfigField("String", "publicAccessToken", publicAccessToken) }
-        }
+    val publicAccessToken = gradleLocalProperties(rootDir).getProperty("publicAccess.token") ?: "\"ci\""
+    buildTypes {
+        getByName("debug") { buildConfigField("String", "publicAccessToken", publicAccessToken) }
+        getByName("release") { buildConfigField("String", "publicAccessToken", publicAccessToken) }
     }
 
     val releaseKeyStoreLocation: String? = gradleLocalProperties(rootDir).getProperty("keyStore.release.location")
@@ -72,7 +71,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
-    
+
     buildFeatures {
         compose = true
     }
@@ -116,7 +115,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:${Versions.hilt}")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     kapt("com.google.dagger:hilt-android-compiler:${Versions.hilt}")
-    annotationProcessor("com.google.dagger:hilt-compiler:${Versions.hilt}")
+    kapt("com.google.dagger:hilt-compiler:${Versions.hilt}")
 
     // Network
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")

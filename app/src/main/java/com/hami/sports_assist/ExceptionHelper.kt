@@ -7,7 +7,7 @@ object ExceptionHelper  {
     var postHandler: (() -> Unit)? = null
 
     val nbaExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        if (LocalProperties.isDebug) {
+        if (BuildConfig.DEBUG) {
             Log.e("bbbb", "Exception caught: ${throwable.localizedMessage}")
             Log.e("bbbb", Log.getStackTraceString(throwable))
         } else {
