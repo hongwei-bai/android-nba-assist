@@ -7,10 +7,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import com.hami.sports_assist.R
 import kotlinx.coroutines.delay
@@ -39,9 +36,11 @@ fun DataStatusSnackBar(dataStatus: DataStatus?) {
                 style = MaterialTheme.typography.overline,
                 color = MaterialTheme.colors.onError
             )
-            coroutineScope.launch {
-                delay(3000)
-                displayState.value = false
+            LaunchedEffect(key1 = true) {
+                coroutineScope.launch {
+                    delay(3000)
+                    displayState.value = false
+                }
             }
         }
     }

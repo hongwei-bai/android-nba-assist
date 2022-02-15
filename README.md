@@ -1,6 +1,6 @@
 # Hami-sports-assistant.android
 
-[![Build Status](https://hongwei-test1.top:8444/buildStatus/icon?job=android-nba-assist)](https://hongwei-test1.top:8444/job/android-nba-assist/)
+[![CircleCI](https://circleci.com/gh/hongwei-bai/android-nba-assist/tree/main.svg?style=svg)](https://circleci.com/gh/hongwei-bai/android-nba-assist/tree/main)
 
 This is an Android App demo which is going to apply all sorts of state-of-the-art technologies, including those are still in Alpha & Beta tests.
 
