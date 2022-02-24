@@ -1,6 +1,32 @@
 # Hami-sports-assistant.android
 
-[![CircleCI](https://circleci.com/gh/hongwei-bai/android-nba-assist/tree/main.svg?style=svg)](https://circleci.com/gh/hongwei-bai/android-nba-assist/tree/main)
+[![CircleCI](https://img.shields.io/circleci/build/github/hongwei-bai/android-nba-assist?logo=CircleCI&token=24%3Ae1%3A67%3Afb%3Ab1%3A8b%3Aaa%3A74%3Af3%3Ac1%3Af6%3A5a%3Ace%3Ac6%3A06%3A9a)](https://app.circleci.com/pipelines/github/hongwei-bai/android-nba-assist?branch=main)
+[![Unit Tests](https://img.shields.io/badge/unit%20tests-covered-83B81A?style=for-the-bedge&logo=Stitcher)](https://github.com/hongwei-bai/android-nba-assist/tree/main/app/src/test/java/com/hami/sports_assist/util)
+[![Instrumented Tests](https://img.shields.io/badge/instrumented%20tests-not%20applicable-EE0000?style=for-the-bedge&logo=Stitcher)](./README.md)
+[![UI Tests](https://img.shields.io/badge/ui%20tests-not%20applicable-EE0000?style=for-the-bedge&logo=Stitcher)](./README.md)
+[![GitHub repo size](https://img.shields.io/github/repo-size/hongwei-bai/android-nba-assist?logo=GitHub)](./README.md)
+[![GitHub last commit](https://img.shields.io/github/last-commit/hongwei-bai/android-nba-assist?logo=Github)](./README.md)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/hongwei-bai/android-nba-assist?logo=Github)](./README.md)
+[![GitHub Repo stars](https://img.shields.io/github/stars/hongwei-bai/android-nba-assist?logo=Github&style=plastic)](./README.md)
+[![GitHub forks](https://img.shields.io/github/forks/hongwei-bai/android-nba-assist?logo=GitHub&style=plastic)](./README.md)
+[![YouTube Video Views](https://img.shields.io/youtube/views/l-4lD2POrqw?style=social)](https://www.youtube.com/watch?v=l-4lD2POrqw)
+
+<a href='https://play.google.com/store/apps/details?id=com.hongwei.android_nba_assist'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="45px"/></a>
+
+[![GitHub top language](https://img.shields.io/github/languages/top/hongwei-bai/android-nba-assist?logo=Kotlin)](./README.md)
+[![Coroutines](https://img.shields.io/badge/kotlin%20coroutines-in%20use-83B81A?style=for-the-bedge&logo=Kotlin)](./README.md)
+[![Jetpack Compose](https://img.shields.io/badge/jetpack%20compose-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Dynamic Theming](https://img.shields.io/badge/dynamic%20theming-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Navigation](https://img.shields.io/badge/compose%20navigation-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Navigation Animation](https://img.shields.io/badge/navigation%20animation-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Compose Accompanist](https://img.shields.io/badge/compose%20accompanist-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Accompanist Placeholder](https://img.shields.io/badge/accompanist%20placeholder-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Room](https://img.shields.io/badge/jetpack%20room-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Hilt](https://img.shields.io/badge/hilt-in%20use-83B81A?style=for-the-bedge&logo=Google)](./README.md)
+[![OkHttp Retrofit](https://img.shields.io/badge/okhttp%2Bretrofit-in%20use-83B81A?style=for-the-bedge&logo=Square)](./README.md)
+[![MVVM](https://img.shields.io/badge/architecture-mvvm-83B81A?style=for-the-bedge&logo=Laravel)](./README.md)
+[![Design Patterns](https://img.shields.io/badge/design%20patterns-in%20use-83B81A?style=for-the-bedge&logo=Laravel)](./README.md)
+[![SOLID](https://img.shields.io/badge/solid%20principles-in%20use-83B81A?style=for-the-bedge&logo=Laravel)](./README.md)
 
 This is an Android App demo which is going to apply all sorts of state-of-the-art technologies, including those are still in Alpha & Beta tests.
 
