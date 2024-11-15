@@ -1,5 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Theme.SportsHubAppTheme" parent="android:Theme.Material.Light.NoActionBar" />
+<resources xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Sports" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/nba_blue</item>
+        <item name="android:colorPrimary">@color/nba_white</item>
+        <item name="android:textColorPrimary">@color/nba_blue</item>
+        <item name="android:colorSecondary" tools:targetApi="n_mr1">@color/nba_red</item>
+        <item name="android:textColorSecondary">@color/nba_white</item>
+        <item name="android:textColor">@color/nba_blue</item>
+        <item name="android:colorBackground">@color/nba_white</item>
+    </style>
 </resources>

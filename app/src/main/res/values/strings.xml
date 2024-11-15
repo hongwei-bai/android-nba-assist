@@ -1,3 +1,53 @@
 <resources>
-    <string name="app_name">sports hub</string>
+    <string name="app_name">SportsMate</string>
+    <string name="splash_loading_text">Hold tight&#8230;</string>
+    <string name="games_left">Games Left</string>
+    <string name="no_games_left">No Games Left, Season ends.</string>
+    <string name="generic_error">Oops! Something is wrong!\nPlease try again later&#8230;</string>
+    <string name="game_vs_at">\@</string>
+    <string name="upcoming_game_in">Upcoming game in</string>
+    <string name="upcoming_game_on">Upcoming game on</string>
+    <string name="upcoming_game_started">Game started</string>
+    <string name="upcoming_game_in_days">%1$d days&#8230;</string>
+    <string name="upcoming_game_in_hours">%1$d hours!!</string>
+    <string name="upcoming_game_tomorrow">Tomorrow</string>
+    <string name="upcoming_game_today">Today!</string>
+    <string name="upcoming_game_now">Now!!!</string>
+    <string name="upcoming_game_countdown_zero">0:00:00</string>
+
+    <string name="calendar_game_at_location">AT %1$s</string>
+    <string name="calendar_result_template">%1$s%2$d-%3$d</string>
+    <string name="win_symbol">W</string>
+    <string name="lose_symbol">L</string>
+
+    <string name="standing_header_win_lose">W-L</string>
+    <string name="standing_header_games_back">GB</string>
+    <string name="standing_header_streak">Streak</string>
+    <string name="standing_win_lose_template">%1$d-%2$d</string>
+    <string name="standing_streak_template">%1$s%2$d</string>
+
+    <string name="snack_bar_data_may_outdated">Your data may outdated, will retrieve from server&#8230;</string>
+    <string name="snack_bar_data_up_to_date">Your data is up to date.</string>
+    <string name="snack_bar_service_error">Oops! Something is wrong, please try again later.</string>
+
+    <string name="season_play_in_tournament_title_western">Western Conference Play-in Tournament</string>
+    <string name="season_play_in_tournament_title_eastern">Eastern Conference Play-in Tournament</string>
+    <string name="season_play_off_title_western">Western Conference PlayOff</string>
+    <string name="season_play_off_title_eastern">Eastern Conference PlayOff</string>
+    <string name="season_grand_final">Grand Final</string>
+    <string name="season_winner_symbol">W</string>
+    <string name="season_loser_symbol">L</string>
+
+    <string name="settings_start_from_monday">Week starts from Monday</string>
+    <string name="settings_monday">Monday</string>
+    <string name="settings_sunday">Sunday</string>
+    <string name="settings_schedule_weeks">Number of weeks displayed in schedule</string>
+    <string name="settings_2_weeks">2</string>
+    <string name="settings_4_weeks">4</string>
+    <string name="settings_changed_need_restart">Your setting has changed, Please restart your App to take effect.</string>
+    <string name="settings_switch_team">Switch my team</string>
+
+    <string name="date_is_up_to_date_copy">Your schedule data is up to date.</string>
+    <string name="copy_right_declaration">\u00a9Copyright: Hami studio</string>
+    <string name="coming_soon">Coming soon&#8230;</string>
 </resources>

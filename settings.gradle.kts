@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "sports-hub-android"
+rootProject.name = "sports-mate-android"
 include(":app")
