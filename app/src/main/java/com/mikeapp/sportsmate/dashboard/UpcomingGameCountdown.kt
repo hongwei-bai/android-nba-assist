@@ -69,7 +69,7 @@ private fun ForecastContent(caption: String, value: String, isHighlight: Boolean
     Spacer(modifier = Modifier.size(6.dp))
     Text(
         text = value,
-        style = MaterialTheme.typography.h4,
+        style = MaterialTheme.typography.headlineSmall,
         color = if (isHighlight) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary
     )
 }

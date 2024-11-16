@@ -1,10 +1,12 @@
 package com.mikeapp.sportsmate.season
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,6 +23,8 @@ import com.mikeapp.sportsmate.ui.component.DataStatus
 import com.mikeapp.sportsmate.ui.component.DataStatusSnackBar
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun Season() {
     val seasonViewModel = hiltViewModel<SeasonViewModel>()
@@ -55,53 +59,42 @@ fun Season() {
             pageCount = { 7 }
         )
 
-        // TODO
-//        val pullRefreshState = rememberPullRefreshState(
-//            refreshing = isRefreshing,
-//            onRefresh = {
-//                scope.launch {
-//                    isRefreshing = true
-//                    delay(2000) // Simulate loading
-//                    isRefreshing = false
-//                }
-//            }
-
-//        SwipeRefresh(
-//            state = rememberSwipeRefreshState(seasonViewModel.isRefreshing.observeAsState().value == true),
-//            onRefresh = { seasonViewModel.refresh() },
-//        ) {
+        PullToRefreshBox(
+            isRefreshing = seasonViewModel.isRefreshing.observeAsState().value == true,
+            onRefresh = { seasonViewModel.refresh() },
+        ) {
             Column {
                 DataStatusSnackBar(dataStatus)
                 //TODO
-//                TabRow(
-//                    selectedTabIndex = pagerState.currentPage,
-//                    indicator = { tabPositions ->
-//                        TabRowDefaults.Indicator(
-//                            Modifier.pagerTabIndicatorOffset(
-//                                pagerState, tabPositions
-//                            )
-//                        )
-//                    }
-//                ) {
-//                    pages.forEachIndexed { index, stage ->
-//                        Tab(
-//                            icon = {
-//                                Icon(
-//                                    imageVector = stage.icon,
-//                                    tint = if (tabPosition == index) MaterialTheme.colorScheme.secondary
-//                                    else MaterialTheme.colorScheme.onPrimary,
-//                                    contentDescription = null
-//                                )
-//                            },
-//                            selected = pagerState.currentPage == index,
-//                            onClick = {
-//                                coroutineScope.launch {
-//                                    pagerState.scrollToPage(index)
-//                                }
-//                            },
-//                        )
-//                    }
-//                }
+                TabRow(
+                    selectedTabIndex = pagerState.currentPage,
+                    indicator = { tabPositions ->
+                        TabRowDefaults.Indicator(
+                            Modifier.pagerTabIndicatorOffset(
+                                pagerState, tabPositions
+                            )
+                        )
+                    }
+                ) {
+                    pages.forEachIndexed { index, stage ->
+                        Tab(
+                            icon = {
+                                Icon(
+                                    imageVector = stage.icon,
+                                    tint = if (tabPosition == index) MaterialTheme.colorScheme.secondary
+                                    else MaterialTheme.colorScheme.onPrimary,
+                                    contentDescription = null
+                                )
+                            },
+                            selected = pagerState.currentPage == index,
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.scrollToPage(index)
+                                }
+                            },
+                        )
+                    }
+                }
 
                 HorizontalPager(state = pagerState) { page ->
                     when (pages[page]) {

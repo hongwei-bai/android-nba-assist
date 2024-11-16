@@ -29,7 +29,7 @@ fun GamesLeftView(@PreviewParameter(UrlProvider::class) gamesLeft: Int?) {
             null -> {
                 Text(
                     text = " ",
-                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.secondary
                 )
             }
@@ -41,7 +41,7 @@ fun GamesLeftView(@PreviewParameter(UrlProvider::class) gamesLeft: Int?) {
             else -> {
                 Text(
                     text = gamesLeft.toString(),
-                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.secondary
                 )
                 Spacer(modifier = Modifier.size(6.dp))

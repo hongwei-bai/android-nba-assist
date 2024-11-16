@@ -1,12 +1,22 @@
 package com.mikeapp.sportsmate.dashboard
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
@@ -14,20 +24,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.mikeapp.sportsmate.dashboard.Calendar
-import com.mikeapp.sportsmate.dashboard.DashboardViewModel
-import com.mikeapp.sportsmate.dashboard.GamesLeftView
-import com.mikeapp.sportsmate.dashboard.UpcomingGameCountdown
-import com.mikeapp.sportsmate.dashboard.UpcomingGameInfo
 import com.mikeapp.sportsmate.ui.animation.ErrorView
 import com.mikeapp.sportsmate.ui.animation.LoadingContent
 import com.mikeapp.sportsmate.ui.component.DataStatus
 import com.mikeapp.sportsmate.ui.component.DataStatusSnackBar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun Dashboard() {
     val viewModel = hiltViewModel<DashboardViewModel>()
@@ -35,8 +38,8 @@ fun Dashboard() {
     val seasonStatus = viewModel.seasonStatus.observeAsState().value
     var screenSize by remember { mutableStateOf(IntSize.Zero) }
 
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(viewModel.isRefreshing.observeAsState().value == true),
+    PullToRefreshBox(
+        isRefreshing = viewModel.isRefreshing.observeAsState().value == true,
         onRefresh = { viewModel.refresh() },
     ) {
         val gamesLeft = viewModel.gamesLeft.observeAsState().value
@@ -48,6 +51,7 @@ fun Dashboard() {
             modifier = Modifier
                 .fillMaxSize()
                 .onSizeChanged { screenSize = it }
+                .verticalScroll(rememberScrollState())
         ) {
             DataStatusSnackBar(viewModel.dataStatus.observeAsState().value)
             if (calendarDays != null

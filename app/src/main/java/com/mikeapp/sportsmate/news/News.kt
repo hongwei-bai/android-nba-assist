@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -20,6 +22,7 @@ import com.mikeapp.sportsmate.ui.component.DataStatusSnackBar
 import com.mikeapp.sportsmate.ui.component.TeamLogo
 import com.mikeapp.sportsmate.util.LocalDateTimeUtil
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun News() {
@@ -27,11 +30,10 @@ fun News() {
     val dataStatus = viewModel.dataStatus.observeAsState().value
     val transactions = viewModel.transactions.observeAsState().value
 
-    // TODO
-//    SwipeRefresh(
-//        state = rememberSwipeRefreshState(viewModel.isRefreshing.observeAsState().value == true),
-//        onRefresh = { viewModel.refresh() },
-//    ) {
+    PullToRefreshBox(
+        isRefreshing = viewModel.isRefreshing.observeAsState().value == true,
+        onRefresh = { viewModel.refresh() },
+    ) {
         DataStatusSnackBar(viewModel.dataStatus.observeAsState().value)
         if (transactions != null) {
             LazyColumn {
@@ -64,5 +66,5 @@ fun News() {
                 else -> LoadingContent()
             }
         }
-//    }
+    }
 }
