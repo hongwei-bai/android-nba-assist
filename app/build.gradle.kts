@@ -7,16 +7,18 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
     kotlin("plugin.serialization") version "1.9.10"
+
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.mikeapp.sportsmate"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.mikeapp.sportsmate"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -68,60 +70,61 @@ android {
 }
 
 dependencies {
+    implementation(libs.symbol.processing.api)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("com.airbnb.android:lottie:5.0.3")
-    implementation("com.airbnb.android:lottie-compose:5.0.3")
-    implementation("io.coil-kt:coil-compose:2.2.2")
-    implementation("androidx.compose.ui:ui:1.4.0")
-    implementation("androidx.compose.material3:material3:1.3.1")
-    implementation("androidx.compose.foundation:foundation:1.5.0")
-    implementation("androidx.compose.material:material-pullrefresh:1.1.0")
-    implementation("androidx.navigation:navigation-compose:2.7.0-alpha01")
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.material)
+    implementation(libs.lottie)
+    implementation(libs.lottie.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.ui)
+    implementation(libs.material3)
+    implementation(libs.androidx.foundation)
+//    implementation(libs.androidx.material.pullrefresh)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.runtime.livedata)
-    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
-    implementation("androidx.room:room-runtime:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
-    implementation("androidx.room:room-ktx:2.5.2")
-    implementation("com.squareup.moshi:moshi:1.15.0")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation(platform(libs.androidx.compose.bom.v20231001))
+    implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.moshi)
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.converter.moshi)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom.v20231001))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // network
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.retrofit.v290)
+    implementation(libs.retrofit2.converter.gson)
     implementation(libs.gson)
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.okhttp3.okhttp)
 
     // di
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-compiler:2.48")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+//    implementation(libs.androidx.hilt.lifecycle.viewmodel)
 
     // For testing (optional)
-//    testImplementation("com.google.dagger:hilt-android-testing:2.48")
-//    kaptTest("com.google.dagger:hilt-compiler:2.48")
-//    androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
-//    kaptAndroidTest("com.google.dagger:hilt-compiler:2.48")
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.compiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
 }
