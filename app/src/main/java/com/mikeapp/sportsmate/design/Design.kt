@@ -20,19 +20,19 @@ fun Design() {
             SectionHeader("Typography")
             Text(
                 text = "h1",
-                style = MaterialTheme.typography.h1
+                style = MaterialTheme.typography.headlineLarge
             )
             Text(
                 text = "h2",
-                style = MaterialTheme.typography.h2
+                style = MaterialTheme.typography.headlineMedium
             )
             Text(
                 text = "h3",
-                style = MaterialTheme.typography.h3
+                style = MaterialTheme.typography.headlineSmall
             )
             Text(
                 text = "h4",
-                style = MaterialTheme.typography.h4
+                style = MaterialTheme.typography.titleLarge
             )
             Text(
                 text = "h5",
@@ -44,7 +44,7 @@ fun Design() {
             )
             Text(
                 text = "subtitle1",
-                style = MaterialTheme.typography.subtitle1
+                style = MaterialTheme.typography.bodyMedium
             )
             Text(
                 text = "subtitle2",
@@ -64,7 +64,7 @@ fun Design() {
             )
             Text(
                 text = "button",
-                style = MaterialTheme.typography.button
+                style = MaterialTheme.typography.labelLarge
             )
             Text(
                 text = "overline",

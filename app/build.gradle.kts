@@ -86,6 +86,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.3.1")
     implementation("androidx.compose.foundation:foundation:1.5.0")
     implementation("androidx.compose.material:material-pullrefresh:1.1.0")
+    implementation("androidx.navigation:navigation-compose:2.7.0-alpha01")
     implementation(libs.androidx.runtime.livedata)
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")

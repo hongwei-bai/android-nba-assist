@@ -1,6 +1,5 @@
 package com.mikeapp.sportsmate.home
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideInHorizontally
@@ -14,19 +13,17 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.accompanist.pager.ExperimentalPagerApi
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.mikeapp.sportsmate.dashboard.Dashboard
 import com.mikeapp.sportsmate.news.News
 import com.mikeapp.sportsmate.season.Season
 import com.mikeapp.sportsmate.settings.Settings
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen() {
-    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
     var size by remember { mutableStateOf(IntSize.Zero) }
 
     Scaffold(bottomBar = { BottomNavBar(navController) }) { innerPadding ->
@@ -39,12 +36,11 @@ fun MainScreen() {
 }
 
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
 @Composable
 fun MainNavCompose(navController: NavHostController, size: IntSize) {
     val springSpec = spring<IntOffset>(dampingRatio = Spring.DampingRatioMediumBouncy)
 
-    AnimatedNavHost(navController = navController, startDestination = "dashboard") {
+    NavHost(navController = navController, startDestination = "dashboard") {
         composable(
             route = "dashboard",
             enterTransition = { slideInHorizontally(initialOffsetX = { size.width }, animationSpec = springSpec) },
