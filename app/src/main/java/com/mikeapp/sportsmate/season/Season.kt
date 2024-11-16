@@ -2,15 +2,22 @@ package com.mikeapp.sportsmate.season
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mikeapp.sportsmate.data.league.nba.getConferenceByTeam
 import com.mikeapp.sportsmate.data.local.AppSettings
@@ -52,11 +59,8 @@ fun Season() {
         val tabForActiveStage =
             SeasonScreens.fromSeasonStatus(seasonStatus, getConferenceByTeam(AppSettings.myNbaTeam))
         val tabPosition = pages.indexOf(tabForActiveStage)
-        // TODO
         val pagerState = rememberPagerState(
-            initialPage = tabPosition,
-            initialPageOffsetFraction = 0.0f,
-            pageCount = { 7 }
+            pageCount = { pages.size }
         )
 
         PullToRefreshBox(
@@ -69,10 +73,12 @@ fun Season() {
                 TabRow(
                     selectedTabIndex = pagerState.currentPage,
                     indicator = { tabPositions ->
-                        TabRowDefaults.Indicator(
-                            Modifier.pagerTabIndicatorOffset(
-                                pagerState, tabPositions
-                            )
+                        Box(
+                            Modifier
+                                .tabIndicatorOffset(tabPositions[pagerState.currentPage])
+                                .height(4.dp)
+                                .fillMaxWidth()
+                                .background(Color.Blue)
                         )
                     }
                 ) {
@@ -115,7 +121,7 @@ fun Season() {
                     }
                 }
             }
-//        }
+        }
     } else {
         when (dataStatus) {
             is DataStatus.ServiceError -> ErrorView(dataStatus.message)
