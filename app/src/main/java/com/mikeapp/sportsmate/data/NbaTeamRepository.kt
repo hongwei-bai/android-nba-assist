@@ -1,16 +1,18 @@
 package com.mikeapp.sportsmate.data
 
+import com.mikeapp.sportsmate.AppConfigurations.Network.nbaSeasonStatusEndpoint
 import com.mikeapp.sportsmate.AppConfigurations.Network.nbaThemeEndpoint
 import com.mikeapp.sportsmate.data.github.GithubApiService
+import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusEnumResponse
 import com.mikeapp.sportsmate.data.local.AppSettings
 import com.mikeapp.sportsmate.data.mapper.NbaTeamDetailMapper.map
+import com.mikeapp.sportsmate.data.network.model.nba.NbaSeasonStatusResponse
 import com.mikeapp.sportsmate.data.network.model.nba.NbaTeamDetailResponse
 import com.mikeapp.sportsmate.data.network.service.NbaStatService
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailDao
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailEntity
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import com.squareup.moshi.adapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
@@ -50,12 +52,22 @@ class NbaTeamRepository @Inject constructor(
 
     suspend fun fetchSeasonStatusFromBackend() {
         withContext(Dispatchers.IO) {
-            val response = nbaStatService.getSeasonStatus()
-            val data = response.body()
-            if (response.isSuccessful && data != null) {
-                teamDetailDao.getTeamTheme()?.let { entity ->
-                    entity.seasonStatus = data
-                    teamDetailDao.save(entity)
+            val response = githubApiService.getFileContent(nbaSeasonStatusEndpoint)
+            val body = response.body()
+            if (response.isSuccessful && body != null) {
+                val decodedContent = String(
+                    android.util.Base64.decode(
+                        body.content,
+                        android.util.Base64.URL_SAFE
+                    )
+                )
+                val adapter = moshi.adapter(NbaSeasonStatusResponse::class.java)
+                val seasonStatus: NbaSeasonStatusResponse? = adapter.fromJson(decodedContent)
+                seasonStatus?.let {
+                    teamDetailDao.getTeamTheme()?.let { entity ->
+                        entity.seasonStatus = seasonStatus.seasonStatus.name
+                        teamDetailDao.save(entity)
+                    }
                 }
             }
         }

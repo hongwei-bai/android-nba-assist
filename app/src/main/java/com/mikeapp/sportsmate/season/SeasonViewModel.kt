@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.mikeapp.sportsmate.ExceptionHelper.nbaExceptionHandler
 import com.mikeapp.sportsmate.data.NbaStatRepository
 import com.mikeapp.sportsmate.data.NbaTeamRepository
-import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusResponse
+import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusEnumResponse
 import com.mikeapp.sportsmate.season.common.SeasonStatus
 import com.mikeapp.sportsmate.season.common.SeasonStatusMapper.mapToUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +29,7 @@ class SeasonViewModel @Inject constructor(
     val seasonStatus: LiveData<SeasonStatus> =
         nbaTeamRepository.getTeamDetailFlow().mapNotNull {
             if (it.seasonStatus.isNotEmpty()) {
-                NbaSeasonStatusResponse.valueOf(it.seasonStatus).mapToUiState()
+                NbaSeasonStatusEnumResponse.valueOf(it.seasonStatus).mapToUiState()
             } else {
                 null
             }
