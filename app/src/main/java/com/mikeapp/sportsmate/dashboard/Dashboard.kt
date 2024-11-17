@@ -51,7 +51,7 @@ fun Dashboard() {
             modifier = Modifier
                 .fillMaxSize()
                 .onSizeChanged { screenSize = it }
-                .verticalScroll(rememberScrollState())
+//                .verticalScroll(rememberScrollState())
         ) {
             DataStatusSnackBar(viewModel.dataStatus.observeAsState().value)
             if (calendarDays != null
