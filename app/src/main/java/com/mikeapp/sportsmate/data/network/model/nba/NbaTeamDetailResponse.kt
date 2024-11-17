@@ -2,7 +2,6 @@ package com.mikeapp.sportsmate.data.network.model.nba
 
 data class NbaTeamDetailResponse(
     var team: String,
-    val fullName: String,
     var displayName: String,
     var logo: String,
     var banner: String,

@@ -9,6 +9,8 @@ import com.mikeapp.sportsmate.data.network.service.NbaStatService
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailDao
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailEntity
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.adapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
@@ -33,10 +35,14 @@ class NbaTeamRepository @Inject constructor(
                         android.util.Base64.URL_SAFE
                     )
                 )
-                val adapter = moshi.adapter(NbaTeamDetailResponse::class.java)
-                val teamTheme = adapter.fromJson(decodedContent)
-                teamTheme?.let {
-                    teamDetailDao.save(teamTheme.map())
+                val type =
+                    Types.newParameterizedType(List::class.java, NbaTeamDetailResponse::class.java)
+                val adapter = moshi.adapter<List<NbaTeamDetailResponse>>(type)
+                val teamDetailsList: List<NbaTeamDetailResponse> =
+                    adapter.fromJson(decodedContent) ?: emptyList()
+                val teamDetail = teamDetailsList.firstOrNull { it.team == "gs" }
+                teamDetail?.let {
+                    teamDetailDao.save(teamDetail.map())
                 }
             }
         }
