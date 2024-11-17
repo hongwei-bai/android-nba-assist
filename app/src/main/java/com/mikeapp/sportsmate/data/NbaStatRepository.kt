@@ -1,29 +1,46 @@
 package com.mikeapp.sportsmate.data
 
 import com.mikeapp.sportsmate.AppConfigurations.Network.HttpCode
+import com.mikeapp.sportsmate.AppConfigurations.Network.nbaTeamScheduleEndpoint
+import com.mikeapp.sportsmate.data.github.GithubApiService
 import com.mikeapp.sportsmate.data.local.AppSettings
 import com.mikeapp.sportsmate.data.mapper.NbaPostSeasonMapper.map
 import com.mikeapp.sportsmate.data.mapper.NbaStandingMapper.map
 import com.mikeapp.sportsmate.data.mapper.NbaTeamScheduleMapper.map
 import com.mikeapp.sportsmate.data.mapper.NbaTransactionsMapper.map
+import com.mikeapp.sportsmate.data.network.model.nba.TeamScheduleResponse
 import com.mikeapp.sportsmate.data.network.service.NbaStatService
-import com.mikeapp.sportsmate.data.room.nba.*
+import com.mikeapp.sportsmate.data.room.nba.NbaTransactionsDao
+import com.mikeapp.sportsmate.data.room.nba.NbaTransactionsEntity
+import com.mikeapp.sportsmate.data.room.nba.PostSeasonDao
+import com.mikeapp.sportsmate.data.room.nba.PostSeasonEntity
+import com.mikeapp.sportsmate.data.room.nba.StandingDao
+import com.mikeapp.sportsmate.data.room.nba.StandingEntity
+import com.mikeapp.sportsmate.data.room.nba.TeamEvent
+import com.mikeapp.sportsmate.data.room.nba.TeamScheduleDao
 import com.mikeapp.sportsmate.data.util.DataValidationUtil.after
 import com.mikeapp.sportsmate.data.util.DataValidationUtil.dataMayOutdated
 import com.mikeapp.sportsmate.ui.component.DataStatus
 import com.mikeapp.sportsmate.util.LocalDateTimeUtil.getFirstDayOfWeek
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class NbaStatRepository @Inject constructor(
+    private val githubApiService: GithubApiService,
     private val nbaStatService: NbaStatService,
     private val teamScheduleDao: TeamScheduleDao,
     private val standingDao: StandingDao,
     private val postSeasonDao: PostSeasonDao,
-    private val nbaTransactionsDao: NbaTransactionsDao
+    private val nbaTransactionsDao: NbaTransactionsDao,
+    private val moshi: Moshi
 ) {
     private val dataStatusChannel = Channel<DataStatus>()
 
@@ -45,7 +62,7 @@ class NbaStatRepository @Inject constructor(
                 it == null -> fetchTeamScheduleFromBackend(team)
                 dataMayOutdated(it.timeStamp) -> {
                     dataStatusChannel.send(DataStatus.DataMayOutdated)
-                    fetchTeamScheduleFromBackend(team, it.dataVersion)
+                    fetchTeamScheduleFromBackend(team, it.sha)
                 }
             }
         }.filterNotNull().map {
@@ -85,17 +102,35 @@ class NbaStatRepository @Inject constructor(
         }.filterNotNull()
     }
 
-    suspend fun fetchTeamScheduleFromBackend(team: String, dataVersion: Long? = null) {
+    suspend fun fetchTeamScheduleFromBackend(team: String, sha: String? = null) {
         withContext(Dispatchers.IO) {
-            val response = nbaStatService.getTeamSchedule(team, dataVersion ?: -1)
-            val data = response.body()
-            when (response.code()) {
-                HttpCode.HTTP_OK -> data?.let { teamScheduleDao.save(data.map(team)) }
-                HttpCode.HTTP_DATA_UP_TO_DATE -> {
-                    dataStatusChannel.send(DataStatus.DataIsUpToDate)
-                    teamScheduleDao.update(System.currentTimeMillis())
+            val responseMetadata = githubApiService.getFileMetadata(nbaTeamScheduleEndpoint(team))
+            val responseSha = if (responseMetadata.isSuccessful) {
+                responseMetadata.body()?.sha
+            } else null
+            if (sha != null && sha == responseSha) {
+                dataStatusChannel.send(DataStatus.DataIsUpToDate)
+                teamScheduleDao.update(System.currentTimeMillis())
+            } else {
+                val response = githubApiService.getFileContent(nbaTeamScheduleEndpoint(team))
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    val decodedContent = String(
+                        android.util.Base64.decode(
+                            body.content,
+                            android.util.Base64.URL_SAFE
+                        )
+                    )
+                    val adapter = moshi.adapter(TeamScheduleResponse::class.java)
+                    val teamSchedule = adapter.fromJson(decodedContent)
+                    teamSchedule?.let {
+                        teamScheduleDao.save(teamSchedule.map(team))
+                    }
+                } else {
+                    dataStatusChannel.send(
+                        DataStatus.ServiceError("Fetch schedules data error, code: ${response.code()}")
+                    )
                 }
-                else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch schedules data error, code: ${response.code()}"))
             }
         }
     }
@@ -110,6 +145,7 @@ class NbaStatRepository @Inject constructor(
                     dataStatusChannel.send(DataStatus.DataIsUpToDate)
                     standingDao.update(System.currentTimeMillis())
                 }
+
                 else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch standings data error, code: ${response.code()}"))
             }
         }
@@ -123,10 +159,12 @@ class NbaStatRepository @Inject constructor(
                 HttpCode.HTTP_OK -> data?.let {
                     postSeasonDao.save(data.map())
                 }
+
                 HttpCode.HTTP_DATA_UP_TO_DATE -> {
                     dataStatusChannel.send(DataStatus.DataIsUpToDate)
                     postSeasonDao.update(System.currentTimeMillis())
                 }
+
                 else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch Playoff data error, code: ${response.code()}"))
             }
         }
@@ -140,9 +178,11 @@ class NbaStatRepository @Inject constructor(
                 HttpCode.HTTP_OK -> data?.let {
                     nbaTransactionsDao.save(data.map())
                 }
+
                 HttpCode.HTTP_DATA_UP_TO_DATE -> {
                     dataStatusChannel.send(DataStatus.DataIsUpToDate)
                 }
+
                 else -> dataStatusChannel.send(DataStatus.ServiceError("Fetch transactions data error, code: ${response.code()}"))
             }
         }

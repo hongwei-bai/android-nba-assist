@@ -12,6 +12,7 @@ object AppConfigurations {
 
         const val nbaThemeEndpoint = "/nba/theme_v1/team_detail.json"
         const val nbaSeasonStatusEndpoint = "/nba/season_status.json"
+        fun nbaTeamScheduleEndpoint(team: String) = "/nba/$team.json"
 
         const val PLACEHOLDER_WIDTH = "{width}"
         const val NBA_APP_IMG_ENDPOINTS = "/nba"

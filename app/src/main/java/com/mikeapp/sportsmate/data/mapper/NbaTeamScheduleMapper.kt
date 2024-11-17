@@ -15,6 +15,7 @@ object NbaTeamScheduleMapper {
         team = team.mapTeam(),
         timeStamp = System.currentTimeMillis(),
         dataVersion = dataVersion,
+        sha = null,
         events = events.map { it.map(team) }
     )
 

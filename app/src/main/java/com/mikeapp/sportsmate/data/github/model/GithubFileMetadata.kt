@@ -11,7 +11,7 @@ data class GithubFileMetadata(
     val download_url: String?,
     val type: String,
     val _links: Links,  // Use a separate class for the links
-    val commit: Commit   // Define commit structure if needed
+    val commit: Commit?   // Define commit structure if needed
 )
 
 data class Links(
