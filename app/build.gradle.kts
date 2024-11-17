@@ -7,8 +7,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
     kotlin("plugin.serialization") version "1.9.10"
-
-    id("com.google.devtools.ksp")
+//    id("com.google.devtools.ksp")
 }
 
 android {
@@ -60,7 +59,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     packaging {
         resources {
@@ -94,10 +93,10 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom.v20231001))
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.moshi)
-    ksp(libs.moshi.kotlin.codegen)
+    kapt(libs.moshi.kotlin.codegen)
     implementation(libs.moshi.kotlin)
     implementation(libs.converter.moshi)
 
@@ -118,13 +117,13 @@ dependencies {
 
     // di
     implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 //    implementation(libs.androidx.hilt.lifecycle.viewmodel)
 
     // For testing (optional)
     testImplementation(libs.hilt.android.testing)
-    kspTest(libs.hilt.compiler)
+    kaptTest(libs.hilt.compiler)
     androidTestImplementation(libs.hilt.android.testing)
-    kspAndroidTest(libs.hilt.compiler)
+    kaptAndroidTest(libs.hilt.compiler)
 }
