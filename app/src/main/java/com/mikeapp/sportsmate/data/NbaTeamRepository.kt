@@ -3,12 +3,10 @@ package com.mikeapp.sportsmate.data
 import com.mikeapp.sportsmate.AppConfigurations.Network.nbaSeasonStatusEndpoint
 import com.mikeapp.sportsmate.AppConfigurations.Network.nbaThemeEndpoint
 import com.mikeapp.sportsmate.data.github.GithubApiService
-import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusEnumResponse
 import com.mikeapp.sportsmate.data.local.AppSettings
 import com.mikeapp.sportsmate.data.mapper.NbaTeamDetailMapper.map
 import com.mikeapp.sportsmate.data.network.model.nba.NbaSeasonStatusResponse
 import com.mikeapp.sportsmate.data.network.model.nba.NbaTeamDetailResponse
-import com.mikeapp.sportsmate.data.network.service.NbaStatService
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailDao
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailEntity
 import com.squareup.moshi.Moshi
@@ -22,7 +20,6 @@ import javax.inject.Inject
 
 class NbaTeamRepository @Inject constructor(
     private val githubApiService: GithubApiService,
-    private val nbaStatService: NbaStatService,
     private val teamDetailDao: TeamDetailDao,
     private val moshi: Moshi
 ) {
@@ -64,7 +61,7 @@ class NbaTeamRepository @Inject constructor(
                 val adapter = moshi.adapter(NbaSeasonStatusResponse::class.java)
                 val seasonStatus: NbaSeasonStatusResponse? = adapter.fromJson(decodedContent)
                 seasonStatus?.let {
-                    teamDetailDao.getTeamTheme()?.let { entity ->
+                    teamDetailDao.getTeamDetail()?.let { entity ->
                         entity.seasonStatus = seasonStatus.seasonStatus.name
                         teamDetailDao.save(entity)
                     }

@@ -13,7 +13,7 @@ interface TeamDetailDao {
     fun getTeamThemeFlow(): Flow<TeamDetailEntity?>
 
     @Query("SELECT * FROM nba_team_detail WHERE apiVersion=$API_VERSION")
-    fun getTeamTheme(): TeamDetailEntity?
+    fun getTeamDetail(): TeamDetailEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(teamThemeEntity: TeamDetailEntity)

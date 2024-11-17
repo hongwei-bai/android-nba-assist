@@ -16,6 +16,7 @@ import com.mikeapp.sportsmate.data.room.nba.PostSeasonDao
 import com.mikeapp.sportsmate.data.room.nba.PostSeasonEntity
 import com.mikeapp.sportsmate.data.room.nba.StandingDao
 import com.mikeapp.sportsmate.data.room.nba.StandingEntity
+import com.mikeapp.sportsmate.data.room.nba.TeamDetailDao
 import com.mikeapp.sportsmate.data.room.nba.TeamEvent
 import com.mikeapp.sportsmate.data.room.nba.TeamScheduleDao
 import com.mikeapp.sportsmate.data.util.DataValidationUtil.after
@@ -37,6 +38,7 @@ class NbaStatRepository @Inject constructor(
     private val githubApiService: GithubApiService,
     private val nbaStatService: NbaStatService,
     private val teamScheduleDao: TeamScheduleDao,
+    private val teamDetailDao: TeamDetailDao,
     private val standingDao: StandingDao,
     private val postSeasonDao: PostSeasonDao,
     private val nbaTransactionsDao: NbaTransactionsDao,
@@ -124,7 +126,10 @@ class NbaStatRepository @Inject constructor(
                     val adapter = moshi.adapter(TeamScheduleResponse::class.java)
                     val teamSchedule = adapter.fromJson(decodedContent)
                     teamSchedule?.let {
-                        teamScheduleDao.save(teamSchedule.map(team))
+                        val teamDetail = teamDetailDao.getTeamDetail()
+                        teamDetail?.let {
+                            teamScheduleDao.save(teamSchedule.map(teamDetail))
+                        }
                     }
                 } else {
                     dataStatusChannel.send(
