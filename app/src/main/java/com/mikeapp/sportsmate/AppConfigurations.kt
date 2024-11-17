@@ -6,16 +6,14 @@ object AppConfigurations {
         const val HTTP_WRITE_TIMEOUT = 15000L
         const val HTTP_CONNECT_TIMEOUT = 15000L
 
-        const val HONGWEI_SERVICE_DOMAIN = "https://hongwei-test1.top"
-        const val NBA_STAT_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-sports/nba/"
-        const val SOCCER_STAT_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-sports/soccer/"
-//        const val NBA_STAT_ENDPOINT = "http://10.0.2.2:8081/nba/"
-//        const val NBA_STAT_ENDPOINT = "http://10.0.2.2:8080/application-service-sports/nba/"
+        const val SPORTS_HUB_GITHUB_API_BASE  = "https://api.github.com/"
+        const val NBA_STAT_ENDPOINT = "/nba/"
+        const val SOCCER_STAT_ENDPOINT = "/soccer/"
 
-        const val NBA_THEME_ENDPOINT = "$HONGWEI_SERVICE_DOMAIN/application-service-sports/nba/"
+        const val NBA_THEME_ENDPOINT = "/nba/"
 
         const val PLACEHOLDER_WIDTH = "{width}"
-        const val NBA_APP_IMG_ENDPOINTS = "$HONGWEI_SERVICE_DOMAIN/resize/$PLACEHOLDER_WIDTH/nba_v1"
+        const val NBA_APP_IMG_ENDPOINTS = "/nba"
         const val NBA_BANNER_PATH = "$NBA_APP_IMG_ENDPOINTS/banner/"
         const val NBA_LOGO_PATH = "$NBA_APP_IMG_ENDPOINTS/logo/"
 
@@ -25,7 +23,7 @@ object AppConfigurations {
         const val DEFAULT_LOGO_EXTENSION = ".png"
 
         const val AUTHORIZATION_HEADER = "Authorization"
-        const val AUTHORIZATION_BEARER = "Bearer"
+        const val BEARER_TOKEN = "Bearer ${BuildConfig.STATIC_API_TOKEN}"
 
         object HttpCode {
             const val HTTP_OK = 200

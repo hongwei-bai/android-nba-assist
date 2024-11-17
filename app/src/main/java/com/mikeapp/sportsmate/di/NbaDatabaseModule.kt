@@ -1,4 +1,4 @@
-package com.mikeapp.sportsmate.hilt
+package com.mikeapp.sportsmate.di
 
 import android.content.Context
 import androidx.room.Room
