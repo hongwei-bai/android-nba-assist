@@ -1,11 +1,14 @@
 package com.mikeapp.sportsmate.data
 
+import com.mikeapp.sportsmate.AppConfigurations.Network.nbaThemeEndpoint
+import com.mikeapp.sportsmate.data.github.GithubApiService
 import com.mikeapp.sportsmate.data.local.AppSettings
 import com.mikeapp.sportsmate.data.mapper.NbaTeamDetailMapper.map
+import com.mikeapp.sportsmate.data.network.model.nba.NbaTeamDetailResponse
 import com.mikeapp.sportsmate.data.network.service.NbaStatService
-import com.mikeapp.sportsmate.data.network.service.NbaThemeService
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailDao
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailEntity
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
@@ -14,16 +17,27 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class NbaTeamRepository @Inject constructor(
-    private val nbaThemeService: NbaThemeService,
+    private val githubApiService: GithubApiService,
     private val nbaStatService: NbaStatService,
-    private val teamDetailDao: TeamDetailDao
+    private val teamDetailDao: TeamDetailDao,
+    private val moshi: Moshi
 ) {
     suspend fun fetchTeamDetailFromBackend(team: String) {
         withContext(Dispatchers.IO) {
-            val response = nbaThemeService.getTeamDetail(team)
-            val data = response.body()
-            if (response.isSuccessful && data != null) {
-                teamDetailDao.save(data.map())
+            val response = githubApiService.getFileContent(nbaThemeEndpoint)
+            val body = response.body()
+            if (response.isSuccessful && body != null) {
+                val decodedContent = String(
+                    android.util.Base64.decode(
+                        body.content,
+                        android.util.Base64.URL_SAFE
+                    )
+                )
+                val adapter = moshi.adapter(NbaTeamDetailResponse::class.java)
+                val teamTheme = adapter.fromJson(decodedContent)
+                teamTheme?.let {
+                    teamDetailDao.save(teamTheme.map())
+                }
             }
         }
     }

@@ -9,8 +9,8 @@ object NbaTeamDetailMapper {
         logoUrl = logo,
         bannerUrl = banner,
         backgroundUrl = background,
-        colorLight = 0xFFFFFFFF,
-        colorHome = teamColor,
-        colorGuest = altColor
+        colorLight = teamColorLight,
+        colorHome = teamColorHome,
+        colorGuest = teamColorGuest
     )
 }

@@ -6,11 +6,11 @@ object AppConfigurations {
         const val HTTP_WRITE_TIMEOUT = 15000L
         const val HTTP_CONNECT_TIMEOUT = 15000L
 
-        const val SPORTS_HUB_GITHUB_API_BASE  = "https://api.github.com/"
+        const val SPORTS_HUB_GITHUB_API_BASE = "https://api.github.com/"
         const val NBA_STAT_ENDPOINT = "/nba/"
         const val SOCCER_STAT_ENDPOINT = "/soccer/"
 
-        const val NBA_THEME_ENDPOINT = "/nba/"
+        const val nbaThemeEndpoint = "/nba/theme_v1/team_theme.json"
 
         const val PLACEHOLDER_WIDTH = "{width}"
         const val NBA_APP_IMG_ENDPOINTS = "/nba"

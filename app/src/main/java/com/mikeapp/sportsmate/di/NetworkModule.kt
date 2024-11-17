@@ -4,6 +4,7 @@ import com.mikeapp.sportsmate.AppConfigurations.Network.HTTP_CONNECT_TIMEOUT
 import com.mikeapp.sportsmate.AppConfigurations.Network.HTTP_READ_TIMEOUT
 import com.mikeapp.sportsmate.AppConfigurations.Network.HTTP_WRITE_TIMEOUT
 import com.mikeapp.sportsmate.AppConfigurations.Network.SPORTS_HUB_GITHUB_API_BASE
+import com.mikeapp.sportsmate.data.github.GithubApiService
 import com.mikeapp.sportsmate.data.network.interceptor.PublicAccessInterceptor
 import com.mikeapp.sportsmate.data.network.service.NbaStatService
 import com.mikeapp.sportsmate.data.network.service.NbaThemeService
@@ -54,6 +55,12 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGithubApiService(retrofit: Retrofit): GithubApiService {
+        return retrofit.create(GithubApiService::class.java)
     }
 
     @Provides
