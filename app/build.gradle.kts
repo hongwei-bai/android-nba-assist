@@ -7,7 +7,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
     kotlin("plugin.serialization") version "1.9.10"
-//    id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -64,6 +65,11 @@ android {
     }
 }
 
+//composeCompiler {
+//    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+//    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+//}
+
 dependencies {
 //    implementation(libs.symbol.processing.api)
     implementation(libs.androidx.core.ktx)
@@ -80,7 +86,7 @@ dependencies {
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.navigation.compose)
 
@@ -100,13 +106,13 @@ dependencies {
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.okhttp3.okhttp)
     implementation(libs.moshi)
-    kapt(libs.moshi.kotlin.codegen)
+    ksp(libs.moshi.kotlin.codegen)
     implementation(libs.moshi.kotlin)
     implementation(libs.converter.moshi)
 
     // di
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 //    implementation(libs.androidx.hilt.lifecycle.viewmodel)
 
@@ -120,7 +126,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
     androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
 }

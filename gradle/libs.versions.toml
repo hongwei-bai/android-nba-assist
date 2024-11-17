@@ -1,10 +1,10 @@
 [versions]
 agp = "8.7.2"
 gradle = "8.7.2"
-kotlin = "1.9.25"
+kotlin = "2.0.21"
 coreKtx = "1.15.0"
 kotlinGradlePlugin = "1.7.0"
-symbolProcessingApi = "1.9.0-1.0.13"
+symbolProcessingApi = "2.0.21-1.0.27"
 
 composeBomVersion = "2024.11.00"
 ui = "1.7.5"
@@ -30,12 +30,11 @@ coilCompose = "2.4.0"
 lottie = "6.0.0"
 lottieCompose = "6.0.0"
 
-
 lifecycleRuntimeKtx = "2.8.7"
 runtimeLivedata = "1.7.5"
 swiperefreshlayout = "1.2.0-alpha01"
 
-okhttp = "4.10.0"
+okhttp = "4.11.0"
 retrofit = "2.9.0"
 moshi = "1.15.0"
 moshiKotlin = "1.15.0"
@@ -104,4 +103,4 @@ hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", vers
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
-
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
