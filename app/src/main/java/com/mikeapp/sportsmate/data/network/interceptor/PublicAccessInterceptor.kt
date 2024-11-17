@@ -9,7 +9,7 @@ import okhttp3.Response
 
 class PublicAccessInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val jwt = BuildConfig.publicAccessToken
+        val jwt = BuildConfig.STATIC_API_TOKEN
         val request: Request = chain.request()
         val newRequest = request.newBuilder()
             .addHeader(AUTHORIZATION_HEADER, "$AUTHORIZATION_BEARER $jwt")

@@ -1,7 +1,7 @@
 package com.mikeapp.sportsmate.ui.theme
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.lightColorSchemecheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 val NbaWhite = Color(0xFFFFFFFF)

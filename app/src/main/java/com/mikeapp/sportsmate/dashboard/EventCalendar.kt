@@ -3,10 +3,25 @@ package com.mikeapp.sportsmate.dashboard
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -16,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,21 +43,23 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
-import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material.placeholder
-import com.google.accompanist.placeholder.material.shimmer
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.mikeapp.sportsmate.R
 import com.mikeapp.sportsmate.ui.component.TeamLogo
-import com.mikeapp.sportsmate.ui.theme.*
+import com.mikeapp.sportsmate.ui.theme.BlackAlpha60
+import com.mikeapp.sportsmate.ui.theme.BlackAlphaA0
+import com.mikeapp.sportsmate.ui.theme.BlackAlphaE0
+import com.mikeapp.sportsmate.ui.theme.ColorLose
+import com.mikeapp.sportsmate.ui.theme.ColorVictory
+import com.mikeapp.sportsmate.ui.theme.Grey60
 import com.mikeapp.sportsmate.util.LocalDateTimeUtil
 import com.mikeapp.sportsmate.util.LocalDateTimeUtil.CALENDAR_GAME_DATE_FORMAT
 import com.mikeapp.sportsmate.util.LocalDateTimeUtil.getDayIdentifier
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun Calendar(
     calendarDays: List<List<Calendar>>?, events: List<EventViewObject>?, backgroundUrl: String?,
@@ -55,11 +73,14 @@ fun Calendar(
                 .fillMaxWidth()
         ) {
             backgroundUrl?.let {
-                val painter = rememberImagePainter(
-                    data = backgroundUrl,
-                    builder = { crossfade(true) })
+                val painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current).data(data = backgroundUrl)
+                        .apply(block = fun ImageRequest.Builder.() {
+                            crossfade(true)
+                        }).build()
+                )
                 val statefulPainter = when (painter.state) {
-                    is ImagePainter.State.Error -> painterResource(id = R.drawable.bg_placeholder)
+                    is AsyncImagePainter.State.Error -> painterResource(id = R.drawable.bg_placeholder)
                     else -> painter
                 }
                 Image(
@@ -69,10 +90,10 @@ fun Calendar(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(calendarCellHeight(screenSize, cellTextHeight) * calendarDays.size)
-                        .placeholder(
-                            visible = painter.state is ImagePainter.State.Loading,
-                            highlight = PlaceholderHighlight.shimmer(),
-                        )
+//                        .placeholder(
+//                            visible = painter.state is ImagePainter.State.Loading,
+//                            highlight = PlaceholderHighlight.shimmer(),
+//                        )
                 )
             } ?: Image(
                 painter = painterResource(id = R.drawable.bg_placeholder),

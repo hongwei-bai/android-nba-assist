@@ -33,10 +33,6 @@ android {
         }
         val staticApiToken = localProperties.getProperty("staticApi.token", "ci")
         buildConfigField("String", "STATIC_API_TOKEN", "\"$staticApiToken\"")
-//        buildTypes {
-//            getByName("debug") { buildConfigField("String", "staticApiToken", staticApiToken) }
-//            getByName("release") { buildConfigField("String", "staticApiToken", staticApiToken) }
-//        }
     }
 
     buildTypes {

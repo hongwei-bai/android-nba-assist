@@ -15,12 +15,12 @@ fun NbaTeamTheme(
         val colorGuestAdapted = ColorAdapter.adaptGuestColor(colorGuest)
         val colorLightAdapted = colorLight
         NbaTheme(
-            colors = lightColorScheme(
+            colorScheme = lightColorScheme(
                 primary = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.primary,
-                primaryContainer = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.primaryVariant,
+                primaryContainer = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.primaryContainer,
                 onPrimary = colorLightAdapted?.let { Color(it) } ?: NBALightColors.onPrimary,
                 secondary = colorGuestAdapted?.let { Color(it) } ?: NBALightColors.secondary,
-                secondaryContainer = colorGuestAdapted?.let { Color(it) } ?: NBALightColors.secondaryVariant,
+                secondaryContainer = colorGuestAdapted?.let { Color(it) } ?: NBALightColors.secondaryContainer,
                 onSecondary = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.onSecondary,
                 background = colorLightAdapted?.let { Color(it) } ?: NBALightColors.background,
                 onBackground = colorHomeAdapted?.let { Color(it) } ?: NBALightColors.onBackground
@@ -28,7 +28,7 @@ fun NbaTeamTheme(
             content = content
         )
     } ?: NbaTheme(
-        colors = NBALightColors,
+        colorScheme = NBALightColors,
         content = content
     )
 }

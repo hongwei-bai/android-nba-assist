@@ -1,6 +1,6 @@
 package com.mikeapp.sportsmate.ui.theme
 
-import androidx.compose.material3.lightColorSchemecheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 val Red700 = Color(0xffdd0d3c)
