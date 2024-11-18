@@ -27,10 +27,10 @@ interface NbaStatService {
         @Query("dataVersion") dataVersion: Long = -1
     ): Response<String>
 
-    @GET("schedule.do")
-    suspend fun getSchedule(
-        @Query("dataVersion") dataVersion: Long = -1
-    ): Response<ScheduleResponse>
+//    @GET("schedule.do")
+//    suspend fun getSchedule(
+//        @Query("dataVersion") dataVersion: Long = -1
+//    ): Response<ScheduleResponse>
 
     @GET("transactions.do")
     suspend fun getTransactions(

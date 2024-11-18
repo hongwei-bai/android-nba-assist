@@ -2,12 +2,15 @@ package com.mikeapp.sportsmate.data.mapper
 
 import com.mikeapp.sportsmate.data.mapper.NbaTeamMapper.mapTeam
 import com.mikeapp.sportsmate.data.network.model.nba.Event
+import com.mikeapp.sportsmate.data.network.model.nba.NbaMatchStatusIdResponse
 import com.mikeapp.sportsmate.data.network.model.nba.TeamScheduleResponse
 import com.mikeapp.sportsmate.data.room.nba.Team
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailEntity
 import com.mikeapp.sportsmate.data.room.nba.TeamEvent
 import com.mikeapp.sportsmate.data.room.nba.TeamResult
 import com.mikeapp.sportsmate.data.room.nba.TeamScheduleEntity
+import com.mikeapp.sportsmate.data.network.model.nba.Result
+import com.mikeapp.sportsmate.util.LocalDateTimeUtil
 
 object NbaTeamScheduleMapper {
     fun TeamScheduleResponse.map(teamDetail: TeamDetailEntity): TeamScheduleEntity =
@@ -15,9 +18,9 @@ object NbaTeamScheduleMapper {
             teamAbbr = teamDetail.team,
             team = Team(
                 abbrev = teamDetail.team,
-                name = TODO(),
+                name = teamDetail.teamDisplayName,
                 logo = teamDetail.logoUrl,
-                location = TODO()
+                location = teamDetail.city
             ),
             timeStamp = System.currentTimeMillis(),
             dataVersion = dataVersion,
@@ -27,7 +30,7 @@ object NbaTeamScheduleMapper {
         )
 
     private fun Event.map(teamDetail: TeamDetailEntity): TeamEvent = TeamEvent(
-        unixTimeStamp = unixTimeStamp,
+        unixTimeStamp = LocalDateTimeUtil.utcStringToUnixTimeStamp(date.date),
         eventType = seasonType.name,
         opponent = Team(
             abbrev = opponent.abbrev,
@@ -38,12 +41,20 @@ object NbaTeamScheduleMapper {
         guestTeam = if (opponent.homeAwaySymbol == "vs") opponent.mapTeam() else teamDetail.mapTeam(),
         homeTeam = if (opponent.homeAwaySymbol == "vs") teamDetail.mapTeam() else opponent.mapTeam(),
         home = opponent.homeAwaySymbol == "vs",
-        result = result?.let {
-            TeamResult(
-                isWin = it.winner == true,
-                currentTeamScore = it.currentTeamScore.toInt(),
-                opponentTeamScore = it.opponentTeamScore.toInt()
-            )
-        }
+        result = result.map()
     )
+
+    private fun Result.map(): TeamResult? {
+        return when (statusId.toInt()) {
+            NbaMatchStatusIdResponse.Finished.value -> {
+                TeamResult(
+                    isWin = winner == true,
+                    currentTeamScore = currentTeamScore.toInt(),
+                    opponentTeamScore = opponentTeamScore.toInt()
+                )
+            }
+
+            else -> null
+        }
+    }
 }

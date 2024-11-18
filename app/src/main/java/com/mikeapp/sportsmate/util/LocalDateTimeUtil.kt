@@ -2,6 +2,9 @@ package com.mikeapp.sportsmate.util
 
 import org.jetbrains.annotations.TestOnly
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.Calendar.*
 import kotlin.math.abs
@@ -18,6 +21,12 @@ object LocalDateTimeUtil {
     const val CALENDAR_GAME_DATE_FORMAT = "EEE MMM d"
     private const val DASHBOARD_UPCOMING_GAME_DATE_FORMAT = "EEE, MMM d"
     private const val DASHBOARD_UPCOMING_GAME_TIME_FORMAT = "H:mm a"
+
+    fun utcStringToUnixTimeStamp(utcString: String): Long {
+        val formatter = DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneOffset.UTC)
+        val instant = Instant.from(formatter.parse(utcString))
+        return instant.toEpochMilli()
+    }
 
     fun getLocalDateDisplay(ts: Long, format: String = DASHBOARD_UPCOMING_GAME_DATE_FORMAT): String =
         getLocalDateDisplay(getInstance(Locale.US).apply { timeInMillis = ts }, format)
