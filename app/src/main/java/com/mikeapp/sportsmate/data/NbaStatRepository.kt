@@ -126,9 +126,9 @@ class NbaStatRepository @Inject constructor(
                     val adapter = moshi.adapter(TeamScheduleResponse::class.java)
                     val teamSchedule = adapter.fromJson(decodedContent)
                     teamSchedule?.let {
-                        val teamDetail = teamDetailDao.getTeamDetail()
+                        val teamDetail = teamDetailDao.getTeamTheme()
                         teamDetail?.let {
-                            teamScheduleDao.save(teamSchedule.map(teamDetail))
+                            teamScheduleDao.save(teamSchedule.map(teamDetail.team))
                         }
                     }
                 } else {

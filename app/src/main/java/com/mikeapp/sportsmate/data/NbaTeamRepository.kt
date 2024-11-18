@@ -3,9 +3,9 @@ package com.mikeapp.sportsmate.data
 import com.mikeapp.sportsmate.AppConfigurations.Network.nbaSeasonStatusEndpoint
 import com.mikeapp.sportsmate.AppConfigurations.Network.nbaThemeEndpoint
 import com.mikeapp.sportsmate.data.github.GithubApiService
+import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusResponse
 import com.mikeapp.sportsmate.data.local.AppSettings
 import com.mikeapp.sportsmate.data.mapper.NbaTeamDetailMapper.map
-import com.mikeapp.sportsmate.data.network.model.nba.NbaSeasonStatusResponse
 import com.mikeapp.sportsmate.data.network.model.nba.NbaTeamDetailResponse
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailDao
 import com.mikeapp.sportsmate.data.room.nba.TeamDetailEntity
@@ -39,7 +39,7 @@ class NbaTeamRepository @Inject constructor(
                 val adapter = moshi.adapter<List<NbaTeamDetailResponse>>(type)
                 val teamDetailsList: List<NbaTeamDetailResponse> =
                     adapter.fromJson(decodedContent) ?: emptyList()
-                val teamDetail = teamDetailsList.firstOrNull { it.team == "gs" }
+                val teamDetail = teamDetailsList.firstOrNull { it.team == team }
                 teamDetail?.let {
                     teamDetailDao.save(teamDetail.map())
                 }
@@ -61,8 +61,8 @@ class NbaTeamRepository @Inject constructor(
                 val adapter = moshi.adapter(NbaSeasonStatusResponse::class.java)
                 val seasonStatus: NbaSeasonStatusResponse? = adapter.fromJson(decodedContent)
                 seasonStatus?.let {
-                    teamDetailDao.getTeamDetail()?.let { entity ->
-                        entity.seasonStatus = seasonStatus.seasonStatus.name
+                    teamDetailDao.getTeamTheme()?.let { entity ->
+                        entity.seasonStatus = seasonStatus.name
                         teamDetailDao.save(entity)
                     }
                 }

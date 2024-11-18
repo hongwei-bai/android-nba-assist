@@ -9,9 +9,6 @@ data class TeamDetailEntity(
     @PrimaryKey
     val apiVersion: Int = API_VERSION,
     val team: String = "",
-    val teamFullName: String = "",
-    val teamDisplayName: String = "",
-    val city: String = "",
     val logoUrl: String = "",
     val bannerUrl: String = "",
     val backgroundUrl: String? = null,

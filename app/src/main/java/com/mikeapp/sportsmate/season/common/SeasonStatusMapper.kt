@@ -1,16 +1,16 @@
 package com.mikeapp.sportsmate.season.common
 
-import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusEnumResponse
+import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusResponse
 
 object SeasonStatusMapper {
-    fun NbaSeasonStatusEnumResponse.mapToUiState(): SeasonStatus =
+    fun NbaSeasonStatusResponse.mapToUiState(): SeasonStatus =
         when (this) {
-            NbaSeasonStatusEnumResponse.Season -> SeasonStatus.RegularSeason
-            NbaSeasonStatusEnumResponse.PlayIn -> SeasonStatus.PlayInTournament
-            NbaSeasonStatusEnumResponse.PlayOffRound1,
-            NbaSeasonStatusEnumResponse.PlayOffRound2,
-            NbaSeasonStatusEnumResponse.PlayOffConferenceFinal -> SeasonStatus.PlayOff
-            NbaSeasonStatusEnumResponse.PlayOffGrandFinal -> SeasonStatus.GrandFinal
-            NbaSeasonStatusEnumResponse.PreSeason -> SeasonStatus.PreSeason
+            NbaSeasonStatusResponse.Season -> SeasonStatus.RegularSeason
+            NbaSeasonStatusResponse.PlayIn -> SeasonStatus.PlayInTournament
+            NbaSeasonStatusResponse.PlayOffRound1,
+            NbaSeasonStatusResponse.PlayOffRound2,
+            NbaSeasonStatusResponse.PlayOffConferenceFinal -> SeasonStatus.PlayOff
+            NbaSeasonStatusResponse.PlayOffGrandFinal -> SeasonStatus.GrandFinal
+            NbaSeasonStatusResponse.PreSeason -> SeasonStatus.PreSeason
         }
 }

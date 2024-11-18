@@ -8,7 +8,7 @@ import com.mikeapp.sportsmate.dashboard.CountdownHelper.getUpcomingRange
 import com.mikeapp.sportsmate.data.NbaStatRepository
 import com.mikeapp.sportsmate.data.NbaTeamRepository
 import com.mikeapp.sportsmate.data.SoccerStatRepository
-import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusEnumResponse
+import com.mikeapp.sportsmate.data.league.nba.NbaSeasonStatusResponse
 import com.mikeapp.sportsmate.data.local.AppSettings
 import com.mikeapp.sportsmate.season.common.SeasonStatus
 import com.mikeapp.sportsmate.season.common.SeasonStatusMapper.mapToUiState
@@ -43,7 +43,7 @@ class DashboardViewModel @Inject constructor(
     val seasonStatus: LiveData<SeasonStatus> =
         nbaTeamRepository.getTeamDetailFlow().mapNotNull {
             if (it.seasonStatus.isNotEmpty()) {
-                NbaSeasonStatusEnumResponse.valueOf(it.seasonStatus).mapToUiState()
+                NbaSeasonStatusResponse.valueOf(it.seasonStatus).mapToUiState()
             } else {
                 null
             }

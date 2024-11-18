@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NbaThemeService {
-    @GET("/nba/theme_v1/team_theme.json")
+    @GET("teamDetail.do")
     suspend fun getTeamDetail(
         @Query("team") team: String
     ): Response<NbaTeamDetailResponse>

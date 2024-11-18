@@ -12,7 +12,7 @@ data class TeamScheduleEntity(
     val teamAbbr: String = "",
     val team: Team? = null,
     val timeStamp: Long,
-    val dataVersion: Long,
+    val dataVersion: Long = -1,
     val sha: String? = null,
     val events: List<TeamEvent> = emptyList()
 )

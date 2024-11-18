@@ -2,7 +2,6 @@ package com.mikeapp.sportsmate.data.mapper
 
 import com.mikeapp.sportsmate.data.network.model.nba.*
 import com.mikeapp.sportsmate.data.room.nba.*
-import com.mikeapp.sportsmate.data.network.model.nba.Result
 
 object NbaPostSeasonMapper {
     fun PostSeasonResponse.map(): PostSeasonEntity = PostSeasonEntity(

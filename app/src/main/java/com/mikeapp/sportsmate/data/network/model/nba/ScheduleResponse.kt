@@ -18,10 +18,3 @@ data class ResultResponse(
     val homeTeamScore: Int,
     val guestTeamScore: Int
 )
-
-data class TeamResponse(
-    val abbrev: String,
-    val displayName: String,
-    val logo: String,
-    val location: String
-)

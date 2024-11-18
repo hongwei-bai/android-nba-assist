@@ -1,6 +1,6 @@
 package com.mikeapp.sportsmate.data.league.nba
 
-enum class NbaSeasonStatusEnumResponse {
+enum class NbaSeasonStatusResponse {
     PreSeason,
     Season,
     PlayIn,
